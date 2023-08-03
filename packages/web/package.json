@@ -1,16 +1,9 @@
 {
-  "name": "viterc",
+  "name": "web",
   "private": false,
-  "version": "1.2.0",
-  "description": "A modern minimal Vite + React + TypeScript template with pre-configured ESLint (with Airbnb JS/React rules), Prettier, Testing with Jest and Git hooks with Husky out of the box 📦",
+  "version": "1.0.0",
   "license": "MIT",
-  "author": {
-    "name": "Patrick Jean Meurer",
-    "email": "patrickjmeurer@gmail.com",
-    "url": "https://github.com/potreco"
-  },
   "scripts": {
-    "postinstall": "husky install",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
@@ -31,8 +24,6 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.0.3",
-    "@commitlint/config-conventional": "^17.0.3",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.2.5",
@@ -53,7 +44,6 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "7.33.1",
     "eslint-plugin-react-hooks": "4.6.0",
-    "husky": "^8.0.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^29.6.2",
     "jest-environment-jsdom": "^29.6.2",

@@ -2,8 +2,14 @@
   "name": "pin2-nhs-log",
   "version": "1.0.0",
   "license": "MIT",
+  "scripts": {
+    "start": "yarn start:web",
+    "start:web": "yarn workspace web dev"
+  },
   "workspaces": {
-    "packages": ["packages/*"]
+    "packages": [
+      "packages/*"
+    ]
   },
   "private": true
 }

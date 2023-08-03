@@ -20,8 +20,10 @@ Fullstack monorepo application
 
 ```javascript
 // cmd run
+$
 cd ./packages
 
+$
 ls
 ```
 
@@ -30,6 +32,20 @@ ls
 `./server` folder, contains backend server
 
 `./types` folder, contains `typescript` types for modeling
+
+### How to run
+
+```bash
+// run all packages
+$
+yarn start
+```
+
+```bash
+// run only web package
+$
+yarn start:web
+```
 
 ### Git branches
 

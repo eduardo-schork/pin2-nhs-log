@@ -1,0 +1,9 @@
+{
+  "name": "pin2-nhs-log",
+  "version": "1.0.0",
+  "license": "MIT",
+  "workspaces": {
+    "packages": ["packages/*"]
+  },
+  "private": true
+}

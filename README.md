@@ -25,9 +25,11 @@ cd ./packages
 ls
 ```
 
-`./web` folder, contains frontend application; 
-`./server` folder, contains backend server;
-`./types` folder, contains `typescript` types for modeling;
+`./web` folder, contains frontend application
+
+`./server` folder, contains backend server
+
+`./types` folder, contains `typescript` types for modeling
 
 ### Git branches
 

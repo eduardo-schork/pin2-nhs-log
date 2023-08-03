@@ -29,15 +29,19 @@ ls
 `./server` folder, contains backend server;
 `./types` folder, contains `typescript` types for modeling;
 
+### Git branches
+
+- main 
+- develop
 
 ### Docs
-
-#### `server documentation`
-see documentation [here](./packages/server/README.md).
 
 #### `web documentation`
 see documentation [here](./packages/web/README.md).
 
-#### `types documentation`
+#### `server documentation (todo)` 
+see documentation [here](./packages/server/README.md).
+
+#### `types documentation (todo)` 
 see documentation [here](./packages/types/README.md).
 

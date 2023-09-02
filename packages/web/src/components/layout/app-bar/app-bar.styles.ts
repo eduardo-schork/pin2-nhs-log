@@ -4,7 +4,9 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
     top: 0;
+    justify-content: space-between;
     width: 100%;
+    padding: 0 ${Spacings.LARGE};
     display: flex;
     border-radius: 0;
     position: sticky;
@@ -14,10 +16,10 @@ export const Container = styled.div`
 `;
 
 export const LogoImage = styled.img`
-    max-height: 100%;
-    max-width: 100%;
-    height: 100%;
     width: 12%;
+    height: 100%;
+    display: block;
     align-self: center;
     padding: ${Spacings.MEDIUM};
+    cursor: pointer;
 `;

@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        /* Basic Options */
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "lib": [
+            "ESNext"
+        ],
+        "composite": true,
+        "outDir": "dist",
+        "rootDir": "src"
+    },
+    "include": [
+        "src"
+    ]
+}

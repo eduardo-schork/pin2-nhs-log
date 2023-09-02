@@ -1,7 +1,11 @@
 {
     "common.NHSLOG": "NHS LOG",
     "common.Enter": "ENTRAR",
+    "common.CompanyName": "NHS-LOG",
     "Home.Copyright": "Copyright NHS-LOG. All rights reserved",
     "Home.ShippingTracking": "Rastrear sua remessa",
-    "Home.FollowQuotation": "Solicitar/Acompanhar uma cotação"
+    "Home.FollowQuotation": "Solicitar/Acompanhar uma cotação",
+    "Dashboard.ManageFleets": "Gerenciar frota",
+    "Dashboard.FollowQuotation": "Acompanhar Cotações",
+    "Dashboard.ManageProcess": "Gerenciar Processos"
 }

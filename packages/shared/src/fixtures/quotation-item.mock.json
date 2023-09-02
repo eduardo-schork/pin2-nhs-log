@@ -1,0 +1,14 @@
+{
+    "id": 1,
+    "cpf": "09046138950",
+    "email": "eduardo.schork1814@gmail.com",
+    "currentDate": 1693613292,
+    "originAddressId": 1,
+    "destinationAddressId": 1,
+    "createdAt": 1,
+    "createdBy": 1693613292,
+    "updatedAt": null,
+    "updatedBy": null,
+    "deletedAt": null,
+    "deletedBy": null
+}

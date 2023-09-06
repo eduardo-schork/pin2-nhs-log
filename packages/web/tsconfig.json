@@ -8,6 +8,8 @@
             "DOM.Iterable"
         ],
         "module": "ESNext",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
         "skipLibCheck": true,
         "paths": {
             "@/*": [

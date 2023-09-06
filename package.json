@@ -18,5 +18,8 @@
         "pg": "^8.11.3",
         "reflect-metadata": "^0.1.13",
         "typeorm": "^0.3.17"
+    },
+    "devDependencies": {
+        "ts-node": "^10.9.1"
     }
 }

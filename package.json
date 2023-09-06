@@ -11,5 +11,8 @@
             "packages/*"
         ]
     },
-    "private": true
+    "private": true,
+    "dependencies": {
+        "express": "^4.18.2"
+    }
 }

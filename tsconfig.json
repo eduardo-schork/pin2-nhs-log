@@ -1,26 +1,19 @@
 {
-    "compilerOptions": {
-        /* Basic Options */
-        "target": "es5",
-        "module": "commonjs",
-        "lib": [
-            "ESNext"
-        ],
-        /* Strict Type-Checking Options */
-        "strict": true,
-        /* Module Resolution Options */
-        "moduleResolution": "node",
-        "esModuleInterop": true,
-        /* Advanced Options */
-        "forceConsistentCasingInFileNames": true,
-        "skipLibCheck": true
-    },
-    "references": [
-        {
-            "path": "./packages/shared"
-        },
-        {
-            "path": "./packages/web"
-        }
-    ]
+  "compilerOptions": {
+      /* Basic Options */
+      "target": "es5",
+      "module": "commonjs",
+      "composite": true,
+      "lib": [
+          "ESNext"
+      ],
+      /* Strict Type-Checking Options */
+      "strict": true,
+      /* Module Resolution Options */
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      /* Advanced Options */
+      "forceConsistentCasingInFileNames": true,
+      "skipLibCheck": true,
+  }
 }

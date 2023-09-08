@@ -5,7 +5,7 @@ import Fleet from './Fleet';
     tableName: 'Fleet_Vehicle',
     modelName: 'FleetVehicle',
 })
-class FleetVehicle extends Model<FleetVehicle> {
+class FleetVehicle extends Model {
     @Column({
         type: DataType.INTEGER,
         allowNull: false,

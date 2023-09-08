@@ -1,34 +1,39 @@
 import { Model, DataType, Table, Column } from 'sequelize-typescript';
 
 @Table({
-    tableName: 'Payment_Type',
-    modelName: 'PaymentType',
+    tableName: 'Feedback',
+    modelName: 'Feedback',
 })
-class PaymentType extends Model {
+class Feedback extends Model {
     @Column({
         type: DataType.INTEGER,
+        allowNull: false,
         primaryKey: true,
-        field: "pk_payment_type"
+        autoIncrement: true,
     })
-    pk_payment_type!: number;
+    pkFeedback!: number;
+
+    @Column({
+        type: DataType.INTEGER,
+        allowNull: false,
+    })
+    feRating!: number;
 
     @Column({
         type: DataType.STRING(255),
-        field: "pt_type"
+        allowNull: true,
     })
-    pt_type!: string;
+    feComment!: string | null;
 
     @Column({
         type: DataType.DATE,
-        field: "createdAt"
     })
     createdAt!: Date;
 
     @Column({
         type: DataType.DATE,
-        field: "updatedAt"
     })
     updatedAt!: Date;
 }
 
-export default PaymentType;
+export default Feedback;

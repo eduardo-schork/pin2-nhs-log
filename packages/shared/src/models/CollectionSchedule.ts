@@ -1,40 +1,40 @@
 import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import ItemRemittanceType from './ItemRemittanceType';
+import Address from './Address';
 
 @Table({
-    tableName: 'Item_Remittance',
-    modelName: 'ItemRemittance',
+    tableName: 'Collection_Schedule',
+    modelName: 'CollectionSchedule',
 })
-class ItemRemittance extends Model<ItemRemittance> {
+class CollectionSchedule extends Model {
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
     })
-    pkItemRemittance!: number;
+    pk_collection_schedule!: number;
+
+    @Column({
+        type: DataType.DATE,
+        allowNull: false,
+    })
+    cs_schedule_date!: Date;
 
     @Column({
         type: DataType.STRING(255),
-        allowNull: false,
+        allowNull: true,
     })
-    irTypeObject!: string;
+    cs_comment!: string | null;
 
-    @Column({
-        type: DataType.FLOAT,
-        allowNull: false,
-    })
-    irWeight!: number;
-
-    @ForeignKey(() => ItemRemittanceType)
+    @ForeignKey(() => Address)
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
     })
-    fkItemRemittanceType!: number;
+    fk_collection_address!: number;
 
-    @BelongsTo(() => ItemRemittanceType)
-    ItemRemittanceType!: ItemRemittanceType;
+    @BelongsTo(() => Address, 'fk_collection_address')
+    CollectionAddress?: Address;
 
     @Column({
         type: DataType.DATE,
@@ -47,4 +47,4 @@ class ItemRemittance extends Model<ItemRemittance> {
     updatedAt!: Date;
 }
 
-export default ItemRemittance;
+export default CollectionSchedule;

@@ -1,29 +1,23 @@
 import { Model, DataType, Table, Column } from 'sequelize-typescript';
 
 @Table({
-    tableName: 'Feedback',
-    modelName: 'Feedback',
+    tableName: 'Delivery_Appointment_Status',
+    modelName: 'DeliveryAppointmentStatus',
 })
-class Feedback extends Model<Feedback> {
+class DeliveryAppointmentStatus extends Model {
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
     })
-    pkFeedback!: number;
-
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: false,
-    })
-    feRating!: number;
+    pk_delivery_appointment_status!: number;
 
     @Column({
         type: DataType.STRING(255),
-        allowNull: true,
+        allowNull: false,
     })
-    feComment!: string | null;
+    das_status!: string;
 
     @Column({
         type: DataType.DATE,
@@ -36,4 +30,4 @@ class Feedback extends Model<Feedback> {
     updatedAt!: Date;
 }
 
-export default Feedback;
+export default DeliveryAppointmentStatus;

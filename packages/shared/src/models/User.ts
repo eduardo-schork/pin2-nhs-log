@@ -4,7 +4,7 @@ import { Model, DataType, Table, Column } from 'sequelize-typescript';
     tableName: 'User',
     modelName: 'User',
 })
-class User extends Model<User> {
+class User extends Model {
     @Column({
         type: DataType.INTEGER,
         allowNull: false,

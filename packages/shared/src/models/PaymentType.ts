@@ -1,23 +1,20 @@
 import { Model, DataType, Table, Column } from 'sequelize-typescript';
 
 @Table({
-    tableName: 'Delivery_Process_Status',
-    modelName: 'DeliveryProcessStatus',
+    tableName: 'Payment_Type',
+    modelName: 'PaymentType',
 })
-class DeliveryProcessStatus extends Model<DeliveryProcessStatus> {
+class PaymentType extends Model {
     @Column({
         type: DataType.INTEGER,
-        allowNull: false,
         primaryKey: true,
-        autoIncrement: true,
     })
-    pk_delivery_process_status!: number;
+    pk_payment_type!: number;
 
     @Column({
         type: DataType.STRING(255),
-        allowNull: false,
     })
-    dps_status!: string;
+    pt_type!: string;
 
     @Column({
         type: DataType.DATE,
@@ -30,4 +27,4 @@ class DeliveryProcessStatus extends Model<DeliveryProcessStatus> {
     updatedAt!: Date;
 }
 
-export default DeliveryProcessStatus;
+export default PaymentType;

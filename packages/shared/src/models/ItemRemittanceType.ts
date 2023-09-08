@@ -1,23 +1,23 @@
 import { Model, DataType, Table, Column } from 'sequelize-typescript';
 
 @Table({
-    tableName: 'Delivery_Appointment_Status',
-    modelName: 'DeliveryAppointmentStatus',
+    tableName: 'Item_Remittance_Type',
+    modelName: 'ItemRemittanceType',
 })
-class DeliveryAppointmentStatus extends Model<DeliveryAppointmentStatus> {
+class ItemRemittanceType extends Model {
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
     })
-    pk_delivery_appointment_status!: number;
+    pkItemRemittanceType!: number;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
     })
-    das_status!: string;
+    irtType!: string;
 
     @Column({
         type: DataType.DATE,
@@ -30,4 +30,4 @@ class DeliveryAppointmentStatus extends Model<DeliveryAppointmentStatus> {
     updatedAt!: Date;
 }
 
-export default DeliveryAppointmentStatus;
+export default ItemRemittanceType;

@@ -5,7 +5,7 @@ import Address from './Address';
     tableName: 'Quotation',
     modelName: 'Quotation',
 })
-class Quotation extends Model<Quotation> {
+class Quotation extends Model {
     @Column({
         type: DataType.INTEGER,
         allowNull: false,

@@ -4,7 +4,7 @@ import { Model, DataType, Table, Column } from 'sequelize-typescript';
     tableName: 'Remittance_Type_Tax',
     modelName: 'RemittanceTypeTax',
 })
-class RemittanceTypeTax extends Model<RemittanceTypeTax> {
+class RemittanceTypeTax extends Model {
     @Column({
         type: DataType.INTEGER,
         allowNull: false,

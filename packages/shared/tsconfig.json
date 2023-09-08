@@ -7,6 +7,10 @@
         "lib": [
             "ESNext"
         ],
+        "allowImportingTsExtensions": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
         "composite": true,
         "outDir": "dist",
         "rootDir": "src"

@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "ES2020",
+        "target": "es2016",
         "useDefineForClassFields": true,
         "composite": true,
         "lib": [
@@ -19,7 +19,6 @@
             ],
         },
         /* Bundler mode */
-        "moduleResolution": "bundler",
         "allowImportingTsExtensions": true,
         "resolveJsonModule": true,
         "isolatedModules": true,
@@ -37,9 +36,6 @@
     "references": [
         {
             "path": "./tsconfig.node.json"
-        },
-        {
-            "path": "../shared"
         }
     ]
 }

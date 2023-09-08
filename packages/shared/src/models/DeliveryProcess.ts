@@ -6,7 +6,7 @@ import Feedback from './Feedback';
     tableName: 'Delivery_Process',
     modelName: 'DeliveryProcess',
 })
-class DeliveryProcess extends Model<DeliveryProcess> {
+class DeliveryProcess extends Model {
     @Column({
         type: DataType.INTEGER,
         allowNull: false,

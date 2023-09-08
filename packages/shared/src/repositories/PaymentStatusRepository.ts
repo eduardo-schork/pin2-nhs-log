@@ -1,25 +1,22 @@
 import PaymentStatus from "../models/PaymentStatus";
 
 class PaymentStatusRepo {
-    async createPaymentStatus(): Promise<boolean> {
+    async createPaymentStatus(): Promise<void> {
         try {
             await PaymentStatus.bulkCreate([
                 {
                     pk_payment_status: 1,
                     ps_status: 'Aprovado',
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
                 },
                 {
                     pk_payment_status: 2,
                     ps_status: 'Reprovado',
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
                 }
             ]);
-            return true;
+            // return true;
         } catch (error) {
-            return false;
+            // return false;
+            console.log(error)
         }
     }
 }

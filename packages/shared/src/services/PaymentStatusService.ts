@@ -5,9 +5,9 @@ class PaymentStatusServ {
         try {
             const paymentStatusRepo = new PaymentStatusRepo();
             const result = await paymentStatusRepo.createPaymentStatus();
-            if (!result) {
-                throw new Error("Error while trying to execute PaymentStatusService")
-            }
+            // if (!result) {
+            //     throw new Error("Error while trying to execute PaymentStatusService")
+            // }
             return result;
         } catch (ex) {
             throw new Error(String(ex));

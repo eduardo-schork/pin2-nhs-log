@@ -7,14 +7,10 @@ class OfferStatusRepo {
                 {
                     pk_offer_status: 1,
                     os_status: 'Em aberto',
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
                 },
                 {
                     pk_offer_status: 2,
                     os_status: 'Em negociação',
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
                 },
                 {
                     pk_offer_status: 3,

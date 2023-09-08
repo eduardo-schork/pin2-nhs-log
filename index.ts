@@ -14,12 +14,12 @@ class App {
     constructor() {
         this.app = express();
         this.databaseSync();
-        this.servicesSync();
     }
 
     protected databaseSync(): void {
         const db = new Database();
         db.sequelize?.sync();
+        this.servicesSync();
     }
     protected servicesSync(): void {
         const paymentTypeService = new PaymentTypeServ();

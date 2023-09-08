@@ -18,6 +18,7 @@ import Payment from "../shared/src/models/Payment";
 import Quotation from "../shared/src/models/Quotation";
 import RemittanceTypeTax from "../shared/src/models/RemittanceTypeTax";
 import User from "../shared/src/models/User";
+import PaymentStatus from "../shared/src/models/PaymentStatus";
 dotenv.config();
 
 
@@ -45,7 +46,7 @@ class Database {
                 DeliveryAppointmentStatus, DeliveryProcess, DeliveryProcessStatus,
                 Feedback, Fleet, FleetVehicle, ItemRemittance, ItemRemittanceType,
                 Offer, OfferStatus, Payment, PaymentType, Quotation, RemittanceTypeTax,
-                User]
+                PaymentStatus, User]
         });
 
         await this.sequelize

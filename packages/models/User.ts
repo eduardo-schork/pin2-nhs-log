@@ -1,10 +1,47 @@
-interface User {
-    pk_user: number;
-    user_name: string;
-    user_cpf: string;
-    user_email: string;
-    user_password: string;
-    user_session: string;
+import { Model, DataType, Table, Column } from 'sequelize-typescript';
+
+@Table({
+    tableName: 'User',
+    modelName: 'User',
+})
+class User extends Model<User> {
+    @Column({
+        type: DataType.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+    })
+    pkUser!: number;
+
+    @Column({
+        type: DataType.STRING(255),
+        allowNull: false,
+    })
+    userName!: string;
+
+    @Column({
+        type: DataType.STRING(255),
+        allowNull: false,
+    })
+    userCpf!: string;
+
+    @Column({
+        type: DataType.STRING(255),
+        allowNull: false,
+    })
+    userEmail!: string;
+
+    @Column({
+        type: DataType.STRING(255),
+        allowNull: false,
+    })
+    userPassword!: string;
+
+    @Column({
+        type: DataType.STRING(255),
+        allowNull: false,
+    })
+    userSession!: string;
 }
-  
-export default User;  
+
+export default User;

@@ -11,37 +11,37 @@ class User extends Model {
         primaryKey: true,
         autoIncrement: true,
     })
-    pkUser!: number;
+    pk_user!: number;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
     })
-    userName!: string;
+    user_name!: string;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
     })
-    userCpf!: string;
+    user_cpf!: string;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
     })
-    userEmail!: string;
+    user_email!: string;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
     })
-    userPassword!: string;
+    user_password!: string;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
     })
-    userSession!: string;
+    user_session!: string;
 }
 
 export default User;

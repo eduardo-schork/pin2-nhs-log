@@ -12,28 +12,28 @@ class Payment extends Model {
         primaryKey: true,
         autoIncrement: true,
     })
-    pkPayment!: number;
+    pk_payment!: number;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
     })
-    paStatus!: string;
+    pa_status!: string;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
     })
-    paType!: string;
+    pa_type!: string;
 
     @ForeignKey(() => DeliveryProcess)
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
     })
-    fkDeliveryProcess!: number;
+    fk_delivery_process!: number;
 
-    @BelongsTo(() => DeliveryProcess, 'fkDeliveryProcess')
+    @BelongsTo(() => DeliveryProcess, 'fk_delivery_process')
     DeliveryProcess?: DeliveryProcess;
 }
 

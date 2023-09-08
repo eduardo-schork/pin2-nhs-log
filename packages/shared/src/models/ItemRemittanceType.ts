@@ -11,13 +11,13 @@ class ItemRemittanceType extends Model {
         primaryKey: true,
         autoIncrement: true,
     })
-    pkItemRemittanceType!: number;
+    pk_item_remittance_type!: number;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
     })
-    irtType!: string;
+    irt_type!: string;
 
     @Column({
         type: DataType.DATE,

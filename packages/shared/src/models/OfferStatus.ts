@@ -11,13 +11,13 @@ class OfferStatus extends Model {
         primaryKey: true,
         autoIncrement: true,
     })
-    pkOfferStatus!: number;
+    pk_offer_status!: number;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
     })
-    osStatus!: string;
+    os_status!: string;
 }
 
 export default OfferStatus;

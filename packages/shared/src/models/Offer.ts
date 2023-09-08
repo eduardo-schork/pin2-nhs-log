@@ -13,54 +13,54 @@ class Offer extends Model {
         primaryKey: true,
         autoIncrement: true,
     })
-    pkOffer!: number;
+    pk_offer!: number;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
     })
-    ofStatus!: string;
+    of_status!: string;
 
     @Column({
         type: DataType.FLOAT,
         allowNull: false,
     })
-    ofSubtotal!: number;
+    of_subtotal!: number;
 
     @Column({
         type: DataType.FLOAT,
     })
-    ofTaxes?: number;
+    of_taxes?: number;
 
     @Column({
         type: DataType.FLOAT,
         allowNull: false,
     })
-    ofTotal!: number;
+    of_total!: number;
 
     @Column({
         type: DataType.DATE,
         allowNull: false,
     })
-    ofDeliveryForecast!: Date;
+    of_delivery_forecast!: Date;
 
     @ForeignKey(() => Quotation)
     @Column({
         type: DataType.INTEGER,
     })
-    fkQuotation!: number;
+    fk_quotation!: number;
 
     @ForeignKey(() => FleetVehicle)
     @Column({
         type: DataType.INTEGER,
     })
-    fkFleetVehicle!: number;
+    fk_fleet_vehicle!: number;
 
     @BelongsTo(() => Quotation)
     quotation?: Quotation;
 
     @BelongsTo(() => FleetVehicle)
-    fleetVehicle?: FleetVehicle;
+    fleet_vehicle?: FleetVehicle;
 }
 
 export default Offer;

@@ -13,33 +13,33 @@ class DeliveryAppointment extends Model {
         primaryKey: true,
         autoIncrement: true,
     })
-    pkDeliveryAppointment!: number;
+    pk_delivery_appointment!: number;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
     })
-    daStatus!: string;
+    da_status!: string;
 
     @Column({
         type: DataType.DATE,
         allowNull: false,
     })
-    daAppointmentDate!: Date;
+    da_appointment_date!: Date;
 
     @ForeignKey(() => Address)
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
     })
-    fkCurrentAddress!: number;
+    fk_current_address!: number;
 
     @ForeignKey(() => DeliveryProcess)
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
     })
-    fkDeliveryProcess!: number;
+    fk_delivery_process!: number;
 
     @BelongsTo(() => Address, 'fkCurrentAddress')
     CurrentAddress?: Address;

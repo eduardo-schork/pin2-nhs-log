@@ -11,19 +11,19 @@ class Feedback extends Model {
         primaryKey: true,
         autoIncrement: true,
     })
-    pkFeedback!: number;
+    pk_feedback!: number;
 
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
     })
-    feRating!: number;
+    fe_rating!: number;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: true,
     })
-    feComment!: string | null;
+    fe_comment!: string | null;
 
     @Column({
         type: DataType.DATE,

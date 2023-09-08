@@ -13,27 +13,27 @@ class DeliveryProcess extends Model {
         primaryKey: true,
         autoIncrement: true,
     })
-    pkDeliveryProcess!: number;
+    pk_delivery_process!: number;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
     })
-    dpStatus!: string;
+    dp_status!: string;
 
     @ForeignKey(() => Offer)
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
     })
-    fkOffer!: number;
+    fk_offer!: number;
 
     @ForeignKey(() => Feedback)
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
     })
-    fkFeedback!: number;
+    fk_feedback!: number;
 
     @BelongsTo(() => Offer, 'fkOffer')
     Offer?: Offer;

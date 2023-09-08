@@ -11,19 +11,19 @@ class RemittanceTypeTax extends Model {
         primaryKey: true,
         autoIncrement: true,
     })
-    pkRemittanceTypeTax!: number;
+    pk_remittance_type_tax!: number;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
     })
-    rrtTypeObject!: string;
+    rrt_type_object!: string;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
     })
-    rrtCalculationBasis!: string;
+    rrt_calculation_basis!: string;
 }
 
 export default RemittanceTypeTax;

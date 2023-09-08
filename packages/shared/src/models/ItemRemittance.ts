@@ -12,26 +12,26 @@ class ItemRemittance extends Model {
         primaryKey: true,
         autoIncrement: true,
     })
-    pkItemRemittance!: number;
+    pk_item_remittance!: number;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
     })
-    irTypeObject!: string;
+    ir_type_object!: string;
 
     @Column({
         type: DataType.FLOAT,
         allowNull: false,
     })
-    irWeight!: number;
+    ir_weight!: number;
 
     @ForeignKey(() => ItemRemittanceType)
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
     })
-    fkItemRemittanceType!: number;
+    fk_item_remittance_type!: number;
 
     @BelongsTo(() => ItemRemittanceType)
     ItemRemittanceType!: ItemRemittanceType;

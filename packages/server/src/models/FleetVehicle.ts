@@ -38,16 +38,6 @@ class FleetVehicle extends Model {
     })
     fv_revam!: string;
 
-    @ForeignKey(() => Fleet)
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: false,
-    })
-    fk_fleet!: number;
-
-    @BelongsTo(() => Fleet)
-    Fleet!: Fleet;
-
     @Column({
         type: DataType.DATE,
     })

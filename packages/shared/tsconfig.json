@@ -15,7 +15,4 @@
         "outDir": "dist",
         "rootDir": "src"
     },
-    "include": [
-        "src"
-, "../server/src/models", "../server/src/repositories"    ]
 }

@@ -2,7 +2,7 @@ import Axios, { AxiosInstance } from 'axios';
 
 import { HttpRequestParams, IHttpRequestPort } from './http-request.port';
 
-const API_BASE_URL = 'localhost';
+const API_BASE_URL = 'http://127.0.0.1:8000';
 
 class AxiosHttpRequest implements IHttpRequestPort {
     axiosInstance: AxiosInstance | null = null;

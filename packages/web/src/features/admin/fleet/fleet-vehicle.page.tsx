@@ -1,17 +1,19 @@
 import FleetVehicleItem from '@/components/fleetVehicle/fleet-vehicle.ui';
-import FleetVehicleMock from '../../../../../shared/src/fixtures/fleetVehicle-item.mock.json';
 import TFleetVehicleModel from '@/models/FleetVehicle.model';
 import BaseLayout from '@/components/layout/base-layout/base-layout.ui';
 import { styled } from 'styled-components';
 import Spacings from '@/styles/tokens/spacing';
+import useFleetVehicleLogic from './fleet-vehicle.logic';
 
-const mock = [FleetVehicleMock];
+function FleetVehiclePage({ ...props }: { fleetVehicles?: TFleetVehicleModel[] }) {
+    const { fleetVehicles } = useFleetVehicleLogic();
 
-function FleetVehiclePage({ fleetVehicles = mock, ...props }: { fleetVehicles?: TFleetVehicleModel[] }) {
+    console.log({fleetVehicles})
+
     return (
         <BaseLayout>
             <FleetVehicleContainer {...props}>
-                {fleetVehicles.map((fleetVehicle) => (
+                {fleetVehicles.map((fleetVehicle: TFleetVehicleModel) => (
                     <FleetVehicleItem fleetVehicle={fleetVehicle} />
                 ))}
             </FleetVehicleContainer>

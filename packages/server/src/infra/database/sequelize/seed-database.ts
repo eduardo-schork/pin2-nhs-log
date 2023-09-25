@@ -1,19 +1,18 @@
-import express, { Application } from "express";
-import Database from "./db/dbconfig";
 import * as dotenv from "dotenv";
 
-import PaymentTypeServ from "./services/PaymentTypeService";
-import OfferStatusServ from "./services/OfferStatusService";
-import ItemRemittanceTypeServ from "./services/ItemRemittanceTypeService";
-import DeliveryAppointmentStatusServ from "./services/DeliveryAppointmentStatusService";
-import DeliveryProcessStatusServ from "./services/DeliveryProcessStatusService";
-import PaymentStatusServ from "./services/PaymentStatusService";
-import RemittanceTypeTaxServ from "./services/RemittanceTypeTaxService";
+import PaymentTypeServ from "../../../services/PaymentTypeService";
+import OfferStatusServ from "../../../services/OfferStatusService";
+import ItemRemittanceTypeServ from "../../../services/ItemRemittanceTypeService";
+import DeliveryAppointmentStatusServ from "../../../services/DeliveryAppointmentStatusService";
+import DeliveryProcessStatusServ from "../../../services/DeliveryProcessStatusService";
+import PaymentStatusServ from "../../../services/PaymentStatusService";
+import RemittanceTypeTaxServ from "../../../services/RemittanceTypeTaxService";
+import DatabasePort from "../database.port";
 
 dotenv.config();
 
-function seedDatabase() {
-    const db = new Database();
+function seedSequelizeDatabase() {
+    const db = DatabasePort;
     db.sequelize?.sync();
 
     const paymentTypeService = new PaymentTypeServ();
@@ -38,4 +37,4 @@ function seedDatabase() {
     remittanceTypeTaxService.initializeRemittanceTypeTax();
 }
 
-seedDatabase();
+export default seedSequelizeDatabase

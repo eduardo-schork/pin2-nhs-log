@@ -1,28 +1,16 @@
-import express, { Application } from "express";
-import Database from "./db/dbconfig";
 import * as dotenv from "dotenv";
+import HttpServerPort from "./infra/http-server/http-server.port";
+
+import DatabasePort from "./infra/database/database.port";
+import seedSequelizeDatabase from "./infra/database/sequelize/seed-database";
 
 dotenv.config();
 
-console.log({dotenv})
+async function start() {
+    // await DatabasePort.connectDataBase();
+    // seedSequelizeDatabase();
 
-class App {
-    public app: Application;
-
-    constructor() {
-        this.app = express();
-        this.databaseSync();
-    }
-
-    protected databaseSync(): void {
-        const db = new Database();
-        db.sequelize?.sync();
-    }
+    HttpServerPort.runHttpServer();
 }
 
-const port = process.env.APP_PORT as unknown as number;
-const app = new App().app;
-
-app.listen(port, () => {
-    console.log("Server started successfully!");
-});
+start();

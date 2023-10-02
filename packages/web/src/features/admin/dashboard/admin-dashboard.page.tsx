@@ -5,7 +5,7 @@ import HeroImage from '@/components/hero-image.ui';
 import BaseLayout from '@/components/layout/base-layout/base-layout.ui';
 import t from '@/infra/i18n';
 
-function DashboardPage({ ...props }) {
+function AdminDashboardPage({ ...props }) {
     return (
         <BaseLayout {...props}>
             <HeroImage />
@@ -19,4 +19,4 @@ function DashboardPage({ ...props }) {
     );
 }
 
-export default DashboardPage;
+export default AdminDashboardPage;

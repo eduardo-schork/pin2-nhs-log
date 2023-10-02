@@ -1,9 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom';
 import HomePage from '@/features/home/home.page';
 import LoginPage from '@/features/auth/login/login.page';
-import DashboardPage from '@/features/admin/dashboard/dashboard.page';
-import QuoationPage from '@/features/admin/quotation/quotation.page';
-import FleetVehiclePage from '@/features/admin/fleet/fleet-vehicle.page';
+
+import AdminQuoationPage from '@/features/admin/quotation/admin-quotation.page';
+import AdminDashboardPage from '@/features/admin/dashboard/admin-dashboard.page';
+import AdminFleetVehiclePage from '@/features/admin/fleet/admin-fleet-vehicle.page';
+import QuotationPage from '@/features/quotation/quotation.page';
+import TrackQuotationPage from '@/features/quotation/track/track-quotation.page';
 
 const AppRouter = createBrowserRouter([
     {
@@ -15,16 +18,24 @@ const AppRouter = createBrowserRouter([
         element: <LoginPage />,
     },
     {
+        path: '/quotation',
+        element: <QuotationPage />,
+    },
+    {
+        path: '/quotation/track',
+        element: <TrackQuotationPage />,
+    },
+    {
         path: '/admin',
-        element: <DashboardPage />,
+        element: <AdminDashboardPage />,
     },
     {
         path: '/admin/quotation',
-        element: <QuoationPage />,
+        element: <AdminQuoationPage />,
     },
     {
-        path: '/admin/fleet/vehicle',
-        element: <FleetVehiclePage />,
+        path: '/admin/fleet-vehicle',
+        element: <AdminFleetVehiclePage />,
     },
 ]);
 

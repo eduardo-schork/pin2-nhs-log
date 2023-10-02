@@ -1,13 +1,13 @@
 import QuotationItem from '@/components/quotation/quotation-item.ui';
-import QuotationMock from '../../../../../shared/src/fixtures/quotation-item.mock.json';
+// import QuotationMock from '@/fixtures/quotation-item.mock.json';
 import TQuotationModel from '@/models/Quotation.model';
 import BaseLayout from '@/components/layout/base-layout/base-layout.ui';
 import { styled } from 'styled-components';
 import Spacings from '@/styles/tokens/spacing';
 
-const mock = [QuotationMock, QuotationMock, QuotationMock, QuotationMock, QuotationMock];
+// const mock = [QuotationMock, QuotationMock, QuotationMock, QuotationMock, QuotationMock];
 
-function QuoationPage({ quotations = mock, ...props }: { quotations?: TQuotationModel[] }) {
+function AdminQuoationPage({ quotations, ...props }: { quotations?: TQuotationModel[] }) {
     return (
         <BaseLayout>
             <QuotationPageContainer {...props}>
@@ -26,4 +26,4 @@ const QuotationPageContainer = styled.div`
     gap: ${Spacings.MEDIUM};
 `;
 
-export default QuoationPage;
+export default AdminQuoationPage;

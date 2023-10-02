@@ -7,5 +7,9 @@
     "Home.FollowQuotation": "Solicitar/Acompanhar uma cotação",
     "Dashboard.ManageFleets": "Gerenciar frota",
     "Dashboard.FollowQuotation": "Acompanhar Cotações",
-    "Dashboard.ManageProcess": "Gerenciar Processos"
+    "Dashboard.ManageProcess": "Gerenciar Processos",
+
+    "Quotation.NewQuotationForm.Follow": "Pesquisar 🔎",
+    "Quotation.NewQuotationForm.InsertQuotationCPF": "Digite o número de CPF vinculado a cotação",
+    "Quotation.NewQuotationForm.NewQuotation": "Criar nova cotação:"
 }

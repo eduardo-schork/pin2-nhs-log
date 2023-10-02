@@ -1,14 +1,12 @@
-import FleetVehicleItem from '@/components/fleetVehicle/fleet-vehicle.ui';
+import FleetVehicleItem from '@/components/fleet-vehicle/fleet-vehicle.ui';
 import TFleetVehicleModel from '@/models/FleetVehicle.model';
 import BaseLayout from '@/components/layout/base-layout/base-layout.ui';
 import { styled } from 'styled-components';
 import Spacings from '@/styles/tokens/spacing';
-import useFleetVehicleLogic from './fleet-vehicle.logic';
+import useFleetVehicleLogic from './admin-fleet-vehicle.logic';
 
-function FleetVehiclePage({ ...props }: { fleetVehicles?: TFleetVehicleModel[] }) {
+function AdminFleetVehiclePage({ ...props }: { fleetVehicles?: TFleetVehicleModel[] }) {
     const { fleetVehicles } = useFleetVehicleLogic();
-
-    console.log({fleetVehicles})
 
     return (
         <BaseLayout>
@@ -28,4 +26,4 @@ const FleetVehicleContainer = styled.div`
     gap: ${Spacings.MEDIUM};
 `;
 
-export default FleetVehiclePage;
+export default AdminFleetVehiclePage;

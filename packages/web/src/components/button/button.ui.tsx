@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 
 export const ContainedButton = styled(Button)`
     && {
-        width: 80%;
+        width: 100%;
         align-self: center;
         height: 50px;
     }

@@ -5,6 +5,6 @@ type TFleetVehicleModel = {
     model: string;
     plate: string;
     cpfDriver: string;
-} & TBaseModel
+} & TBaseModel;
 
-export default TFleetVehicleModel
+export default TFleetVehicleModel;

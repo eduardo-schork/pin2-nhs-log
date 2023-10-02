@@ -1,10 +1,10 @@
 import Colors from '@/styles/tokens/color';
-import { Input } from '@chakra-ui/react';
+import { Input, InputProps } from '@chakra-ui/react';
 import { styled } from 'styled-components';
 
-const TextInput = styled(Input)`
+const TextInput: React.FC<InputProps> = styled(Input)`
     && {
-        width: 80%;
+        width: 100%;
         height: 50px;
         align-self: center;
         background-color: ${Colors.WHITE};

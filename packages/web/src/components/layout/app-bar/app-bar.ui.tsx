@@ -8,6 +8,7 @@ import { styled } from 'styled-components';
 import Spacings from '@/styles/tokens/spacing';
 import FontSizes from '@/styles/tokens/font-size';
 import t from '@/infra/i18n';
+import Colors from '@/styles/tokens/color';
 
 function AppBar({ ...props }): JSX.Element {
     const navigate = useNavigate();
@@ -31,6 +32,7 @@ function AppBar({ ...props }): JSX.Element {
 const CompanyNameText = styled(Text).attrs({})`
     font-size: ${FontSizes.LARGE};
     align-self: center;
+    color: ${Colors.WHITE};
 `;
 
 const LogoContainer = styled.div`
@@ -43,6 +45,7 @@ const LogoContainer = styled.div`
 const UserIcon = styled(IconButton).attrs({
     as: MdPerson,
 })`
+    color: ${Colors.WHITE};
     cursor: pointer;
     width: ${Spacings.EXTRA_LARGE};
     height: ${Spacings.EXTRA_LARGE};

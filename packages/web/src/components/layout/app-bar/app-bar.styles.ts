@@ -10,9 +10,10 @@ export const Container = styled.div`
     display: flex;
     border-radius: 0;
     position: sticky;
+    z-index: 999;
     height: 80px !important;
-    background-color: ${Colors.WHITE};
     box-shadow: 0 2px 6px -1px ${Colors.DARK_TRANSPARENT};
+    background: ${Colors.SECONDARY};
 `;
 
 export const LogoImage = styled.img`

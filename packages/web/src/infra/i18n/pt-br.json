@@ -21,5 +21,8 @@
     "Register.cpf": "CPF",
     "Register.cpf.invalid": "CPF inválido!",
     "Register.email": "Email",
-    "Register.password": "Senha"
+    "Register.password": "Senha",
+    "Quotation.NewQuotationForm.Follow": "Pesquisar 🔎",
+    "Quotation.NewQuotationForm.InsertQuotationCPF": "Digite o número de CPF vinculado a cotação",
+    "Quotation.NewQuotationForm.NewQuotation": "Criar nova cotação:"
 }

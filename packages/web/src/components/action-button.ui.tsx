@@ -4,10 +4,10 @@ import Colors from '@/styles/tokens/color';
 
 const ActionButton = styled(ContainedButton)`
     && {
-        height: 100px;
+        height: 75px;
         width: 400px;
         background-color: ${Colors.WHITE};
-        border: 1px solid ${Colors.PRIMARY};
+        border: 1px solid ${Colors.SECONDARY};
         color: ${Colors.DARK_GREY};
     }
 `;

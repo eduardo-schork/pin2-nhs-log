@@ -1,9 +1,9 @@
-import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import Fleet from './Fleet';
+import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from "sequelize-typescript";
+import Fleet from "./Fleet";
 
 @Table({
-    tableName: 'Fleet_Vehicle',
-    modelName: 'FleetVehicle',
+    tableName: "Fleet_Vehicle",
+    modelName: "FleetVehicle",
 })
 class FleetVehicle extends Model {
     @Column({

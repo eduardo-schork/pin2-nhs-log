@@ -1,4 +1,5 @@
 import TBaseModel from "./Base.model";
+import TItemRemittanceModel from "./ItemRemittance.model";
 
 type TQuotationModel = {
     id: number;
@@ -7,6 +8,8 @@ type TQuotationModel = {
     currentDate: string;
     originAddressId: number;
     destinationAddressId: number;
-} & TBaseModel
+    remittanceTypeId: number;
+    remittanceType?: TItemRemittanceModel;
+} & TBaseModel;
 
-export default TQuotationModel
+export default TQuotationModel;

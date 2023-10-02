@@ -17,7 +17,6 @@ export const Container = styled.div`
 `;
 
 export const LogoImage = styled.img`
-    width: 12%;
     height: 100%;
     display: block;
     align-self: center;

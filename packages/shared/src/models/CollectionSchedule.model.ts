@@ -4,7 +4,7 @@ type TCollectionScheduleModel = {
     id: number;
     data: number;
     comment: string;
-    collectionAddressId: number; 
-} & TBaseModel
+    collectionAddressId: number;
+} & TBaseModel;
 
-export default TCollectionScheduleModel
+export default TCollectionScheduleModel;

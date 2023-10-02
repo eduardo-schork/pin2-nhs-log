@@ -7,7 +7,7 @@ export const ContainedButton = styled(Button)`
         width: 100%;
         align-self: center;
         height: 50px;
-        background-color: ${Colors.BLUE};
-        border: 1px solid ${Colors.BLUE};
+        background-color: ${Colors.PRIMARY};
+        border: 1px solid ${Colors.PRIMARY};
     }
 `;

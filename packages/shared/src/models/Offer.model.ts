@@ -9,6 +9,6 @@ type TOfferModel = {
     deliveryForecast: string;
     quotationId: number;
     fleetVehicleId: number;
-} & TBaseModel
+} & TBaseModel;
 
-export default TOfferModel
+export default TOfferModel;

@@ -1,5 +1,5 @@
 const Colors = {
-    PRIMARY: '#4D7EA8',
+    PRIMARY: '#ba99cb',
     SECONDARY: '#54007d',
     TERCIARY: '#54007d',
     PRIMARY_COMPL: '#b3b300',
@@ -11,7 +11,7 @@ const Colors = {
     DARK_TRANSPARENT: 'rgba(51, 51, 51, 0.9)',
     WHITE_TRANSPARENT: 'rgba(233, 233, 233, 0.9)',
     WHITESMOKE: 'whitesmoke',
-    BLUE: 'rgba(29, 161, 242, 0.85)'
+    BLUE: 'rgba(29, 161, 242, 0.85)',
 };
 
 export default Colors;

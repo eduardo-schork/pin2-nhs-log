@@ -3,6 +3,16 @@ import BaseLayout from '@/components/layout/base-layout/base-layout.ui';
 import Spacings from '@/styles/tokens/spacing';
 import FontSizes from '@/styles/tokens/font-size';
 
+const RegisterDivMargin = {
+    MARGINTOP: '-604.8px',
+    MARGINLEFT: '506.52px',
+};
+
+const RegisterTextMargin = {
+    MARGINTOP: '-35.7px',
+    MARGINLEFT: '170.06px',
+};
+
 export const PageContainer = styled(BaseLayout).attrs({
     withoutHeader: true,
 })`
@@ -17,12 +27,11 @@ export const FormContainer = styled.div`
     height: 100%;
     justify-content: center;
 
-    gap: ${Spacings.Spacings.MEDIUM};
-    padding: ${Spacings.Spacings.MEDIUM};
-    margin-top: ${Spacings.LoginDivMargin.MARGINTOP};
-    margin-left: ${Spacings.LoginDivMargin.MARGINLEFT}`
-    ;
-
+    gap: ${Spacings.MEDIUM};
+    padding: ${Spacings.MEDIUM};
+    margin-top: ${RegisterDivMargin.MARGINTOP};
+    margin-left: ${RegisterDivMargin.MARGINLEFT};
+`;
 
 export const ImageContainer = styled.img`
     display: flex;
@@ -33,13 +42,11 @@ export const ImageContainer = styled.img`
 `;
 
 export const TextContainer = styled.div`
-    margin-top: ${Spacings.LoginTextMargin.MARGINTOP};
-    margin-left: ${Spacings.LoginTextMargin.MARGINLEFT}
+    margin-top: ${RegisterTextMargin.MARGINTOP};
+    margin-left: ${RegisterTextMargin.MARGINLEFT};
 `;
 
 export const LoginText = styled.span`
-    font-size: ${FontSizes.DEFAULT} ; 
+    font-size: ${FontSizes.DEFAULT};
     font-weight: bold;
 `;
-
-

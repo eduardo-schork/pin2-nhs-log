@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container, Content } from './base-layout.styles';
 import AppBar from '../app-bar/app-bar.ui';
 

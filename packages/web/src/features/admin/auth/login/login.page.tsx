@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // Importe o useState
+import { useState } from 'react'; // Importe o useState
 import { Text } from '@chakra-ui/react';
 import LoginBackground from '@/assets/login-page.png';
 import { ContainedButton } from '@/components/button/button.ui';
@@ -26,24 +26,24 @@ function LoginPage({ ...props }) {
     };
 
     async function handleFormSubmit(data: TLoginPageFormValues) {
-        if(!data.userEmail || !data.userPassword){
+        if (!data.userEmail || !data.userPassword) {
             setError(t('common.MissingParameter'));
             setIsErrorModalOpen(true);
-        } else{
+        } else {
             const queryParams = new URLSearchParams({
                 userEmail: data.userEmail,
                 userPassword: data.userPassword,
             });
-    
+
             const res = await fetch(`http://localhost:8000/api/admin/login?${queryParams}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
-    
+
             const result = await res.json();
-    
+
             if (res.status === 200) {
                 console.log(result);
                 navigate('/');

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Container, LogoImage } from './app-bar.styles';
-import ImagePng from '@/assets/logo.png';
+import ImagePng from '@/assets/nhs-logo.png';
 import { IconButton, Text } from '@chakra-ui/react';
 
 import { MdPerson } from 'react-icons/md';
@@ -17,6 +17,10 @@ function AppBar({ ...props }): JSX.Element {
         navigate(`/`);
     }
 
+    function handleOnClickAdmin() {
+        navigate(`/admin/login`);
+    }
+
     return (
         <Container {...props}>
             <LogoContainer>
@@ -24,7 +28,7 @@ function AppBar({ ...props }): JSX.Element {
                 <CompanyNameText fontSize={'2xl'}>{t('common.CompanyName')}</CompanyNameText>
             </LogoContainer>
 
-            <UserIcon onClick={() => alert('oie')} />
+            <UserIcon onClick={handleOnClickAdmin} />
         </Container>
     );
 }
@@ -39,7 +43,6 @@ const LogoContainer = styled.div`
     display: flex;
     width: 100%;
     height: 100%;
-    gap: ${Spacings.MEDIUM};
 `;
 
 const UserIcon = styled(IconButton).attrs({

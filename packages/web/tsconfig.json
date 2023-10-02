@@ -31,7 +31,10 @@
         "noFallthroughCasesInSwitch": true
     },
     "include": [
-        "src"
+        "src",
+        "src/**/*.json",
+        "../shared/src/*",
+        "../shared/src/**/*.json",
     ],
     "references": [
         {

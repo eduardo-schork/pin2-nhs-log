@@ -9,6 +9,16 @@ export const PageContainer = styled(BaseLayout).attrs({
     position: relative;
 `;
 
+const LoginDivMargin = {
+    MARGINTOP: '-604.8px',
+    MARGINLEFT: '506.52px',
+};
+
+const LoginTextMargin = {
+    MARGINTOP: '-56.7px',
+    MARGINLEFT: ' 177.06px',
+};
+
 export const FormContainer = styled.div`
     align-self: flex-start;
     display: flex;
@@ -17,12 +27,11 @@ export const FormContainer = styled.div`
     height: 100%;
     justify-content: center;
 
-    gap: ${Spacings.Spacings.MEDIUM};
-    padding: ${Spacings.Spacings.MEDIUM};
-    margin-top: ${Spacings.RegisterDivMargin.MARGINTOP};
-    margin-left: ${Spacings.RegisterDivMargin.MARGINLEFT}`
-    ;
-
+    gap: ${Spacings.MEDIUM};
+    padding: ${Spacings.MEDIUM};
+    margin-top: ${LoginDivMargin.MARGINTOP};
+    margin-left: ${LoginDivMargin.MARGINLEFT};
+`;
 
 export const ImageContainer = styled.img`
     display: flex;
@@ -33,13 +42,11 @@ export const ImageContainer = styled.img`
 `;
 
 export const TextContainer = styled.div`
-    margin-top: ${Spacings.RegisterTextMargin.MARGINTOP};
-    margin-left: ${Spacings.RegisterTextMargin.MARGINLEFT}
+    margin-top: ${LoginTextMargin.MARGINTOP};
+    margin-left: ${LoginTextMargin.MARGINLEFT};
 `;
 
 export const LoginText = styled.span`
-    font-size: ${FontSizes.DEFAULT} ; 
+    font-size: ${FontSizes.DEFAULT};
     font-weight: bold;
 `;
-
-

@@ -1,9 +1,9 @@
-import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import Address from './Address';
+import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from "sequelize-typescript";
+import Address from "./Address";
 
 @Table({
-    tableName: 'Collection_Schedule',
-    modelName: 'CollectionSchedule',
+    tableName: "Collection_Schedule",
+    modelName: "CollectionSchedule",
 })
 class CollectionSchedule extends Model {
     @Column({
@@ -33,7 +33,7 @@ class CollectionSchedule extends Model {
     })
     fk_collection_address!: number;
 
-    @BelongsTo(() => Address, 'fk_collection_address')
+    @BelongsTo(() => Address, "fk_collection_address")
     CollectionAddress?: Address;
 
     @Column({

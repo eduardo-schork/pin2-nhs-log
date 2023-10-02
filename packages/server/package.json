@@ -4,8 +4,8 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "start": "ts-node ./src/index.ts",
-        "seed-database": "ts-node ./src/SeedDatabase.ts"
+        "start:db": "ts-node ./src/index.ts",
+        "seed-database": "ts-node packages/server/src/infra/database/sequelize/seed-database.ts"
     },
     "dependencies": {
         "@/shared": "1.0.0",

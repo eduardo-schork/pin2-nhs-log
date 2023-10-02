@@ -19,8 +19,8 @@ export const FormContainer = styled.div`
 
     gap: ${Spacings.Spacings.MEDIUM};
     padding: ${Spacings.Spacings.MEDIUM};
-    margin-top: ${Spacings.LoginDivMargin.MARGINTOP};
-    margin-left: ${Spacings.LoginDivMargin.MARGINLEFT}`
+    margin-top: ${Spacings.RegisterDivMargin.MARGINTOP};
+    margin-left: ${Spacings.RegisterDivMargin.MARGINLEFT}`
     ;
 
 
@@ -33,8 +33,8 @@ export const ImageContainer = styled.img`
 `;
 
 export const TextContainer = styled.div`
-    margin-top: ${Spacings.LoginTextMargin.MARGINTOP};
-    margin-left: ${Spacings.LoginTextMargin.MARGINLEFT}
+    margin-top: ${Spacings.RegisterTextMargin.MARGINTOP};
+    margin-left: ${Spacings.RegisterTextMargin.MARGINLEFT}
 `;
 
 export const LoginText = styled.span`

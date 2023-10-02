@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import fleetVehicleRepository from "../../../../repositories/example/fleet-vehicle.repository";
+import fleetVehicleRepository from "../../../../repositories/fleet-vehicle.repository";
 
 async function handleFindAllFleetVehicles(req: Request, res: Response) {
     const vehicles = await fleetVehicleRepository.findAll();

@@ -1,0 +1,6 @@
+{
+    "User.notFound": "Usuário não encontrado",
+    "User.notRegistered": "Não foi possível cadastrar o usuário",
+    "User.wrongPassword": "Login inválido! Tente novamente",
+    "common.MissingParameter": "Os campos obrigatórios devem ser preenchidos!"
+}

@@ -4,6 +4,7 @@ import LoginPage from '@/features/auth/login/login.page';
 import DashboardPage from '@/features/admin/dashboard/dashboard.page';
 import QuoationPage from '@/features/admin/quotation/quotation.page';
 import FleetVehiclePage from '@/features/admin/fleet/fleet-vehicle.page';
+import RegisterPage from '@/features/auth/register/register.page';
 
 const AppRouter = createBrowserRouter([
     {
@@ -11,8 +12,12 @@ const AppRouter = createBrowserRouter([
         element: <HomePage />,
     },
     {
-        path: '/login',
+        path: '/admin/login',
         element: <LoginPage />,
+    },
+    {
+        path: '/admin/register',
+        element: <RegisterPage/>,
     },
     {
         path: '/admin',

@@ -39,9 +39,19 @@ class User extends Model {
 
     @Column({
         type: DataType.STRING(255),
-        allowNull: false,
+        allowNull: true,
     })
     user_session!: string;
+
+    @Column({
+        type: DataType.DATE,
+    })
+    createdAt!: Date;
+
+    @Column({
+        type: DataType.DATE,
+    })
+    updatedAt!: Date;
 }
 
 export default User;

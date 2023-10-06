@@ -8,8 +8,7 @@ type TQuotationModel = {
     currentDate: string;
     originAddressId: number;
     destinationAddressId: number;
-    remittanceTypeId: number;
-    remittanceType?: TItemRemittanceModel;
+    itemRemittance?: TItemRemittanceModel;
 } & TBaseModel;
 
 export default TQuotationModel;

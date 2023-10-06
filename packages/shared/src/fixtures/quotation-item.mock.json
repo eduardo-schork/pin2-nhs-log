@@ -10,5 +10,11 @@
     "updatedAt": null,
     "updatedBy": null,
     "deletedAt": null,
-    "deletedBy": null
+    "deletedBy": null,
+    "itemRemittance": {
+        "id": "1",
+        "objectType": "Sob efeito do produto 🧪",
+        "weight": 40.32,
+        "quotationId": 1
+    }
 }

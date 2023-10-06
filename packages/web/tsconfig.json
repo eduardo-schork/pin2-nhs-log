@@ -15,8 +15,10 @@
         "paths": {
             "@/*": [
                 "./src/*",
-                "../shared/src/*"
             ],
+            "@shared/*": [
+                "../shared/src/*"
+            ]
         },
         /* Bundler mode */
         "allowImportingTsExtensions": true,
@@ -33,7 +35,7 @@
     "include": [
         "src",
         "src/**/*.json",
-        "../shared/src/*",
+        "../shared/src",
         "../shared/src/**/*.json",
     ],
     "references": [

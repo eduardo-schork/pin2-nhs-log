@@ -24,5 +24,11 @@
     "Register.password": "Senha",
     "Quotation.NewQuotationForm.Follow": "Pesquisar 🔎",
     "Quotation.NewQuotationForm.InsertQuotationCPF": "Digite o número de CPF vinculado a cotação",
-    "Quotation.NewQuotationForm.NewQuotation": "Criar nova cotação:"
+    "Quotation.NewQuotationForm.NewQuotation": "Criar nova cotação:",
+    "Register.modal": "Modelo",
+    "Register.plate": "Placa",
+    "Register.cpfDriver": "CPF Motorista",
+    "Register.renavam": "Renavam",
+    "Register.fleetName": "Nome da Frota",
+    "Register.fleetVehicle": "Veículos"
 }

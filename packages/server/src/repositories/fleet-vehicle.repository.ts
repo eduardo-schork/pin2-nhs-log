@@ -2,9 +2,13 @@ import FleetVehicle from "../models/FleetVehicle";
 import IBaseRepository from "./base.repository";
 
 class FleetVehicleRepository implements IBaseRepository<FleetVehicle> {
-    findAll(): Promise<FleetVehicle[]> {
-        throw new Error("Method not implemented.");
+    
+    async findAll(): Promise<FleetVehicle[]> {
+        const vehicle = await FleetVehicle.findAll();
+
+        return vehicle;
     }
+
     findOne({ id }: { id: string }): Promise<FleetVehicle> {
         throw new Error("Method not implemented.");
     }

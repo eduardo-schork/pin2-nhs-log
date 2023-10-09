@@ -3,7 +3,7 @@ import TextInput from '@/components/text-input/text-input.ui';
 import { ContainedButton } from '@/components/button/button.ui';
 import t from '@/infra/i18n';
 import React, { useState } from "react";
-import { FormContainer, PageContainer } from "./create.styles";
+import { FormContainer } from "./create.styles";
 import { useForm } from "react-hook-form";
 import ErrorModal from "./error.modal";
 import { useNavigate } from "react-router-dom";

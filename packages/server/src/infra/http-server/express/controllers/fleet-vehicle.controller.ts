@@ -3,9 +3,17 @@ import fleetVehicleRepository from "../../../../repositories/fleet-vehicle.repos
 import t from "../../../i18n";
 
 async function handleFindAllFleetVehicles(req: Request, res: Response) {
-    const vehicles = await fleetVehicleRepository.findAll();
+    try {
+        const vehicles = await fleetVehicleRepository.findAll();
 
-    res.status(200).send(vehicles);
+        if(vehicles){
+            res.status(200).send(vehicles);
+        } else{
+            res.status(400).send({ "error ": t('FleetVehicle.noneFound') });
+        }
+    } catch (ex) {
+        throw (ex);
+    }
 }
 
 async function createFleetVehicle(req: Request, res: Response) {

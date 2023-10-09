@@ -7,6 +7,4 @@ fleetVehicleRoutes.get("/fleetVehicle", handleFindAllFleetVehicles);
 
 fleetVehicleRoutes.post("/fleetVehicle/create", createFleetVehicle);
 
-// fleetVehicleRoutes.delete("/fleetVehicle", handleFindAllFleetVehicles);
-
 export default fleetVehicleRoutes;

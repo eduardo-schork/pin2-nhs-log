@@ -66,6 +66,14 @@ const CreateVehicleModal: React.FC<CreateVehicleModalProps> = ({ isOpen, onClose
         }
     }
 
+    const handleEditVehicle = (vehicle) => {
+        console.log('Editar veículo:', vehicle);
+    };
+
+    const handleDeleteVehicle = (vehicle) => {
+        console.log('Excluir veículo:', vehicle);
+    };
+
     return (
       <Modal isOpen={true}>
         <ModalOverlay />

@@ -1,4 +1,5 @@
-import { Model, DataType, Table, Column } from 'sequelize-typescript';
+import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import FleetVehicle from './FleetVehicle';
 
 @Table({
     tableName: 'Fleet',
@@ -18,6 +19,16 @@ class Fleet extends Model {
         allowNull: false,
     })
     fl_name!: string;
+
+    @ForeignKey(() => FleetVehicle)
+    @Column({
+        type: DataType.INTEGER,
+        allowNull: false,
+    })
+    fk_fleet_vehicle!: number;
+
+    @BelongsTo(() => FleetVehicle, 'fk_fleet_vehicle')
+    fleetVehicle?: FleetVehicle;
 }
 
 export default Fleet;

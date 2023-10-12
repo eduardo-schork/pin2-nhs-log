@@ -4,13 +4,16 @@ import CopyrightText from '@/components/copyright-text.ui';
 import HeroImage from '@/components/hero-image.ui';
 import BaseLayout from '@/components/layout/base-layout/base-layout.ui';
 import t from '@/infra/i18n';
+import { Link } from 'react-router-dom';
 
 function AdminDashboardPage({ ...props }) {
     return (
         <BaseLayout {...props}>
             <HeroImage />
             <Containers.PageActions>
+            <Link to="/admin/fleet">
                 <ActionButton>{t('Dashboard.ManageFleets')}</ActionButton>
+            </Link>
                 <ActionButton>{t('Dashboard.FollowQuotation')}</ActionButton>
                 <ActionButton>{t('Dashboard.ManageProcess')}</ActionButton>
             </Containers.PageActions>

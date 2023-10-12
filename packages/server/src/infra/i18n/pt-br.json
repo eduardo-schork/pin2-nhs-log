@@ -4,5 +4,6 @@
     "User.wrongPassword": "Login inválido! Tente novamente",
     "common.MissingParameter": "Os campos obrigatórios devem ser preenchidos!",
     "FleetVehicle.notRegistered": "Não foi possível cadastrar o veículo!",
-    "FleetVehicle.noneFound": "Nenhum veículo encontrado!"
+    "FleetVehicle.noneFound": "Nenhum veículo encontrado!",
+    "Fleet.noneFound": "Nenhuma frota encontrada!"
 }

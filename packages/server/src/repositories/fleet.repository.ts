@@ -35,7 +35,7 @@ class FleetRepository implements IBaseRepository<Fleet> {
 
             return true;
         } catch (error) {
-            console.error('Erro ao criar Fleet:', error);
+            console.error('Erro ao criar frota:', error);
             return false;
         } 
     }

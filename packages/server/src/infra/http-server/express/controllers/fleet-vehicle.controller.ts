@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import fleetVehicleRepository from "../../../../repositories/fleet-vehicle.repository";
 import t from "../../../i18n";
+import FleetVehicle from "../../../../models/FleetVehicle";
 
 async function handleFindAllFleetVehicles(req: Request, res: Response) {
     try {
@@ -36,4 +37,27 @@ async function createFleetVehicle(req: Request, res: Response) {
     
 }
 
-export { handleFindAllFleetVehicles, createFleetVehicle };
+async function deleteFleetVehicle(req: Request, res: Response) {
+    const vehicleId = req.params.vehicleId;
+
+    try {
+        const existingVehicle = await FleetVehicle.findByPk(vehicleId);
+        
+        if (!existingVehicle) {
+            return res.status(404).send({ error: 'Veículo não encontrado.' });
+        }
+
+        const isDeleted = await fleetVehicleRepository.deleteFleetVehicle(vehicleId);
+
+        if (isDeleted) {
+            return res.status(200).send({ success: true });
+        } else {
+            return res.status(500).send({ error: 'O veículo não pôde ser excluído.' });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send({ error: 'Ocorreu um erro durante a exclusão do veículo.' });
+    }
+}
+
+export { handleFindAllFleetVehicles, createFleetVehicle, deleteFleetVehicle };

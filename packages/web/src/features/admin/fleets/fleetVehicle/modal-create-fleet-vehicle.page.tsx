@@ -15,11 +15,6 @@ type TCreateVehiclePageFormValues ={
     vehicleRenavam: string;
 };
 
-type CreateVehicleModalProps = {
-    isOpen: boolean;
-    onClose: () => void;
-};
-
 const CreateVehicleModal: React.FC<CreateVehicleModalProps> = ({ isOpen, onClose }) => {
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm<TCreateVehiclePageFormValues>();
@@ -66,35 +61,27 @@ const CreateVehicleModal: React.FC<CreateVehicleModalProps> = ({ isOpen, onClose
         }
     }
 
-    const handleEditVehicle = (vehicle) => {
-        console.log('Editar veículo:', vehicle);
-    };
-
-    const handleDeleteVehicle = (vehicle) => {
-        console.log('Excluir veículo:', vehicle);
-    };
-
     return (
-      <Modal isOpen={true}>
-        <ModalOverlay />
-        <ModalContent className="custom-modal-content" justifyContent="center" alignItems="center" size="sm">
-          <ModalHeader>Cadastro de Veículo</ModalHeader>
-          <ModalCloseButton/>
-          <ModalBody>
-              <FormContainer>
-                <TextInput {...register('vehicleModal')} placeholder={t('Register.modal')} />
-                <TextInput {...register('vehiclePlate')} placeholder={t('Register.plate')} />
-                <TextInput {...register('vehicleCpfDriver')} placeholder={t('Register.cpfDriver')} />
-                <TextInput {...register('vehicleRenavam')} placeholder={t('Register.renavam')} />
-  
-                <ContainedButton onClick={handleSubmit(handleFormSubmit)}>
-                  <Text>{t('common.Register')}</Text>
-                </ContainedButton>
-                <ErrorModal isOpen={isErrorModalOpen} onClose={closeErrorModal} errorMessage={error || ''} />
-              </FormContainer>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+        <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent className="custom-modal-content" justifyContent="center" alignItems="center" size="sm">
+                    <ModalHeader>Cadastro de Veículo</ModalHeader>
+                    <ModalCloseButton/>
+                    <ModalBody>
+                        <FormContainer>
+                            <TextInput {...register('vehicleModal')} placeholder={t('Register.modal')} />
+                            <TextInput {...register('vehiclePlate')} placeholder={t('Register.plate')} />
+                            <TextInput {...register('vehicleCpfDriver')} placeholder={t('Register.cpfDriver')} />
+                            <TextInput {...register('vehicleRenavam')} placeholder={t('Register.renavam')} />
+            
+                            <ContainedButton onClick={handleSubmit(handleFormSubmit)}>
+                            <Text>{t('common.Register')}</Text>
+                            </ContainedButton>
+                            <ErrorModal isOpen={isErrorModalOpen} onClose={closeErrorModal} errorMessage={error || ''} />
+                        </FormContainer>
+                    </ModalBody>
+                    </ModalContent>
+            </Modal>
     );
   };
   

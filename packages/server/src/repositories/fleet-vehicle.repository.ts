@@ -31,6 +31,20 @@ class FleetVehicleRepository implements IBaseRepository<FleetVehicle> {
         }]);
         return !!vehicle;
     }
+
+    async  deleteFleetVehicle(vehicleId: string): Promise<boolean> {
+        try {
+            const result = await FleetVehicle.destroy({
+                where: {
+                    pk_fleet_vehicle: vehicleId,
+                },
+            });
+            return result > 0; 
+        } catch (error) {
+            throw error;
+        }
+    }
+
 }
 
 export default new FleetVehicleRepository();

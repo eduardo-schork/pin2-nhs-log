@@ -14,6 +14,7 @@ import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import EditVehicleModal from '../fleetVehicle/modal-edit-fleet-vehicle.page';
 import DeleteVehicleModal from '../fleetVehicle/modal-delete-fleet-vehicle.page';
 import { useNavigate } from 'react-router-dom';
+import ListFleets from './list-fleet.page';
 
 type TCreateFleetPageFormValues ={
     fleetName: string;
@@ -48,8 +49,6 @@ function CreateFleet({ ...props }) {
       }
     };
     
-
-
     const closeErrorModal = () => {
       setError(null);
       setIsErrorModalOpen(false);
@@ -114,7 +113,7 @@ function CreateFleet({ ...props }) {
               <FormContainer>
                 <TextInput {...register('fleetName')} placeholder={t('Register.fleetName')} />
                 <div style={{ position: 'relative' }}>  
-                  <Button onClick={togglePopover} style={{background: 'white', color: '#718096', padding: '0.375rem 9.798rem',}}>Veículos</Button>
+                  <Button onClick={togglePopover} style={{background: 'white', color: '#718096', width: '100%',}}>Veículos</Button>
                   <Popover isOpen={isPopoverOpen} onOpen={togglePopover} onClose={togglePopover}>
                     <PopoverContent>
                       <PopoverArrow />
@@ -154,21 +153,26 @@ function CreateFleet({ ...props }) {
                 <ContainedButton onClick={handleSubmit(handleFormSubmit)}>
                   <Text>{t('common.Register')}</Text>
                 </ContainedButton>
-                <ContainedButton onClick={openCreateVehicleModal}>
+                <ContainedButton onClick={openCreateVehicleModal} isOpen={isErrorModalOpen} onClose={closeErrorModal}>
                   <Text>CADASTRAR VEÍCULO</Text>
                 </ContainedButton>
                 <ErrorModal isOpen={isErrorModalOpen} onClose={closeErrorModal} errorMessage={error || ''} />
                 { }
                 {isCreateVehicleModalOpen && (
-                  <CreateVehicleModal />
+                  <CreateVehicleModal isOpen={isCreateVehicleModalOpen} onClose={() => setIsCreateVehicleModalOpen(false)}/>
                 )}
                 {isEditVehicleModalOpen && (
                   <EditVehicleModal isOpen={isEditVehicleModalOpen} onClose={() => setIsEditVehicleModalOpen(false)} />
                 )}
                 {isDeleteVehicleModalOpen && (
-                  <DeleteVehicleModal isOpen={isDeleteVehicleModalOpen} onClose={() => setIsDeleteVehicleModalOpen(false)} />
+                  <DeleteVehicleModal isOpen={isDeleteVehicleModalOpen} onClose={() => {
+                    setIsDeleteVehicleModalOpen(false);
+                    setSelectedVehicle(null); 
+                }}
+                vehicleId={selectedVehicle} />
                 )}
               </FormContainer>
+              <ListFleets />
             </PageContainer>
           </Containers.PageActions>
         </BaseLayout>

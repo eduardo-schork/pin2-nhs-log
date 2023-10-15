@@ -20,22 +20,16 @@ class LoginRepository implements IBaseRepository<LoginModel> {
         return false;
     }
 
-
-    async findAdminByEmailAndPassword(userEmail: string, userPassword: string): Promise<boolean> {
-        const user = await User.findOne({
-            where: { user_email: userEmail }
-        });
-
+    async authenticateUser(userEmail: string, userPassword: string): Promise<number | null> {
+        const user = await User.findOne({ where: { user_email: userEmail } });
         if (user) {
-            const hashedPassword = await bcrypt.hash(userPassword, 10);
-            const isPasswordValid = await bcrypt.compare(hashedPassword, user.user_password);
-            console.log(hashedPassword, user.user_password)
-            return isPasswordValid;
+            const isPasswordValid = await bcrypt.compare(userPassword, user.user_password);
+            if (isPasswordValid) {
+                return user.id; // Retorna o ID do usuário
+            }
         }
-
-        return false;
+        return null; // Retorna nulo se a autenticação falhar
     }
-
 
     findAll(): Promise<LoginModel[]> {
         throw new Error("Method not implemented.");

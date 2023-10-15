@@ -3,6 +3,8 @@
     "common.Enter": "ENTRAR",
     "common.CompanyName": "NHSlog",
     "common.Register": "CADASTRAR",
+    "common.Save": "SALVAR",
+    "common.Delete": "EXCLUIR",
     "common.MissingParameter": "Os campos obrigatórios devem ser preenchidos!",
     "common.VehicleInFleet": "Não é possível deletar o veículo pois ele está vinculado em uma frota!",
     "Home.Copyright": "Copyright NHS-LOG. All rights reserved",
@@ -31,5 +33,8 @@
     "Register.cpfDriver": "CPF Motorista",
     "Register.renavam": "Renavam",
     "Register.fleetName": "Nome da Frota",
-    "Register.fleetVehicle": "Veículos"
+    "Register.fleetVehicle": "Veículos",
+    "User.delete": "Deseja mesmo deletar o usuário?",
+    "User.delete.confirmation": "Usuário deletado com sucesso!",
+    "User.edit.confirmation": "Informações do usuário salvas com sucesso!"  
 }

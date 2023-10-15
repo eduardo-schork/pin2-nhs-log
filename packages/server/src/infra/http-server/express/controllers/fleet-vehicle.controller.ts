@@ -7,9 +7,9 @@ async function handleFindAllFleetVehicles(req: Request, res: Response) {
     try {
         const vehicles = await fleetVehicleRepository.findAll();
 
-        if(vehicles){
+        if (vehicles) {
             res.status(200).send(vehicles);
-        } else{
+        } else {
             res.status(400).send({ "error ": t('FleetVehicle.noneFound') });
         }
     } catch (ex) {
@@ -25,16 +25,16 @@ async function createFleetVehicle(req: Request, res: Response) {
         const vehicleRenavam = req.query.vehicleRenavam;
 
         const vehicles = await fleetVehicleRepository.createFleetVehicle(vehicleModal, vehiclePlate, vehicleCpfDriver, vehicleRenavam)
-        
-        if(vehicles){
+
+        if (vehicles) {
             res.status(200).send(true);
-        } else{
+        } else {
             res.status(400).send({ "error ": t('FleetVehicle.notRegistered') });
         }
     } catch (ex) {
         throw (ex);
     }
-    
+
 }
 
 async function deleteFleetVehicle(req: Request, res: Response) {
@@ -42,7 +42,7 @@ async function deleteFleetVehicle(req: Request, res: Response) {
 
     try {
         const existingVehicle = await FleetVehicle.findByPk(vehicleId);
-        
+
         if (!existingVehicle) {
             return res.status(404).send({ error: 'Veículo não encontrado.' });
         }
@@ -62,16 +62,16 @@ async function deleteFleetVehicle(req: Request, res: Response) {
 
 async function updateFleetVehicle(req: Request, res: Response) {
     const vehicleId = req.params.vehicleId;
-    const { fv_modal, fv_plate, fv_cpf_driver, fv_revam } = req.body; 
+    const { fv_modal, fv_plate, fv_cpf_driver, fv_revam } = req.body;
 
     try {
         const existingVehicle = await FleetVehicle.findByPk(vehicleId);
-        
+
         if (!existingVehicle) {
             return res.status(404).send({ error: 'Veículo não encontrado.' });
         }
 
-        const updated = await updateFleetVehicle(vehicleId, fv_modal, fv_plate, fv_cpf_driver, fv_revam);
+        const updated = await fleetVehicleRepository.updateFleetVehicle(vehicleId, fv_modal, fv_plate, fv_cpf_driver, fv_revam);
 
         if (updated) {
             return res.status(200).send({ message: 'Veículo atualizado com sucesso.' });

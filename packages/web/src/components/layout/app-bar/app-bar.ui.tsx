@@ -9,16 +9,19 @@ import Spacings from '@/styles/tokens/spacing';
 import FontSizes from '@/styles/tokens/font-size';
 import t from '@/infra/i18n';
 import Colors from '@/styles/tokens/color';
+import { useState } from 'react';
+import EditLoginPage from '@/features/admin/auth/edit/edit.modal';
 
 function AppBar({ ...props }): JSX.Element {
     const navigate = useNavigate();
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     function handleOnClickLogo() {
         navigate(`/`);
     }
 
     function handleOnClickAdmin() {
-        navigate(`/admin/login`);
+        setIsModalOpen(true);
     }
 
     return (
@@ -29,6 +32,7 @@ function AppBar({ ...props }): JSX.Element {
             </LogoContainer>
 
             <UserIcon onClick={handleOnClickAdmin} />
+        {isModalOpen && <EditLoginPage isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} user= {location.state && location.state.user}/>}
         </Container>
     );
 }

@@ -58,15 +58,15 @@ function CreateFleet({ ...props }) {
       setIsCreateVehicleModalOpen(true);
     };
 
-    const selectEditVehicle = (vehicleId) => {
-      setSelectedVehicle(vehicleId);
+    const selectEditVehicle = (vehicle) => {
+      setSelectedVehicle(vehicle);
       setIsEditVehicleModalOpen(true);
-  };
+    };
 
-  const selectDeleteVehicle = (vehicleId) => {
-      setSelectedVehicle(vehicleId);
-      setIsDeleteVehicleModalOpen(true);
-  };
+    const selectDeleteVehicle = (vehicleId) => {
+        setSelectedVehicle(vehicleId);
+        setIsDeleteVehicleModalOpen(true);
+    };
 
     async function handleFormSubmit(data: TCreateFleetPageFormValues) {
       console.log(data);
@@ -129,7 +129,7 @@ function CreateFleet({ ...props }) {
                               {vehicle.pk_fleet_vehicle}
                           </Checkbox>
                           <Button
-                              onClick={() => selectEditVehicle(vehicle.pk_fleet_vehicle)} 
+                              onClick={() => selectEditVehicle(vehicle)}
                               leftIcon={<EditIcon />}
                               size="sm"
                               variant="link"

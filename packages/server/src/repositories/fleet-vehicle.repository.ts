@@ -45,6 +45,28 @@ class FleetVehicleRepository implements IBaseRepository<FleetVehicle> {
         }
     }
 
+    async updateFleetVehicle(vehicleId: any, vehicleModal: any, vehiclePlate: any, vehicleCpfDriver: any, vehicleRenavam: any): Promise<boolean> {
+        try {
+            const [rowsUpdated] = await FleetVehicle.update(
+                {
+                    fv_modal: vehicleModal,
+                    fv_plate: vehiclePlate,
+                    fv_cpf_driver: vehicleCpfDriver,
+                    fv_revam: vehicleRenavam
+                },
+                {
+                    where: {
+                        pk_fleet_vehicle: vehicleId
+                    }
+                }
+            );
+    
+            return rowsUpdated > 0;
+        } catch (error) {
+            throw error;
+        }
+    }
+
 }
 
 export default new FleetVehicleRepository();

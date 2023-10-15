@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import BaseLayout from '@/components/layout/base-layout/base-layout.ui';
 import Spacings from '@/styles/tokens/spacing';
 import FontSizes from '@/styles/tokens/font-size';
-import { extendTheme } from '@chakra-ui/react';
 
 const RegisterDivMargin = {
     MARGINTOP: '-100px',
@@ -51,13 +50,3 @@ export const LoginText = styled.span`
     font-size: ${FontSizes.DEFAULT};
     font-weight: bold;
 `;
-
-// export const customTheme = extendTheme({
-//     colors: {
-//       customColor: {
-//         50: "#000",
-//         100: "#000",
-        
-//       },
-//     },
-//   });

@@ -129,7 +129,7 @@ function CreateFleet({ ...props }) {
                               {vehicle.pk_fleet_vehicle}
                           </Checkbox>
                           <Button
-                              onClick={() => selectEditVehicle(vehicle)}
+                              onClick={() => selectEditVehicle(vehicle.pk_fleet_vehicle)}
                               leftIcon={<EditIcon />}
                               size="sm"
                               variant="link"
@@ -162,7 +162,11 @@ function CreateFleet({ ...props }) {
                   <CreateVehicleModal isOpen={isCreateVehicleModalOpen} onClose={() => setIsCreateVehicleModalOpen(false)}/>
                 )}
                 {isEditVehicleModalOpen && (
-                  <EditVehicleModal isOpen={isEditVehicleModalOpen} onClose={() => setIsEditVehicleModalOpen(false)} />
+                  <EditVehicleModal isOpen={isEditVehicleModalOpen} onClose={() => {
+                    setIsEditVehicleModalOpen(false);
+                    setSelectedVehicle(null); 
+                }}
+                vehicleId={selectedVehicle} />
                 )}
                 {isDeleteVehicleModalOpen && (
                   <DeleteVehicleModal isOpen={isDeleteVehicleModalOpen} onClose={() => {

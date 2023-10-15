@@ -2,13 +2,19 @@ import { ContainedButton } from "@/components/button/button.ui";
 import TextInput from "@/components/text-input/text-input.ui";
 import t from "@/infra/i18n";
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FormContainer } from "./create.styles";
 import ErrorModal from "./error.modal";
 
-const EditVehicleModal: React.FC<TEditVehicleModalProps> = ({ isOpen, onClose, vehicle }) => {
+type TEditVehicleModalProps = {
+    isOpen: boolean;
+    onClose: () => void;
+    vehicle: Vehicle; 
+  };
+
+const EditVehicleModal: React.FC<TEditVehicleModalProps> = ({ isOpen, onClose, vehicleId }) => {
     const navigate = useNavigate();
     const { register, handleSubmit} = useForm();
     const [error, setError] = useState<string | null>(null);
@@ -20,13 +26,13 @@ const EditVehicleModal: React.FC<TEditVehicleModalProps> = ({ isOpen, onClose, v
         setIsErrorModalOpen(false);
     };
 
-    async function handleFormSubmit(data: TCreateVehiclePageFormValues) {
+    async function handleFormSubmit(data: TEditVehicleModalProps) {
         if (!data.vehicleModal || !data.vehiclePlate || !data.vehicleCpfDriver || !data.vehicleRenavam) {
             setError(t('common.MissingParameter'));
             setIsErrorModalOpen(true);
         } else {
             try {
-                const res = await fetch(`http://localhost:8000/api/fleetVehicle/update/${vehicle?.id}`, {
+                const res = await fetch(`http://localhost:8000/api/fleetVehicle/update/${vehicleId}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -57,27 +63,27 @@ const EditVehicleModal: React.FC<TEditVehicleModalProps> = ({ isOpen, onClose, v
                     <ModalCloseButton/>
                     <ModalBody>
                         <FormContainer>
+                            <p>Tem certeza que deseja deletar o veículo {vehicleId} ?</p>
                             <TextInput
                                 {...register('vehicleModal')}
                                 placeholder={t('Register.modal')}
-                                defaultValue={vehicle} 
+                                defaultValue={vehicleId} 
                             />
                             <TextInput
                                 {...register('vehiclePlate')}
                                 placeholder={t('Register.plate')}
-                                defaultValue={vehicle} 
+                                defaultValue={vehicleId} 
                             />
                             <TextInput
                                 {...register('vehicleCpfDriver')}
                                 placeholder={t('Register.cpfDriver')}
-                                defaultValue={vehicle} 
+                                defaultValue={vehicleId} 
                             />
                             <TextInput
                                 {...register('vehicleRenavam')}
                                 placeholder={t('Register.renavam')}
-                                defaultValue={vehicle} 
+                                defaultValue={vehicleId} 
                             />
-            
                             <ContainedButton onClick={handleSubmit(handleFormSubmit)}>
                             {t('common.Register')}
                             </ContainedButton>

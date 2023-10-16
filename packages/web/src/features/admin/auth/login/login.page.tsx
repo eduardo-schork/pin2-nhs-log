@@ -45,8 +45,7 @@ function LoginPage({ ...props }) {
             const result = await res.json();
 
             if (res.status === 200) {
-                console.log(result);
-                navigate('/');
+                navigate('/admin', { state: { userId: result} });
             } else {
                 setError(t('Login.userNotFound'));
                 setIsErrorModalOpen(true);

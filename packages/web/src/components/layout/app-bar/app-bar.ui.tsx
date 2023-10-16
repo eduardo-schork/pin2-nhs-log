@@ -10,9 +10,9 @@ import FontSizes from '@/styles/tokens/font-size';
 import t from '@/infra/i18n';
 import Colors from '@/styles/tokens/color';
 import { useState } from 'react';
-import EditLoginPage from '@/features/admin/auth/edit/edit.modal';
+import EditModal from '@/features/admin/auth/edit/edit.modal';
 
-function AppBar({ ...props }): JSX.Element {
+function AppBar({ userId, ...props }) {
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -21,7 +21,11 @@ function AppBar({ ...props }): JSX.Element {
     }
 
     function handleOnClickAdmin() {
-        setIsModalOpen(true);
+        if(!userId){
+            navigate('/admin/login')
+        } else{
+            setIsModalOpen(true);
+        }
     }
 
     return (
@@ -32,7 +36,7 @@ function AppBar({ ...props }): JSX.Element {
             </LogoContainer>
 
             <UserIcon onClick={handleOnClickAdmin} />
-        {isModalOpen && <EditLoginPage isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} user= {location.state && location.state.user}/>}
+            {isModalOpen && <EditModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} user={userId} />}
         </Container>
     );
 }

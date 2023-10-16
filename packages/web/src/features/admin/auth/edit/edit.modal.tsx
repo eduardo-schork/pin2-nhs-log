@@ -1,4 +1,4 @@
-import { useState } from 'react'; // Importe o useState
+import { useEffect, useState } from 'react';
 import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react';
 import { ContainedButton } from '@/components/button/button.ui';
 import TextInput from '@/components/text-input/text-input.ui';
@@ -8,16 +8,31 @@ import { useNavigate } from 'react-router-dom';
 import ErrorModal from './error.modal';
 import { FormContainer } from './edit.styles';
 
-const EditLoginPage: React.FC<TEditLoginPageFormValues> = ({isOpen, onClose, user}) => {
+const EditModal: React.FC<TEditModalFormValues> = ({isOpen, onClose, user}) => {
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm();
     const [error, setError] = useState<string | null>(null);
     const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+    const [userData, setUserData] = useState({});
 
     const closeErrorModal = () => {
         setError(null);
         setIsErrorModalOpen(false);
     };
+  
+    useEffect(() => {
+      if (isOpen) {
+        fetch(`http://localhost:8000/api/admin/get?${user}`)
+          .then((response) => response.json())
+          .then((data) => {
+            setUserData(data);
+            console.log(data)
+          })
+          .catch((error) => {
+            console.error('Erro ao buscar os dados do usuário', error);
+          });
+      }
+    }, [isOpen, user.id]);
 
     async function handleFormSubmitEdition(data: any) {
         if (!data.userName || !data.userCpf || !data.userEmail || !data.userPassword) {
@@ -50,7 +65,7 @@ const EditLoginPage: React.FC<TEditLoginPageFormValues> = ({isOpen, onClose, use
         }
     }
 
-    async function handleFormSubmitDelete(data: TEditLoginPageFormValues) {
+    async function handleFormSubmitDelete(data: TEditModalFormValues) {
         if (!data.userEmail || !data.userPassword) {
             setError(t('common.MissingParameter'));
             setIsErrorModalOpen(true);
@@ -90,22 +105,23 @@ const EditLoginPage: React.FC<TEditLoginPageFormValues> = ({isOpen, onClose, use
                     <TextInput
                         {...register('userName')}
                         placeholder={t('Register.name')}
-                        defaultValue={user} 
+                        defaultValue={userData.user_name} 
                     />
                     <TextInput
                         {...register('userCpf')}
                         placeholder={t('Register.cpf')}
-                        defaultValue={user} 
+                        defaultValue={userData.user_cpf} 
                     />
                     <TextInput
                         {...register('userEmail')}
                         placeholder={t('Register.email')}
-                        defaultValue={user} 
+                        defaultValue={userData.user_email} 
                     />
                     <TextInput
                         {...register('userPassword')}
+                        type={'password'}
                         placeholder={t('Register.password')}
-                        defaultValue={user} 
+                        defaultValue={userData.user_password} 
                     />
                     <ContainedButton onClick={handleSubmit(handleFormSubmitEdition)}>
                     {t('common.Save')}
@@ -123,4 +139,4 @@ const EditLoginPage: React.FC<TEditLoginPageFormValues> = ({isOpen, onClose, use
     );
 }
 
-export default EditLoginPage;
+export default EditModal;

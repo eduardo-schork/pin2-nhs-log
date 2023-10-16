@@ -4,11 +4,14 @@ import CopyrightText from '@/components/copyright-text.ui';
 import HeroImage from '@/components/hero-image.ui';
 import BaseLayout from '@/components/layout/base-layout/base-layout.ui';
 import t from '@/infra/i18n';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function AdminDashboardPage({ ...props }) {
+    const location = useLocation();
+    const userId = location.state?.userId.userId;
+    
     return (
-        <BaseLayout {...props}>
+        <BaseLayout {...props} userId={userId}> 
             <HeroImage />
             <Containers.PageActions>
             <Link to="/admin/fleet">

@@ -4,31 +4,15 @@ import User from "../models/User";
 const bcrypt = require('bcrypt');
 
 class LoginRepository implements IBaseRepository<LoginModel> {
-    async checkEmail(userEmail: any): Promise<boolean> {
-        const user = await User.findOne({
-            where: { user_email: userEmail }
-        });
-        return !!user;
-    }
-
-    async checkPassword(userEmail: any, userPassword: any): Promise<boolean> {
-        const user = await User.findOne({ where: { user_email: userEmail } });
-        if (user) {
-            const isPasswordValid = await bcrypt.compare(userPassword, user.user_password);
-            return isPasswordValid;
-        }
-        return false;
-    }
-
     async authenticateUser(userEmail: string, userPassword: string): Promise<number | null> {
         const user = await User.findOne({ where: { user_email: userEmail } });
         if (user) {
             const isPasswordValid = await bcrypt.compare(userPassword, user.user_password);
             if (isPasswordValid) {
-                return user.id; // Retorna o ID do usuário
+                return user.pk_user;
             }
         }
-        return null; // Retorna nulo se a autenticação falhar
+        return null;
     }
 
     findAll(): Promise<LoginModel[]> {

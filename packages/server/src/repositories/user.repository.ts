@@ -9,6 +9,7 @@ class UserRepository implements IBaseRepository<TUserModel> {
             const user = await User.findByPk(id);
 
             if (user) {
+
                 return user;
             } else {
                 return null;

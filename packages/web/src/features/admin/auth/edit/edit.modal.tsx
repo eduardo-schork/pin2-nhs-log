@@ -7,6 +7,8 @@ import t from '@/infra/i18n';
 import { useNavigate } from 'react-router-dom';
 import ErrorModal from './error.modal';
 import { FormContainer } from './edit.styles';
+import { cpf } from 'cpf-cnpj-validator';
+
 
 const EditModal: React.FC<TEditModalFormValues> = ({isOpen, onClose, user}) => {
     const navigate = useNavigate();
@@ -35,32 +37,37 @@ const EditModal: React.FC<TEditModalFormValues> = ({isOpen, onClose, user}) => {
     }, [isOpen, user.id]);
 
     async function handleFormSubmitEdition(data: any) {
-        if (!data.userName || !data.userCpf || !data.userEmail || !data.userPassword) {
+        console.log(data)
+        if (!data.userName || !data.userCpf || !data.userEmail) {
             setError(t('common.MissingParameter'));
             setIsErrorModalOpen(true);
         } else {
-            const queryParams = new URLSearchParams({
-                userName: data.userName,
-                userCpf: data.userCpf,
-                userEmail: data.userEmail,
-                userPassword: data.userPassword,
-            });
-
-            const res = await fetch(`http://localhost:8000/api/admin/login?${queryParams}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            const result = await res.json();
-
-            if (res.status === 200) {
-                console.log(result);
-                navigate('/');
-            } else {
-                setError(t('Login.userNotFound'));
+            if (!cpf.isValid(data.userCpf)) {
+                setError(t('Register.cpf.invalid'));
                 setIsErrorModalOpen(true);
+            }
+            else {
+                const queryParams = new URLSearchParams({
+                    userName: data.userName,
+                    userCpf: data.userCpf,
+                    userEmail: data.userEmail,
+                });
+    
+                const res = await fetch(`http://localhost:8000/api/admin/login?${queryParams}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+    
+                const result = await res.json();
+    
+                if (res.status === 200) {
+                    navigate('/admin');
+                } else {
+                    setError(t('User.edit.notPossible'));
+                    setIsErrorModalOpen(true);
+                }
             }
         }
     }
@@ -76,7 +83,7 @@ const EditModal: React.FC<TEditModalFormValues> = ({isOpen, onClose, user}) => {
             });
 
             const res = await fetch(`http://localhost:8000/api/admin/login?${queryParams}`, {
-                method: 'GET',
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -116,12 +123,6 @@ const EditModal: React.FC<TEditModalFormValues> = ({isOpen, onClose, user}) => {
                         {...register('userEmail')}
                         placeholder={t('Register.email')}
                         defaultValue={userData.user_email} 
-                    />
-                    <TextInput
-                        {...register('userPassword')}
-                        type={'password'}
-                        placeholder={t('Register.password')}
-                        defaultValue={userData.user_password} 
                     />
                     <ContainedButton onClick={handleSubmit(handleFormSubmitEdition)}>
                     {t('common.Save')}

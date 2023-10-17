@@ -36,5 +36,6 @@
     "Register.fleetVehicle": "Veículos",
     "User.delete": "Deseja mesmo deletar o usuário?",
     "User.delete.confirmation": "Usuário deletado com sucesso!",
-    "User.edit.confirmation": "Informações do usuário salvas com sucesso!"  
+    "User.edit.confirmation": "Informações do usuário salvas com sucesso!",
+    "User.edit.notPossible": "Não foi possível atualizar as informações do usuário! Tente novamente"  
 }

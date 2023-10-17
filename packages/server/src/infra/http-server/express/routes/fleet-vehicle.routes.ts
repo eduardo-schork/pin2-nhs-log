@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { createFleetVehicle, deleteFleetVehicle, handleFindAllFleetVehicles, updateFleetVehicle } from "../controllers/fleet-vehicle.controller";
+import {
+    createFleetVehicle,
+    deleteFleetVehicle,
+    handleFindAllFleetVehicles,
+    updateFleetVehicle,
+} from "../controllers/fleet-vehicle.controller";
 
 const fleetVehicleRoutes = Router();
 

@@ -1,27 +1,28 @@
-import PaymentType from "../models/PaymentType";
+import PaymentType from "../../../../models/PaymentType";
 
-class PaymentTypeRepo {
-    async createPaymentTypes(): Promise<boolean> {
+class SeedPaymentType {
+    async execute(): Promise<any> {
         try {
             await PaymentType.bulkCreate([
                 {
                     pk_payment_type: 1,
-                    pt_type: 'PIX',
+                    pt_type: "PIX",
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
                     pk_payment_type: 2,
-                    pt_type: 'Cartão de crédito',
+                    pt_type: "Cartão de crédito",
                     createdAt: new Date(),
                     updatedAt: new Date(),
-                }
-            ]);
-            return true;
+                },
+            ]).then(() => {
+                console.log("Registros inseridos com sucesso.");
+            });
         } catch (error) {
-            return false;
+            console.log({ error });
         }
     }
 }
 
-export default new PaymentTypeRepo();
+export default new SeedPaymentType();

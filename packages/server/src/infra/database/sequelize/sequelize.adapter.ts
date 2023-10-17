@@ -19,56 +19,61 @@ import Quotation from "../../../models/Quotation";
 import RemittanceTypeTax from "../../../models/RemittanceTypeTax";
 import User from "../../../models/User";
 import PaymentStatus from "../../../models/PaymentStatus";
+
 dotenv.config();
 
-class SequelizeAdapter {
-    public sequelize: Sequelize | undefined;
-    public POSTGRES_DB = process.env.POSTGRES_DB as string;
-    public POSTGRES_HOST = process.env.POSTGRES_HOST as string;
-    public POSTGRES_PORT = process.env.POSTGRES_PORT as unknown as number;
-    public POSTGRES_USER = process.env.POSTGRES_USER as unknown as string;
-    public POSTGRES_PASSWORD = process.env.POSTGRES_PASSWORD as unknown as string;
+const DATABASE_MODELS = [
+    PaymentType,
+    Address,
+    CollectionSchedule,
+    DeliveryAppointment,
+    DeliveryAppointmentStatus,
+    DeliveryProcess,
+    DeliveryProcessStatus,
+    Feedback,
+    Fleet,
+    FleetVehicle,
+    ItemRemittance,
+    ItemRemittanceType,
+    Offer,
+    OfferStatus,
+    Payment,
+    PaymentType,
+    Quotation,
+    RemittanceTypeTax,
+    PaymentStatus,
+    User,
+];
 
-    public async connectDataBase() {
-        this.sequelize = new Sequelize({
-            database: this.POSTGRES_DB,
-            username: this.POSTGRES_USER,
-            password: this.POSTGRES_PASSWORD,
-            host: this.POSTGRES_HOST,
-            port: this.POSTGRES_PORT,
+class SequelizeAdapter {
+    public instance: Sequelize | undefined;
+
+    public async connectDataBase(forceSync?: boolean) {
+        const databaseInstance = new Sequelize({
+            database: process.env.POSTGRES_DB,
+            username: process.env.POSTGRES_USER,
+            password: process.env.POSTGRES_PASSWORD,
+            host: process.env.POSTGRES_HOST,
+            port: Number(process.env.POSTGRES_PORT),
             dialect: "postgres",
-            models: [
-                PaymentType,
-                Address,
-                CollectionSchedule,
-                DeliveryAppointment,
-                DeliveryAppointmentStatus,
-                DeliveryProcess,
-                DeliveryProcessStatus,
-                Feedback,
-                Fleet,
-                FleetVehicle,
-                ItemRemittance,
-                ItemRemittanceType,
-                Offer,
-                OfferStatus,
-                Payment,
-                PaymentType,
-                Quotation,
-                RemittanceTypeTax,
-                PaymentStatus,
-                User,
-            ],
+            models: DATABASE_MODELS,
         });
 
-        await this.sequelize
-            .authenticate()
-            .then(() => {
-                console.log("PostgreSQL Connection has been established successfully.");
-            })
-            .catch((err) => {
-                console.error("Unable to connect to the PostgreSQL database:", err);
-            });
+        this.instance = databaseInstance;
+
+        try {
+            await this.instance.authenticate();
+            console.log("PostgreSQL Connection has been established successfully.");
+        } catch (error) {
+            console.error("Unable to connect to the PostgreSQL database:", error);
+        }
+
+        try {
+            await this.instance.sync({ force: forceSync });
+            console.log("Sync all defined models to the DB.");
+        } catch (error) {
+            console.log("Unable to sync models on DB: ", error);
+        }
     }
 }
 

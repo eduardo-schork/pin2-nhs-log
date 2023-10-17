@@ -12,7 +12,7 @@ import Colors from '@/styles/tokens/color';
 import { useState } from 'react';
 import EditModal from '@/features/admin/auth/edit/edit.modal';
 
-function AppBar({ userId, ...props }) {
+function AppBar({ userId, ...props }: { userId?: number }) {
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -21,9 +21,9 @@ function AppBar({ userId, ...props }) {
     }
 
     function handleOnClickAdmin() {
-        if(!userId){
-            navigate('/admin/login')
-        } else{
+        if (!userId) {
+            navigate('/admin/login');
+        } else {
             setIsModalOpen(true);
         }
     }

@@ -10,10 +10,10 @@ async function handleFindAllFleetVehicles(req: Request, res: Response) {
         if (vehicles) {
             res.status(200).send(vehicles);
         } else {
-            res.status(400).send({ "error ": t('FleetVehicle.noneFound') });
+            res.status(400).send({ "error ": t("FleetVehicle.noneFound") });
         }
     } catch (ex) {
-        throw (ex);
+        throw ex;
     }
 }
 
@@ -24,17 +24,21 @@ async function createFleetVehicle(req: Request, res: Response) {
         const vehicleCpfDriver = req.query.vehicleCpfDriver;
         const vehicleRenavam = req.query.vehicleRenavam;
 
-        const vehicles = await fleetVehicleRepository.createFleetVehicle(vehicleModal, vehiclePlate, vehicleCpfDriver, vehicleRenavam)
+        const vehicles = await fleetVehicleRepository.createFleetVehicle(
+            vehicleModal,
+            vehiclePlate,
+            vehicleCpfDriver,
+            vehicleRenavam
+        );
 
         if (vehicles) {
             res.status(200).send(true);
         } else {
-            res.status(400).send({ "error ": t('FleetVehicle.notRegistered') });
+            res.status(400).send({ "error ": t("FleetVehicle.notRegistered") });
         }
     } catch (ex) {
-        throw (ex);
+        throw ex;
     }
-
 }
 
 async function deleteFleetVehicle(req: Request, res: Response) {
@@ -44,7 +48,7 @@ async function deleteFleetVehicle(req: Request, res: Response) {
         const existingVehicle = await FleetVehicle.findByPk(vehicleId);
 
         if (!existingVehicle) {
-            return res.status(404).send({ error: 'Veículo não encontrado.' });
+            return res.status(404).send({ error: "Veículo não encontrado." });
         }
 
         const isDeleted = await fleetVehicleRepository.deleteFleetVehicle(vehicleId);
@@ -52,11 +56,11 @@ async function deleteFleetVehicle(req: Request, res: Response) {
         if (isDeleted) {
             return res.status(200).send({ success: true });
         } else {
-            return res.status(500).send({ error: 'O veículo não pôde ser excluído.' });
+            return res.status(500).send({ error: "O veículo não pôde ser excluído." });
         }
     } catch (error) {
         console.error(error);
-        return res.status(500).send({ error: 'Ocorreu um erro durante a exclusão do veículo.' });
+        return res.status(500).send({ error: "Ocorreu um erro durante a exclusão do veículo." });
     }
 }
 
@@ -68,19 +72,25 @@ async function updateFleetVehicle(req: Request, res: Response) {
         const existingVehicle = await FleetVehicle.findByPk(vehicleId);
 
         if (!existingVehicle) {
-            return res.status(404).send({ error: 'Veículo não encontrado.' });
+            return res.status(404).send({ error: "Veículo não encontrado." });
         }
 
-        const updated = await fleetVehicleRepository.updateFleetVehicle(vehicleId, fv_modal, fv_plate, fv_cpf_driver, fv_revam);
+        const updated = await fleetVehicleRepository.updateFleetVehicle(
+            vehicleId,
+            fv_modal,
+            fv_plate,
+            fv_cpf_driver,
+            fv_revam
+        );
 
         if (updated) {
-            return res.status(200).send({ message: 'Veículo atualizado com sucesso.' });
+            return res.status(200).send({ message: "Veículo atualizado com sucesso." });
         } else {
-            return res.status(500).send({ error: 'Falha ao atualizar o veículo.' });
+            return res.status(500).send({ error: "Falha ao atualizar o veículo." });
         }
     } catch (error) {
         console.error(error);
-        return res.status(500).send({ error: 'Ocorreu um erro durante a atualização do veículo.' });
+        return res.status(500).send({ error: "Ocorreu um erro durante a atualização do veículo." });
     }
 }
 

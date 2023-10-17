@@ -1,27 +1,27 @@
-import DeliveryAppointmentStatus from "../models/DeliveryAppointmentStatus";
+import DeliveryAppointmentStatus from "../../../../models/DeliveryAppointmentStatus";
 
-class DeliveryAppointmentStatusRepo {
-    async createDeliveryAppointmentStatus(): Promise<boolean> {
+class SeedDeliveryAppointmentStatus {
+    async execute(): Promise<boolean> {
         try {
             await DeliveryAppointmentStatus.bulkCreate([
                 {
                     pk_delivery_appointment_status: 1,
-                    das_status: 'Coletada',
+                    das_status: "Coletada",
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
                     pk_delivery_appointment_status: 2,
-                    das_status: 'A caminho',
+                    das_status: "A caminho",
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
                     pk_delivery_appointment_status: 3,
-                    das_status: 'Entregue',
+                    das_status: "Entregue",
                     createdAt: new Date(),
                     updatedAt: new Date(),
-                }
+                },
             ]);
             return true;
         } catch (error) {
@@ -30,4 +30,4 @@ class DeliveryAppointmentStatusRepo {
     }
 }
 
-export default new DeliveryAppointmentStatusRepo();
+export default new SeedDeliveryAppointmentStatus();

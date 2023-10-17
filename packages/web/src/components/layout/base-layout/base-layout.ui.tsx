@@ -8,7 +8,7 @@ function BaseLayout({
 }: {
     withoutHeader?: boolean;
     children?: React.ReactNode;
-    userId: any;
+    userId?: any;
 }): JSX.Element {
     return (
         <Container>

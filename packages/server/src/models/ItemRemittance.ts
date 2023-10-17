@@ -1,9 +1,9 @@
-import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import ItemRemittanceType from './ItemRemittanceType';
+import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from "sequelize-typescript";
+import ItemRemittanceType from "./ItemRemittanceType";
 
 @Table({
-    tableName: 'Item_Remittance',
-    modelName: 'ItemRemittance',
+    tableName: "Item_Remittance",
+    modelName: "ItemRemittance",
 })
 class ItemRemittance extends Model {
     @Column({

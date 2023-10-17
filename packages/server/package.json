@@ -5,7 +5,7 @@
     "license": "MIT",
     "scripts": {
         "start:db": "ts-node ./src/index.ts",
-        "seed-database": "ts-node packages/server/src/infra/database/sequelize/seed-database.ts"
+        "seed-database": "ts-node ./src/infra/database/sequelize/seed-database/seed-database.ts"
     },
     "dependencies": {
         "@/shared": "1.0.0",

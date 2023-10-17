@@ -1,10 +1,10 @@
-import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import Address from './Address';
-import DeliveryProcess from './DeliveryProcess';
+import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from "sequelize-typescript";
+import Address from "./Address";
+import DeliveryProcess from "./DeliveryProcess";
 
 @Table({
-    tableName: 'Delivery_Appointment',
-    modelName: 'DeliveryAppointment',
+    tableName: "Delivery_Appointment",
+    modelName: "DeliveryAppointment",
 })
 class DeliveryAppointment extends Model {
     @Column({
@@ -41,10 +41,10 @@ class DeliveryAppointment extends Model {
     })
     fk_delivery_process!: number;
 
-    @BelongsTo(() => Address, 'fkCurrentAddress')
+    @BelongsTo(() => Address, "fkCurrentAddress")
     CurrentAddress?: Address;
 
-    @BelongsTo(() => DeliveryProcess, 'fkDeliveryProcess')
+    @BelongsTo(() => DeliveryProcess, "fkDeliveryProcess")
     DeliveryProcess?: DeliveryProcess;
 
     @Column({

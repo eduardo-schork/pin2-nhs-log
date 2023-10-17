@@ -10,6 +10,8 @@ import {
 } from '@chakra-ui/react';
 import { ContainedButton } from './button/button.ui';
 
+export type TModalProps = UseDisclosureProps & React.ComponentPropsWithRef<'div'> & { closeButtonText?: string };
+
 function Modal({
     title,
     closeButtonText = 'Continuar',
@@ -17,7 +19,7 @@ function Modal({
     onClose = () => {},
     children,
     ...props
-}: UseDisclosureProps & React.ComponentPropsWithRef<'div'> & { closeButtonText?: string }) {
+}: TModalProps) {
     return (
         <>
             <ChakraModal {...props} isOpen={isOpen} onClose={onClose}>

@@ -11,10 +11,11 @@ import ErrorModal from "./error.modal";
 type TEditVehicleModalProps = {
     isOpen: boolean;
     onClose: () => void;
-    vehicle: Vehicle; 
+    vehicle: Vehicle
   };
 
-const EditVehicleModal: React.FC<TEditVehicleModalProps> = ({ isOpen, onClose, vehicleId }) => {
+const EditVehicleModal: React.FC<TEditVehicleModalProps> = ({ isOpen, onClose, vehicle}) => {
+    console.log(vehicle);
     const navigate = useNavigate();
     const { register, handleSubmit} = useForm();
     const [error, setError] = useState<string | null>(null);
@@ -26,34 +27,34 @@ const EditVehicleModal: React.FC<TEditVehicleModalProps> = ({ isOpen, onClose, v
         setIsErrorModalOpen(false);
     };
 
-    async function handleFormSubmit(data: TEditVehicleModalProps) {
-        if (!data.vehicleModal || !data.vehiclePlate || !data.vehicleCpfDriver || !data.vehicleRenavam) {
-            setError(t('common.MissingParameter'));
-            setIsErrorModalOpen(true);
-        } else {
-            try {
-                const res = await fetch(`http://localhost:8000/api/fleetVehicle/update/${vehicleId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                });
+    // async function handleFormSubmit(data: TEditVehicleModalProps) {
+    //     if (!data.vehicleModal || !data.vehiclePlate || !data.vehicleCpfDriver || !data.vehicleRenavam) {
+    //         setError(t('common.MissingParameter'));
+    //         setIsErrorModalOpen(true);
+    //     } else {
+    //         try {
+    //             const res = await fetch(`http://localhost:8000/api/fleetVehicle/update/${vehicleId}`, {
+    //                 method: 'PUT',
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                 },
+    //                 body: JSON.stringify(data),
+    //             });
 
-                if (res.status === 200) {
-                    console.log(res);
-                    navigate('/admin/fleet');
-                } else {
-                    setError(t('Update.error'));
-                    setIsErrorModalOpen(true);
-                }
-            } catch (error) {
-                console.error(error);
-                setError(t('Update.error'));
-                setIsErrorModalOpen(true);
-            }
-        }
-    }
+    //             if (res.status === 200) {
+    //                 console.log(res);
+    //                 navigate('/admin/fleet');
+    //             } else {
+    //                 setError(t('Update.error'));
+    //                 setIsErrorModalOpen(true);
+    //             }
+    //         } catch (error) {
+    //             console.error(error);
+    //             setError(t('Update.error'));
+    //             setIsErrorModalOpen(true);
+    //         }
+    //     }
+    // }
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -63,30 +64,30 @@ const EditVehicleModal: React.FC<TEditVehicleModalProps> = ({ isOpen, onClose, v
                     <ModalCloseButton/>
                     <ModalBody>
                         <FormContainer>
-                            <p>Tem certeza que deseja deletar o veículo {vehicleId} ?</p>
+                            <p>Tem certeza que deseja deletar o veículo {vehicle.vehicleId} ?</p>
                             <TextInput
                                 {...register('vehicleModal')}
                                 placeholder={t('Register.modal')}
-                                defaultValue={vehicleId} 
+                                defaultValue={vehicle.vehicleModal} 
                             />
                             <TextInput
                                 {...register('vehiclePlate')}
                                 placeholder={t('Register.plate')}
-                                defaultValue={vehicleId} 
+                                defaultValue={vehicle.vehiclePlate} 
                             />
                             <TextInput
                                 {...register('vehicleCpfDriver')}
                                 placeholder={t('Register.cpfDriver')}
-                                defaultValue={vehicleId} 
+                                defaultValue={vehicle.vehicleCpfDriver} 
                             />
                             <TextInput
                                 {...register('vehicleRenavam')}
                                 placeholder={t('Register.renavam')}
-                                defaultValue={vehicleId} 
+                                defaultValue={vehicle.vehicleRenavam} 
                             />
-                            <ContainedButton onClick={handleSubmit(handleFormSubmit)}>
+                            {/* <ContainedButton onClick={handleSubmit(handleFormSubmit)}>
                             {t('common.Register')}
-                            </ContainedButton>
+                            </ContainedButton> */}
 
                             <ErrorModal isOpen={isErrorModalOpen} onClose={closeErrorModal} errorMessage={error || ''} />
                         </FormContainer>

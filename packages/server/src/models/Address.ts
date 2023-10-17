@@ -1,10 +1,11 @@
-import { Model, DataType, Table, Column } from 'sequelize-typescript';
+import TAddressModel from "@/shared/src/models/Address.model";
+import { Model, DataType, Table, Column } from "sequelize-typescript";
 
 @Table({
-    tableName: 'Address',
-    modelName: 'Address',
+    tableName: "Address",
+    modelName: "Address",
 })
-class Address extends Model {
+class Address extends Model<TAddressModel> {
     @Column({
         type: DataType.INTEGER,
         allowNull: false,

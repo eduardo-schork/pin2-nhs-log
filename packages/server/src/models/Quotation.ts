@@ -1,11 +1,12 @@
-import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import Address from './Address';
+import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from "sequelize-typescript";
+import Address from "./Address";
+import TQuotationModel from "@/shared/src/models/Quotation.model";
 
 @Table({
-    tableName: 'Quotation',
-    modelName: 'Quotation',
+    tableName: "Quotation",
+    modelName: "Quotation",
 })
-class Quotation extends Model {
+class Quotation extends Model<TQuotationModel> {
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
@@ -46,10 +47,10 @@ class Quotation extends Model {
     })
     fk_destination_address!: number;
 
-    @BelongsTo(() => Address, 'fk_origin_address')
+    @BelongsTo(() => Address, "fk_origin_address")
     OriginAddress!: Address;
 
-    @BelongsTo(() => Address, 'fk_destination_address')
+    @BelongsTo(() => Address, "fk_destination_address")
     DestinationAddress!: Address;
 }
 

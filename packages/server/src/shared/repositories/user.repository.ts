@@ -1,7 +1,7 @@
 import IBaseRepository from "./base.repository";
-import User from "../models/User";
+import User from "../../models/User";
 import TUserModel from "@/shared/src/models/User.model";
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 class UserRepository implements IBaseRepository<TUserModel> {
     async findUser(id: any): Promise<User | null> {
@@ -9,7 +9,6 @@ class UserRepository implements IBaseRepository<TUserModel> {
             const user = await User.findByPk(id);
 
             if (user) {
-
                 return user;
             } else {
                 return null;

@@ -1,7 +1,7 @@
 import LoginModel from "@/shared/src/models/Login.model";
 import IBaseRepository from "./base.repository";
-import User from "../models/User";
-const bcrypt = require('bcrypt');
+import User from "../../models/User";
+const bcrypt = require("bcrypt");
 
 class LoginRepository implements IBaseRepository<LoginModel> {
     async authenticateUser(userEmail: string, userPassword: string): Promise<number | null> {

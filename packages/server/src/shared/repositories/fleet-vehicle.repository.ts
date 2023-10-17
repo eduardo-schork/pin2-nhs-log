@@ -1,4 +1,4 @@
-import FleetVehicle from "../models/FleetVehicle";
+import FleetVehicle from "../../models/FleetVehicle";
 import IBaseRepository from "./base.repository";
 
 class FleetVehicleRepository implements IBaseRepository<FleetVehicle> {

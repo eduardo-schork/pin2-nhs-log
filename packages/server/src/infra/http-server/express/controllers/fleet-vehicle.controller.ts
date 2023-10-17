@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import fleetVehicleRepository from "../../../../repositories/fleet-vehicle.repository";
+import fleetVehicleRepository from "../../../../shared/repositories/fleet-vehicle.repository";
 import t from "../../../i18n";
 import FleetVehicle from "../../../../models/FleetVehicle";
 

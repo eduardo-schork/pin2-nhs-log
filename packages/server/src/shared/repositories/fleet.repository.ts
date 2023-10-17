@@ -1,9 +1,8 @@
-import Fleet from "../models/Fleet";
-import FleetVehicle from "../models/FleetVehicle";
+import Fleet from "../../models/Fleet";
+import FleetVehicle from "../../models/FleetVehicle";
 import IBaseRepository from "./base.repository";
 
 class FleetRepository implements IBaseRepository<Fleet> {
-    
     async findAll(): Promise<Fleet[]> {
         const fleet = await Fleet.findAll();
 
@@ -24,20 +23,20 @@ class FleetRepository implements IBaseRepository<Fleet> {
     }
     async createFleet(fleetName: any, fleetVehicles: any): Promise<boolean> {
         try {
-            const vehicleIds = fleetVehicles.split(',').map(Number);
+            const vehicleIds = fleetVehicles.split(",").map(Number);
 
             for (const vehicleId of vehicleIds) {
                 await Fleet.create({
-                    fl_name: fleetName, 
-                    fk_fleet_vehicle: vehicleId, 
+                    fl_name: fleetName,
+                    fk_fleet_vehicle: vehicleId,
                 });
             }
 
             return true;
         } catch (error) {
-            console.error('Erro ao criar frota:', error);
+            console.error("Erro ao criar frota:", error);
             return false;
-        } 
+        }
     }
 }
 

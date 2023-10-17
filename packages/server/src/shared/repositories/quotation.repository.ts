@@ -1,8 +1,6 @@
 import IBaseRepository from "./base.repository";
-import User from "../../models/User";
-import TUserModel from "@/shared/src/models/User.model";
 import TQuotationModel from "@/shared/src/models/Quotation.model";
-import TAddressModel from "@/shared/src/models/Address.model";
+import Quotation from "../../models/Quotation";
 
 class QuotationRepository implements IBaseRepository<TQuotationModel> {
     findAll(): Promise<TQuotationModel[]> {
@@ -15,8 +13,12 @@ class QuotationRepository implements IBaseRepository<TQuotationModel> {
     delete({ id }: { id: string }): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    create({ data }: { data: TQuotationModel }): Promise<TQuotationModel> {
-        throw new Error("Method not implemented.");
+    async create({ data }: { data: TQuotationModel }): Promise<TQuotationModel> {
+        const databaseQuotation = await Quotation.create(data);
+
+        console.log({ databaseQuotation });
+
+        return databaseQuotation;
     }
 
     update({ data }: { data: TQuotationModel }): Promise<TQuotationModel> {

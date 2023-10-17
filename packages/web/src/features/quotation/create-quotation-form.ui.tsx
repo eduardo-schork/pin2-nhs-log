@@ -15,20 +15,20 @@ type TCreateQuotationForm = {
     remittanceWeight: number;
 
     originAddress: {
-        cep: string;
+        zipCode: string;
         number: string;
         city: string;
-        street: string;
-        district: string;
+        streetAddress: string;
+        state: string;
         country: string;
     };
 
     destinationAddress: {
-        cep: string;
+        zipCode: string;
         number: string;
         city: string;
-        street: string;
-        district: string;
+        streetAddress: string;
+        state: string;
         country: string;
     };
 };
@@ -58,26 +58,26 @@ function CreateQuotationForm({ onSubmit, ...props }: { onSubmit: (data: TCreateQ
                         <SectionTitleText>Endereço de origem</SectionTitleText>
 
                         <HContainer gap={Spacings.MEDIUM}>
-                            <FormTextInput label="Cep" name={'originAddress.cep'} methods={methods} />
+                            <FormTextInput label="Cep" name={'originAddress.zipCode'} methods={methods} />
                             <FormTextInput label="Número" name={'originAddress.number'} methods={methods} />
                         </HContainer>
                         <FormTextInput label="Cidade" name={'originAddress.city'} methods={methods} />
-                        <FormTextInput label="Rua" name={'originAddress.street'} methods={methods} />
+                        <FormTextInput label="Rua" name={'originAddress.streetAddress'} methods={methods} />
                         <FormTextInput label="País" name={'originAddress.country'} methods={methods} />
-                        <FormTextInput label="Bairro" name={'originAddress.district'} methods={methods} />
+                        <FormTextInput label="Estado" name={'originAddress.state'} methods={methods} />
                     </VContainer>
 
                     <VContainer gap={Spacings.MEDIUM} style={{ width: '40%' }}>
                         <SectionTitleText>Endereço de destino</SectionTitleText>
 
                         <HContainer gap={Spacings.MEDIUM}>
-                            <FormTextInput label="Cep" name={'destinationAddress.cep'} methods={methods} />
+                            <FormTextInput label="Cep" name={'destinationAddress.zipCode'} methods={methods} />
                             <FormTextInput label="Número" name={'destinationAddress.number'} methods={methods} />
                         </HContainer>
                         <FormTextInput label="Cidade" name={'destinationAddress.city'} methods={methods} />
-                        <FormTextInput label="Rua" name={'destinationAddress.street'} methods={methods} />
+                        <FormTextInput label="Rua" name={'destinationAddress.streetAddress'} methods={methods} />
                         <FormTextInput label="País" name={'destinationAddress.country'} methods={methods} />
-                        <FormTextInput label="Bairro" name={'destinationAddress.district'} methods={methods} />
+                        <FormTextInput label="Estado" name={'destinationAddress.state'} methods={methods} />
                     </VContainer>
                 </HContainer>
 

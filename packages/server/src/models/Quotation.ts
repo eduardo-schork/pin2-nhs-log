@@ -12,40 +12,46 @@ class Quotation extends Model<TQuotationModel> {
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
+        field: "pk_quotation",
     })
-    pk_quotation!: number;
+    id!: number;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
+        field: "qu_cpf",
     })
-    qu_cpf!: string;
+    cpf!: string;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
+        field: "qu_email",
     })
-    qu_email!: string;
+    email!: string;
 
     @Column({
-        type: DataType.DATE,
+        type: DataType.BIGINT,
         allowNull: false,
+        field: "currentDate",
     })
-    qu_current_date!: Date;
+    currentDate!: number;
 
     @ForeignKey(() => Address)
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
+        field: "fk_origin_address",
     })
-    fk_origin_address!: number;
+    originAddressId!: number;
 
     @ForeignKey(() => Address)
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
+        field: "fk_destination_address",
     })
-    fk_destination_address!: number;
+    destinationAddressId!: number;
 
     @BelongsTo(() => Address, "fk_origin_address")
     OriginAddress!: Address;

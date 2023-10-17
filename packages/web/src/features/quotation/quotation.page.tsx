@@ -6,6 +6,7 @@ import CreateQuotationForm from './create-quotation-form.ui';
 import Modal from '@/components/modal.ui';
 import TrackQuotationSection from './track-quotation-section.ui';
 import { useNavigate } from 'react-router-dom';
+import HttpRequestPort from '@/infra/http-request/http-request.port';
 
 function QuotationPage({ ...props }) {
     const navigate = useNavigate();
@@ -16,8 +17,28 @@ function QuotationPage({ ...props }) {
         onClose: closeCreateModalHandler,
     } = useDisclosure();
 
-    function onSubmitCreateQuotation(data: any) {
-        console.log({ data });
+    function normalizeQuotationWithAddresses(data: any) {
+        return {
+            quotation: {
+                cpf: data.cpf,
+                email: data.email,
+                currentDate: Date.now(),
+            },
+            itemRemittance: {
+                objectType: data.remittanceType,
+                weight: data.remittanceWeight,
+            },
+            originAddress: data.originAddress,
+            destinationAddress: data.destinationAddress,
+        };
+    }
+
+    async function onSubmitCreateQuotation(data: any) {
+        const normalizedData = normalizeQuotationWithAddresses(data);
+        console.log({ normalizedData });
+
+        const returndata = await HttpRequestPort.post({ path: '/api/quotation', body: normalizedData });
+
         openCreateModalHandler();
     }
 

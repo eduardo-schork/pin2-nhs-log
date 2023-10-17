@@ -11,64 +11,75 @@ class Address extends Model<TAddressModel> {
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
+        field: "pk_address",
     })
-    pk_address!: number;
+    id!: number;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
+        field: "ad_street_address",
     })
-    ad_street_address!: string;
+    streetAddress!: string;
 
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
+        field: "ad_number",
     })
-    ad_number!: number;
+    number!: number;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
+        field: "ad_city",
     })
-    ad_city!: string;
+    city!: string;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
+        field: "ad_state",
     })
-    ad_state!: string;
+    state!: string;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
+        field: "ad_country",
     })
-    ad_country!: string;
+    country!: string;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
+        field: "ad_zip_code",
     })
-    ad_zip_code!: string;
+    zipCode!: string;
 
     @Column({
         type: DataType.INTEGER,
         allowNull: true,
+        field: "ad_geo_latitude",
     })
-    ad_geo_latitude!: number | null;
+    geoLatitude!: number | null;
 
     @Column({
         type: DataType.FLOAT,
         allowNull: true,
+        field: "ad_geo_longitude",
     })
-    ad_geo_longitude!: number | null;
+    geoLongitude!: number | null;
 
     @Column({
         type: DataType.DATE,
+        field: "createdAt",
     })
     createdAt!: Date;
 
     @Column({
         type: DataType.DATE,
+        field: "updatedAt",
     })
     updatedAt!: Date;
 }

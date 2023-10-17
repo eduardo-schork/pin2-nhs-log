@@ -1,14 +1,14 @@
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, Text } from "@chakra-ui/react";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, Text } from '@chakra-ui/react';
 import TextInput from '@/components/text-input/text-input.ui';
 import { ContainedButton } from '@/components/button/button.ui';
 import t from '@/infra/i18n';
-import React, { useState } from "react";
-import { FormContainer } from "./create.styles";
-import { useForm } from "react-hook-form";
-import ErrorModal from "./error.modal";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { FormContainer } from './create.styles';
+import { useForm } from 'react-hook-form';
+import ErrorModal from './error.modal';
+import { useNavigate } from 'react-router-dom';
 
-type TCreateVehiclePageFormValues ={
+type TCreateVehiclePageFormValues = {
     vehicleModal: string;
     vehiclePlate: string;
     vehicleCpfDriver: string;
@@ -27,7 +27,7 @@ const CreateVehicleModal: React.FC<CreateVehicleModalProps> = ({ isOpen, onClose
     };
 
     async function handleFormSubmit(data: TCreateVehiclePageFormValues) {
-        if(!data.vehicleModal || !data.vehiclePlate || !data.vehicleCpfDriver || !data.vehicleRenavam){
+        if (!data.vehicleModal || !data.vehiclePlate || !data.vehicleCpfDriver || !data.vehicleRenavam) {
             setError(t('common.MissingParameter'));
             setIsErrorModalOpen(true);
         } else {
@@ -63,26 +63,26 @@ const CreateVehicleModal: React.FC<CreateVehicleModalProps> = ({ isOpen, onClose
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent className="custom-modal-content" justifyContent="center" alignItems="center" size="sm">
-                    <ModalHeader>Cadastro de Veículo</ModalHeader>
-                    <ModalCloseButton/>
-                    <ModalBody>
-                        <FormContainer>
-                            <TextInput {...register('vehicleModal')} placeholder={t('Register.modal')} />
-                            <TextInput {...register('vehiclePlate')} placeholder={t('Register.plate')} />
-                            <TextInput {...register('vehicleCpfDriver')} placeholder={t('Register.cpfDriver')} />
-                            <TextInput {...register('vehicleRenavam')} placeholder={t('Register.renavam')} />
-            
-                            <ContainedButton onClick={handleSubmit(handleFormSubmit)}>
+            <ModalOverlay />
+            <ModalContent className="custom-modal-content" justifyContent="center" alignItems="center" size="sm">
+                <ModalHeader>Cadastro de Veículo</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                    <FormContainer>
+                        <TextInput {...register('vehicleModal')} placeholder={t('Register.modal')} />
+                        <TextInput {...register('vehiclePlate')} placeholder={t('Register.plate')} />
+                        <TextInput {...register('vehicleCpfDriver')} placeholder={t('Register.cpfDriver')} />
+                        <TextInput {...register('vehicleRenavam')} placeholder={t('Register.renavam')} />
+
+                        <ContainedButton onClick={handleSubmit(handleFormSubmit)}>
                             <Text>{t('common.Register')}</Text>
-                            </ContainedButton>
-                            <ErrorModal isOpen={isErrorModalOpen} onClose={closeErrorModal} errorMessage={error || ''} />
-                        </FormContainer>
-                    </ModalBody>
-                    </ModalContent>
-            </Modal>
+                        </ContainedButton>
+                        <ErrorModal isOpen={isErrorModalOpen} onClose={closeErrorModal} errorMessage={error || ''} />
+                    </FormContainer>
+                </ModalBody>
+            </ModalContent>
+        </Modal>
     );
-  };
-  
-  export default CreateVehicleModal;
+};
+
+export default CreateVehicleModal;

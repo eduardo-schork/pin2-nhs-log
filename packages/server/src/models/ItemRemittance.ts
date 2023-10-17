@@ -1,40 +1,46 @@
 import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from "sequelize-typescript";
 import ItemRemittanceType from "./ItemRemittanceType";
+import TItemRemittanceModel from "@/shared/src/models/ItemRemittance.model";
+import Quotation from "./Quotation";
 
 @Table({
     tableName: "Item_Remittance",
     modelName: "ItemRemittance",
 })
-class ItemRemittance extends Model {
+class ItemRemittance extends Model<TItemRemittanceModel> {
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
+        field: "pk_item_remittance",
     })
-    pk_item_remittance!: number;
+    id!: number;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
+        field: "ir_type_object",
     })
-    ir_type_object!: string;
+    objectType!: string;
 
     @Column({
         type: DataType.FLOAT,
         allowNull: false,
+        field: "ir_weight",
     })
-    ir_weight!: number;
+    weight!: number;
 
-    @ForeignKey(() => ItemRemittanceType)
+    @ForeignKey(() => Quotation)
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
+        field: "fk_quotation",
     })
-    fk_item_remittance_type!: number;
+    quotationId!: number;
 
-    @BelongsTo(() => ItemRemittanceType)
-    ItemRemittanceType!: ItemRemittanceType;
+    @BelongsTo(() => Quotation, "fk_quotation")
+    quotation?: Quotation;
 
     @Column({
         type: DataType.DATE,

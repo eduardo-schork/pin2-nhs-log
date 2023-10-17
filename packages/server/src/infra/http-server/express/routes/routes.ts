@@ -4,6 +4,7 @@ import loginRoute from "./login.routes";
 import registerRoute from "./register.routes";
 import fleetRoutes from "./fleet.routes";
 import userRoutes from "./user.routes";
+import quotationRoutes from "./quotation.routes";
 
 const router = Router();
 
@@ -17,6 +18,7 @@ router.use("/api", fleetRoutes);
 
 router.use("/api", userRoutes);
 
+router.use("/api", quotationRoutes);
 
 // router.use("/api", fleetRoutes);
 

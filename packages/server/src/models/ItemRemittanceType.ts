@@ -1,23 +1,26 @@
+import TItemRemittanceModel from "@/shared/src/models/ItemRemittance.model";
 import { Model, DataType, Table, Column } from "sequelize-typescript";
 
 @Table({
     tableName: "Item_Remittance_Type",
     modelName: "ItemRemittanceType",
 })
-class ItemRemittanceType extends Model {
+class ItemRemittanceType extends Model<TItemRemittanceModel> {
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
+        field: "pk_item_remittance_type",
     })
     pk_item_remittance_type!: number;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
+        field: "irt_type",
     })
-    irt_type!: string;
+    type!: string;
 
     @Column({
         type: DataType.DATE,

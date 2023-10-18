@@ -8,13 +8,8 @@ import TrackQuotationSection from './track-quotation-section.ui';
 import useQuotationLogic from './quotation.logic';
 
 function QuotationPage({ ...props }) {
-    const {
-        isOpenCreateModal,
-        itemRemittanceTypes,
-        closeCreateModalHandler,
-        onSubmitTrackQuotation,
-        onSubmitCreateQuotation,
-    } = useQuotationLogic();
+    const { isOpenCreateModal, closeCreateModalHandler, onSubmitTrackQuotation, onSubmitCreateQuotation } =
+        useQuotationLogic();
     return (
         <BaseLayout {...props}>
             <Modal title={'Cotação enviada!'} isOpen={isOpenCreateModal} onClose={closeCreateModalHandler}>
@@ -24,7 +19,7 @@ function QuotationPage({ ...props }) {
             <TrackQuotationSection onSubmit={onSubmitTrackQuotation} />
 
             <PageContainer gap={Spacings.MEDIUM}>
-                <CreateQuotationForm remittanceTypes={itemRemittanceTypes} onSubmit={onSubmitCreateQuotation} />
+                <CreateQuotationForm onSubmit={onSubmitCreateQuotation} />
             </PageContainer>
         </BaseLayout>
     );

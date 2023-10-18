@@ -5,6 +5,7 @@ import FormTextInput from '@/components/form/text-input/form-text-input.ui';
 import t from '@/infra/i18n';
 import Spacings from '@/styles/tokens/spacing';
 import { Text } from '@chakra-ui/react';
+import { ITEM_REMITTANCE_TYPE } from '@shared/constants/item-remittance-type.const';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
@@ -33,15 +34,10 @@ type TCreateQuotationForm = {
     };
 };
 
-function CreateQuotationForm({
-    remittanceTypes,
-    onSubmit,
-    ...props
-}: {
-    remittanceTypes: any;
-    onSubmit: (data: TCreateQuotationForm) => void;
-}) {
-    const methods = useForm<TCreateQuotationForm>();
+ITEM_REMITTANCE_TYPE;
+
+function CreateQuotationForm({ onSubmit, ...props }: { onSubmit: (data: TCreateQuotationForm) => void }) {
+    const methods = useForm<TCreateQuotationForm>({});
 
     return (
         <form {...props} onSubmit={methods.handleSubmit(onSubmit)}>
@@ -51,7 +47,13 @@ function CreateQuotationForm({
                 <HContainer gap={Spacings.MEDIUM} style={{ justifyContent: 'space-evenly' }}>
                     <VContainer gap={Spacings.MEDIUM} style={{ width: '40%' }}>
                         <FormTextInput label={'CPF'} name={'cpf'} methods={methods} />
-                        <FormSelectInput label={'Tipo da remessa'} name={'remittanceType'} methods={methods} />
+                        <FormSelectInput label={'Tipo da remessa'} name={'remittanceType'} methods={methods}>
+                            <option value={null}></option>
+                            <option value={ITEM_REMITTANCE_TYPE.DOCUMENTS}>{ITEM_REMITTANCE_TYPE.DOCUMENTS}</option>
+                            <option value={ITEM_REMITTANCE_TYPE.ELECTRONICS}>{ITEM_REMITTANCE_TYPE.ELECTRONICS}</option>
+                            <option value={ITEM_REMITTANCE_TYPE.FLAMMABLE}>{ITEM_REMITTANCE_TYPE.FLAMMABLE}</option>
+                            <option value={ITEM_REMITTANCE_TYPE.FRAGILE}>{ITEM_REMITTANCE_TYPE.FRAGILE}</option>
+                        </FormSelectInput>
                     </VContainer>
 
                     <VContainer gap={Spacings.MEDIUM} style={{ width: '40%' }}>
@@ -68,6 +70,7 @@ function CreateQuotationForm({
                             <FormTextInput label="Cep" name={'originAddress.zipCode'} methods={methods} />
                             <FormTextInput label="Número" name={'originAddress.number'} methods={methods} />
                         </HContainer>
+
                         <FormTextInput label="Cidade" name={'originAddress.city'} methods={methods} />
                         <FormTextInput label="Rua" name={'originAddress.streetAddress'} methods={methods} />
                         <FormTextInput label="País" name={'originAddress.country'} methods={methods} />

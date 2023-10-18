@@ -1,27 +1,10 @@
 import HttpRequestPort from '@/infra/http-request/http-request.port';
 import { useDisclosure } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function useQuotationLogic() {
     const navigate = useNavigate();
-
-    const [itemRemittanceTypes, setItemRemittanceTypes] = useState([]);
-
-    function findAllItemRemittanceTypesHandler() {
-        const itemRemittanceTypes = HttpRequestPort.get({ path: '/api/item-remittance-type' });
-        return itemRemittanceTypes;
-    }
-
-    useEffect(() => {
-        (async () => {
-            const returndata = await findAllItemRemittanceTypesHandler();
-            console.log({ returndata });
-            setItemRemittanceTypes(returndata);
-        })();
-    }, []);
-
-    console.log({ itemRemittanceTypes });
 
     const {
         isOpen: isOpenCreateModal,
@@ -46,13 +29,14 @@ function useQuotationLogic() {
     }
 
     async function onSubmitCreateQuotation(data: any) {
-        const normalizedData = normalizeQuotationWithAddresses(data);
-        console.log({ normalizedData });
+        try {
+            const normalizedData = normalizeQuotationWithAddresses(data);
+            await HttpRequestPort.post({ path: '/api/quotation', body: normalizedData });
 
-        const returndata = await HttpRequestPort.post({ path: '/api/quotation', body: normalizedData });
-
-        console.log({ returndata });
-        openCreateModalHandler();
+            openCreateModalHandler();
+        } catch (error) {
+            toast.error('Ocorreu um erro ao criar cotação, tente novamente', { position: 'bottom-right' });
+        }
     }
 
     function onSubmitTrackQuotation(value: string) {
@@ -61,7 +45,6 @@ function useQuotationLogic() {
     }
     return {
         isOpenCreateModal,
-        itemRemittanceTypes,
         closeCreateModalHandler,
         onSubmitTrackQuotation,
         onSubmitCreateQuotation,

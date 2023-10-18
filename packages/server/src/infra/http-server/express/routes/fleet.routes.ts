@@ -1,10 +1,18 @@
 import { Router } from "express";
-import { handleFindAllFleet, createFleet} from "../controllers/fleet.controller";
+import FleetController from "../controllers/fleet.controller";
 
 const fleetRoutes = Router();
 
-fleetRoutes.get("/fleet", handleFindAllFleet);
+fleetRoutes.post("/fleet/create", FleetController.createWithVehicles);
 
-fleetRoutes.post("/fleet/create", createFleet);
+fleetRoutes.get("/user", FleetController.findAll);
+
+fleetRoutes.get("/user/:id", FleetController.findOne);
+
+fleetRoutes.post("/user", FleetController.create);
+
+fleetRoutes.delete("/user/:id", FleetController.delete);
+
+fleetRoutes.put("/user", FleetController.update);
 
 export default fleetRoutes;

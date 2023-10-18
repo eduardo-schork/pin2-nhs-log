@@ -1,9 +1,10 @@
 import TFleetVehicleModel from "./FleetVehicle.model";
 
 type TFleetModel = {
-    id: number;
+    id?: number;
     name: string;
-    vehicles: TFleetVehicleModel[]
-}
+    fleetVehicleId: number;
+    vehicles?: TFleetVehicleModel[];
+};
 
-export default TFleetModel
+export default TFleetModel;

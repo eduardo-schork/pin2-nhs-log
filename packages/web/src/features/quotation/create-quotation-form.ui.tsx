@@ -33,7 +33,14 @@ type TCreateQuotationForm = {
     };
 };
 
-function CreateQuotationForm({ onSubmit, ...props }: { onSubmit: (data: TCreateQuotationForm) => void }) {
+function CreateQuotationForm({
+    remittanceTypes,
+    onSubmit,
+    ...props
+}: {
+    remittanceTypes: any;
+    onSubmit: (data: TCreateQuotationForm) => void;
+}) {
     const methods = useForm<TCreateQuotationForm>();
 
     return (

@@ -39,6 +39,7 @@ const FollowQuotationContainer = styled(VContainer)`
     border-radius: ${Spacings.SMALL};
     width: 40%;
     align-self: center;
+    min-width: 550px;
 `;
 
 export default TrackQuotationSection;

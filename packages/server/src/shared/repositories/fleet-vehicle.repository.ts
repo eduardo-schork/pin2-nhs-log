@@ -1,39 +1,49 @@
+import TFleetVehicleModel from "@/shared/src/models/FleetVehicle.model";
 import FleetVehicle from "../../models/FleetVehicle";
 import IBaseRepository from "./base.repository";
 
-class FleetVehicleRepository implements IBaseRepository<FleetVehicle> {
-    async findAll(): Promise<FleetVehicle[]> {
-        const vehicle = await FleetVehicle.findAll();
-
-        return vehicle;
+class FleetVehicleRepository implements IBaseRepository<TFleetVehicleModel> {
+    async findAll(): Promise<TFleetVehicleModel[]> {
+        const findAllResult = await FleetVehicle.findAll();
+        return findAllResult;
     }
 
-    findOne({ id }: { id: string }): Promise<FleetVehicle> {
-        throw new Error("Method not implemented.");
+    async findOne({ id }: { id: string }): Promise<TFleetVehicleModel | null> {
+        const findOneResult = await FleetVehicle.findOne({ where: { id } });
+        return findOneResult;
     }
-    delete({ id }: { id: string }): Promise<void> {
-        throw new Error("Method not implemented.");
+
+    async delete({ id }: { id: string }): Promise<boolean> {
+        const deletedRows = await FleetVehicle.destroy({ where: { id } });
+
+        if (deletedRows > 0) return true;
+        return false;
     }
-    create({ data }: { data: FleetVehicle }): Promise<FleetVehicle> {
-        throw new Error("Method not implemented.");
+    async create({ data }: { data: TFleetVehicleModel }): Promise<TFleetVehicleModel> {
+        const createResult = await FleetVehicle.create(data);
+        return createResult;
     }
-    update({ data }: { data: FleetVehicle }): Promise<FleetVehicle> {
-        throw new Error("Method not implemented.");
+
+    async update({ data }: { data: TFleetVehicleModel }): Promise<TFleetVehicleModel | null> {
+        const [affectedRows] = await FleetVehicle.update(data, { where: { id: data.id } });
+        if (affectedRows > 0) return data;
+        return null;
     }
+
     async createFleetVehicle(
         vehicleModal: any,
         vehiclePlate: any,
         vehicleCpfDriver: any,
         vehicleRenavam: any
     ): Promise<boolean> {
-        const vehicle = await FleetVehicle.bulkCreate([
-            {
-                fv_modal: vehicleModal,
-                fv_plate: vehiclePlate,
-                fv_cpf_driver: vehicleCpfDriver,
-                fv_revam: vehicleRenavam,
-            },
-        ]);
+        const vehicle = await FleetVehicle.create({
+            model: vehicleModal,
+            plate: vehiclePlate,
+            cpfDriver: vehicleCpfDriver,
+            renavam: vehicleRenavam,
+            createdAt: new Date(),
+            createdBy: "",
+        });
         return !!vehicle;
     }
 
@@ -41,7 +51,7 @@ class FleetVehicleRepository implements IBaseRepository<FleetVehicle> {
         try {
             const result = await FleetVehicle.destroy({
                 where: {
-                    pk_fleet_vehicle: vehicleId,
+                    id: vehicleId,
                 },
             });
             return result > 0;
@@ -60,14 +70,14 @@ class FleetVehicleRepository implements IBaseRepository<FleetVehicle> {
         try {
             const [rowsUpdated] = await FleetVehicle.update(
                 {
-                    fv_modal: vehicleModal,
-                    fv_plate: vehiclePlate,
-                    fv_cpf_driver: vehicleCpfDriver,
-                    fv_revam: vehicleRenavam,
+                    model: vehicleModal,
+                    plate: vehiclePlate,
+                    cpfDriver: vehicleCpfDriver,
+                    renavam: vehicleRenavam,
                 },
                 {
                     where: {
-                        pk_fleet_vehicle: vehicleId,
+                        id: vehicleId,
                     },
                 }
             );

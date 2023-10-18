@@ -4,6 +4,6 @@ type TRemittanceTypeTax = {
     id: number;
     objectType: string;
     calculationBasis: string;
-} & TBaseModel
+} & TBaseModel;
 
-export default TRemittanceTypeTax
+export default TRemittanceTypeTax;

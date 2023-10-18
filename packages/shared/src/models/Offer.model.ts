@@ -4,9 +4,9 @@ type TOfferModel = {
     id: number;
     status: string;
     subtotal: number;
-    taxes: number;
+    taxes?: number;
     total: number;
-    deliveryForecast: string;
+    deliveryForecast: Date;
     quotationId: number;
     fleetVehicleId: number;
 } & TBaseModel;

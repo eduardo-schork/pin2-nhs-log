@@ -3,7 +3,7 @@ import TBaseModel from "./Base.model";
 type TFeedbackModel = {
     id: number;
     rating: number;
-    comment: string;
-} & TBaseModel
+    comment: string | null;
+} & TBaseModel;
 
-export default TFeedbackModel
+export default TFeedbackModel;

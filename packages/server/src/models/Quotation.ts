@@ -31,11 +31,11 @@ class Quotation extends Model<TQuotationModel> {
     email!: string;
 
     @Column({
-        type: DataType.BIGINT,
+        type: DataType.DATE,
         allowNull: false,
-        field: "currentDate",
+        field: "current_date",
     })
-    currentDate!: number;
+    currentDate!: Date;
 
     @ForeignKey(() => Address)
     @Column({
@@ -58,6 +58,42 @@ class Quotation extends Model<TQuotationModel> {
 
     @BelongsTo(() => Address, "fk_destination_address")
     DestinationAddress!: Address;
+
+    @Column({
+        type: DataType.DATE,
+        field: "created_at",
+    })
+    createdAt!: Date;
+
+    @Column({
+        type: DataType.STRING(255),
+        field: "created_by",
+    })
+    createdBy!: string;
+
+    @Column({
+        type: DataType.DATE,
+        field: "updated_at",
+    })
+    updatedAt!: Date;
+
+    @Column({
+        type: DataType.STRING(255),
+        field: "updated_by",
+    })
+    updatedBy!: string;
+
+    @Column({
+        type: DataType.DATE,
+        field: "deleted_at",
+    })
+    deletedAt!: Date;
+
+    @Column({
+        type: DataType.STRING(255),
+        field: "deleted_by",
+    })
+    deletedBy!: string;
 }
 
 export default Quotation;

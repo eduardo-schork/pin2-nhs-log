@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import RegisterRepository from "../../../../shared/repositories/register.repository";
-import t from "../../../../infra/i18n";
+import RegisterRepository from "../../../../../shared/repositories/auth/register.repository";
+import t from "../../../../i18n";
 
 async function handleRegisterAdmin(req: Request, res: Response) {
     try {

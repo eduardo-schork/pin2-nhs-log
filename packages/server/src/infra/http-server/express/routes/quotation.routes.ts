@@ -1,10 +1,18 @@
 import { Router } from "express";
-import { handleCreateQuotation } from "../controllers/quotation.controller";
+import QuotationController from "../controllers/quotation.controller";
 
 const quotationRoutes = Router();
 
-quotationRoutes.post("/quotation", handleCreateQuotation);
+// quotationRoutes.post("/quotation", QuotationController.create);
 
-// quotationRoutes.get("/quotation", handleCreateQuotation);
+quotationRoutes.post("/quotation", QuotationController.createWithAddresses);
+
+quotationRoutes.get("/quotation", QuotationController.findAll);
+
+quotationRoutes.get("/quotation/:id", QuotationController.findOne);
+
+quotationRoutes.delete("/quotation/:id", QuotationController.delete);
+
+quotationRoutes.put("/quotation", QuotationController.update);
 
 export default quotationRoutes;

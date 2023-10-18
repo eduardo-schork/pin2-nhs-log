@@ -9,7 +9,7 @@ import AdminDashboardPage from '@/features/admin/dashboard/admin-dashboard.page'
 import AdminQuoationPage from '@/features/admin/quotation/admin-quotation.page';
 import ScheduleCollectionPage from '@/features/quotation/schedule-collection/schedule-collection.page';
 import CreateFleet from '@/features/admin/fleets/fleet/create-fleet.page';
-import CreateVehicleModal from '@/features/admin/fleets/fleetVehicle/modal-create-fleet-vehicle.page';
+import CreateVehicleModal from '@/features/admin/fleets/fleet-vehicle/modal-create-fleet-vehicle.page';
 
 const BASE_ROUTES = [
     {
@@ -54,7 +54,7 @@ const ADMIN_ROUTES = [
     {
         path: '/admin/fleet',
         element: <CreateFleet />,
-    }
+    },
 ];
 
 const AppRouter = createBrowserRouter([...BASE_ROUTES, ...ADMIN_ROUTES]);

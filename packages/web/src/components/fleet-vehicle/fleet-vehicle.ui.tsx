@@ -9,26 +9,10 @@ function FleetVehicleForm({ fleetVehicle }: { fleetVehicle: TFleetVehicleModel }
                     Cadastro de Veículo
                 </Text>
                 <Grid templateColumns="repeat(4, 1fr)" gap={4}>
-                    <Input
-                        placeholder="ID"
-                        value={fleetVehicle.id.toString()}
-                        required
-                    />
-                    <Input
-                        placeholder="Model"
-                        value={fleetVehicle.model}
-                        required 
-                    />
-                    <Input
-                        placeholder="Plate"
-                        value={fleetVehicle.plate}
-                        required 
-                    />
-                    <Input
-                        placeholder="CPF Driver"
-                        value={fleetVehicle.cpfDriver}
-                        required 
-                    />
+                    <Input placeholder="ID" value={fleetVehicle.id.toString()} required />
+                    <Input placeholder="Model" value={fleetVehicle.model} required />
+                    <Input placeholder="Plate" value={fleetVehicle.plate} required />
+                    <Input placeholder="CPF Driver" value={fleetVehicle.cpfDriver} required />
                 </Grid>
                 <Button colorScheme="blue" mt={4} onClick={() => handleCadastro()}>
                     Cadastrar
@@ -37,9 +21,7 @@ function FleetVehicleForm({ fleetVehicle }: { fleetVehicle: TFleetVehicleModel }
         </div>
     );
 
-    function handleCadastro() {
-        
-    }
+    function handleCadastro() {}
 }
 
 export default FleetVehicleForm;

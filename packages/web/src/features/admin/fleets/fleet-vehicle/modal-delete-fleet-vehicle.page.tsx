@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalCloseButton, Button } from '@chakra-ui/react';
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    ModalCloseButton,
+    Button,
+} from '@chakra-ui/react';
 import t from '@/infra/i18n';
 
 const DeleteVehicleModal = ({ isOpen, onClose, vehicleId }) => {
@@ -46,7 +55,13 @@ const DeleteVehicleModal = ({ isOpen, onClose, vehicleId }) => {
                 </ModalContent>
             </Modal>
 
-            <Modal isOpen={isErrorModalOpen} onClose={() => { setIsErrorModalOpen(false); onClose(); }}>
+            <Modal
+                isOpen={isErrorModalOpen}
+                onClose={() => {
+                    setIsErrorModalOpen(false);
+                    onClose();
+                }}
+            >
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>Erro</ModalHeader>
@@ -55,7 +70,14 @@ const DeleteVehicleModal = ({ isOpen, onClose, vehicleId }) => {
                         <p>{t('common.VehicleInFleet')}</p>
                     </ModalBody>
                     <ModalFooter>
-                        <Button onClick={() => { setIsErrorModalOpen(false); onClose(); }}>Fechar</Button>
+                        <Button
+                            onClick={() => {
+                                setIsErrorModalOpen(false);
+                                onClose();
+                            }}
+                        >
+                            Fechar
+                        </Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

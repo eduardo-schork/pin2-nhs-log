@@ -73,15 +73,38 @@ class Address extends Model<TAddressModel> {
 
     @Column({
         type: DataType.DATE,
-        field: "createdAt",
+        field: "created_at",
     })
     createdAt!: Date;
 
     @Column({
+        type: DataType.STRING(255),
+        field: "created_by",
+    })
+    createdBy!: string;
+    @Column({
         type: DataType.DATE,
-        field: "updatedAt",
+        field: "updated_at",
     })
     updatedAt!: Date;
+
+    @Column({
+        type: DataType.STRING(255),
+        field: "updated_by",
+    })
+    updatedBy!: string;
+
+    @Column({
+        type: DataType.DATE,
+        field: "deleted_at",
+    })
+    deletedAt!: Date;
+
+    @Column({
+        type: DataType.STRING(255),
+        field: "deleted_by",
+    })
+    deletedBy!: string;
 }
 
 export default Address;

@@ -45,6 +45,6 @@ export const LoginText = styled.span`
 `;
 
 export const CustomModalContent = styled.div`
-    width: 400px; 
-    max-width: 90%; 
+    width: 400px;
+    max-width: 90%;
 `;

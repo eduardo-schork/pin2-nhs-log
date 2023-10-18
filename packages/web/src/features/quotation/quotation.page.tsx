@@ -1,52 +1,20 @@
 import { PageContainer } from '@/components/container/container.ui';
 import BaseLayout from '@/components/layout/base-layout/base-layout.ui';
 import Spacings from '@/styles/tokens/spacing';
-import { Text, useDisclosure } from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
 import CreateQuotationForm from './create-quotation-form.ui';
 import Modal from '@/components/modal.ui';
 import TrackQuotationSection from './track-quotation-section.ui';
-import { useNavigate } from 'react-router-dom';
-import HttpRequestPort from '@/infra/http-request/http-request.port';
+import useQuotationLogic from './quotation.logic';
 
 function QuotationPage({ ...props }) {
-    const navigate = useNavigate();
-
     const {
-        isOpen: isOpenCreateModal,
-        onOpen: openCreateModalHandler,
-        onClose: closeCreateModalHandler,
-    } = useDisclosure();
-
-    function normalizeQuotationWithAddresses(data: any) {
-        return {
-            quotation: {
-                cpf: data.cpf,
-                email: data.email,
-                currentDate: Date.now(),
-            },
-            itemRemittance: {
-                objectType: data.remittanceType,
-                weight: data.remittanceWeight,
-            },
-            originAddress: data.originAddress,
-            destinationAddress: data.destinationAddress,
-        };
-    }
-
-    async function onSubmitCreateQuotation(data: any) {
-        const normalizedData = normalizeQuotationWithAddresses(data);
-        console.log({ normalizedData });
-
-        const returndata = await HttpRequestPort.post({ path: '/api/quotation', body: normalizedData });
-
-        openCreateModalHandler();
-    }
-
-    function onSubmitTrackQuotation(value: string) {
-        console.log({ value });
-        navigate('/quotation/track');
-    }
-
+        isOpenCreateModal,
+        itemRemittanceTypes,
+        closeCreateModalHandler,
+        onSubmitTrackQuotation,
+        onSubmitCreateQuotation,
+    } = useQuotationLogic();
     return (
         <BaseLayout {...props}>
             <Modal title={'Cotação enviada!'} isOpen={isOpenCreateModal} onClose={closeCreateModalHandler}>
@@ -56,7 +24,7 @@ function QuotationPage({ ...props }) {
             <TrackQuotationSection onSubmit={onSubmitTrackQuotation} />
 
             <PageContainer gap={Spacings.MEDIUM}>
-                <CreateQuotationForm onSubmit={onSubmitCreateQuotation} />
+                <CreateQuotationForm remittanceTypes={itemRemittanceTypes} onSubmit={onSubmitCreateQuotation} />
             </PageContainer>
         </BaseLayout>
     );

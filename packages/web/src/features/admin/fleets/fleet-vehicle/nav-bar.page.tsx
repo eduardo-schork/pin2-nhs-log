@@ -1,4 +1,4 @@
-import { Container, Content } from './../../../../components/layout/base-layout/base-layout.styles';
+import { Container, Content } from '../../../../components/layout/base-layout/base-layout.styles';
 import AppBar from '../../../../components/layout/app-bar/app-bar.ui';
 
 function BaseLayout({

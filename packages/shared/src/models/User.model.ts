@@ -1,10 +1,12 @@
-import TBaseModel from "./Base.model"
+import TBaseModel from "./Base.model";
 
 type TUserModel = {
+    id?: number;
     name: string;
     cpf: string;
     email: string;
     password: string;
-} & TBaseModel
+    session?: string;
+} & TBaseModel;
 
 export default TUserModel;

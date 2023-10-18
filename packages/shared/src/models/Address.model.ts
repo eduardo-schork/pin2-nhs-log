@@ -8,9 +8,8 @@ type TAddressModel = {
     state: string;
     country: string;
     zipCode: string;
-    geoLatitude: number;
-    geoLongitude: number;
-} & TBaseModel
+    geoLatitude: number | null;
+    geoLongitude: number | null;
+} & TBaseModel;
 
-export default TAddressModel
-
+export default TAddressModel;

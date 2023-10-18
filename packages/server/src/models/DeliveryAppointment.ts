@@ -1,45 +1,51 @@
 import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from "sequelize-typescript";
 import Address from "./Address";
 import DeliveryProcess from "./DeliveryProcess";
+import TDeliveryAppointmentModel from "@/shared/src/models/DeliveryAppointment.model";
 
 @Table({
     tableName: "Delivery_Appointment",
     modelName: "DeliveryAppointment",
 })
-class DeliveryAppointment extends Model {
+class DeliveryAppointment extends Model<TDeliveryAppointmentModel> {
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
+        field: "pk_delivery_appointment",
     })
-    pk_delivery_appointment!: number;
+    id!: number;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
+        field: "da_status",
     })
-    da_status!: string;
+    status!: string;
 
     @Column({
         type: DataType.DATE,
         allowNull: false,
+        field: "da_appointment_date",
     })
-    da_appointment_date!: Date;
+    date!: Date;
 
     @ForeignKey(() => Address)
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
+        field: "fk_current_address",
     })
-    fk_current_address!: number;
+    currentAddressId!: number;
 
     @ForeignKey(() => DeliveryProcess)
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
+        field: "fk_delivery_process",
     })
-    fk_delivery_process!: number;
+    deliveryProcessId!: number;
 
     @BelongsTo(() => Address, "fkCurrentAddress")
     CurrentAddress?: Address;
@@ -49,13 +55,39 @@ class DeliveryAppointment extends Model {
 
     @Column({
         type: DataType.DATE,
+        field: "created_at",
     })
     createdAt!: Date;
 
     @Column({
+        type: DataType.STRING(255),
+        field: "created_by",
+    })
+    createdBy!: string;
+
+    @Column({
         type: DataType.DATE,
+        field: "updated_at",
     })
     updatedAt!: Date;
+
+    @Column({
+        type: DataType.STRING(255),
+        field: "updated_by",
+    })
+    updatedBy!: string;
+
+    @Column({
+        type: DataType.DATE,
+        field: "deleted_at",
+    })
+    deletedAt!: Date;
+
+    @Column({
+        type: DataType.STRING(255),
+        field: "deleted_by",
+    })
+    deletedBy!: string;
 }
 
 export default DeliveryAppointment;

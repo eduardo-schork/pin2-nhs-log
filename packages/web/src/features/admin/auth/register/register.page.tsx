@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // Importe o useState
+import { useState } from 'react'; // Importe o useState
 import { Text } from '@chakra-ui/react';
 import RegisterBackground from '@/assets/register-page.png';
 import { ContainedButton } from '@/components/button/button.ui';
@@ -43,7 +43,7 @@ function RegisterPage({ ...props }) {
                     userEmail: data.userEmail,
                     userPassword: data.userPassword,
                 });
-    
+
                 try {
                     const res = await fetch(`http://localhost:8000/api/admin/register?${requestData}`, {
                         method: 'POST',
@@ -51,7 +51,7 @@ function RegisterPage({ ...props }) {
                             'Content-Type': 'application/json',
                         },
                     });
-    
+
                     if (res.status === 200) {
                         console.log(res);
                         navigate('/');
@@ -66,7 +66,7 @@ function RegisterPage({ ...props }) {
                 }
             }
         }
-    }    
+    }
 
     return (
         <PageContainer {...props}>

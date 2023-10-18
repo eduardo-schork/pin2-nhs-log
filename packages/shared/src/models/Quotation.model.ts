@@ -5,7 +5,7 @@ type TQuotationModel = {
     id: number;
     cpf: string;
     email: string;
-    currentDate: string;
+    currentDate: Date;
     originAddressId: number;
     destinationAddressId: number;
     itemRemittance?: TItemRemittanceModel;

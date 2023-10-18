@@ -1,10 +1,10 @@
 type TBaseModel = {
-    createdAt: number;
+    createdAt: Date;
     createdBy: string;
-    updatedAt?: number;
+    updatedAt?: Date;
     updatedBy?: string;
-    deletedAt?: number;
+    deletedAt?: Date;
     deletedBy?: string;
-}
+};
 
-export default TBaseModel
+export default TBaseModel;

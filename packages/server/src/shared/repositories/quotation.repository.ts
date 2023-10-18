@@ -3,26 +3,32 @@ import TQuotationModel from "@/shared/src/models/Quotation.model";
 import Quotation from "../../models/Quotation";
 
 class QuotationRepository implements IBaseRepository<TQuotationModel> {
-    findAll(): Promise<TQuotationModel[]> {
-        throw new Error("Method not implemented.");
+    async findAll(): Promise<TQuotationModel[]> {
+        const findAllResult = await Quotation.findAll();
+        return findAllResult;
     }
 
-    findOne({ id }: { id: string }): Promise<TQuotationModel> {
-        throw new Error("Method not implemented.");
+    async findOne({ id }: { id: string }): Promise<TQuotationModel | null> {
+        const findOneResult = await Quotation.findOne({ where: { id } });
+        return findOneResult;
     }
-    delete({ id }: { id: string }): Promise<void> {
-        throw new Error("Method not implemented.");
+
+    async delete({ id }: { id: string }): Promise<boolean> {
+        const deletedRows = await Quotation.destroy({ where: { id } });
+
+        if (deletedRows > 0) return true;
+        return false;
     }
+
     async create({ data }: { data: TQuotationModel }): Promise<TQuotationModel> {
-        const databaseQuotation = await Quotation.create(data);
-
-        console.log({ databaseQuotation });
-
-        return databaseQuotation;
+        const createResult = await Quotation.create(data);
+        return createResult;
     }
 
-    update({ data }: { data: TQuotationModel }): Promise<TQuotationModel> {
-        throw new Error("Method not implemented.");
+    async update({ data }: { data: TQuotationModel }): Promise<TQuotationModel | null> {
+        const [affectedRows] = await Quotation.update(data, { where: { id: data.id } });
+        if (affectedRows > 0) return data;
+        return null;
     }
 }
 

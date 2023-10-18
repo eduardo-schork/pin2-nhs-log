@@ -5,28 +5,28 @@ class SeedItemRemittanceType {
         try {
             await ItemRemittanceType.bulkCreate([
                 {
-                    pk_item_remittance_type: 1,
-                    irt_type: "Documentos",
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
+                    id: 1,
+                    type: "Documentos",
+                    createdAt: Date.now(),
+                    createdBy: "",
                 },
                 {
-                    pk_item_remittance_type: 2,
-                    irt_type: "Inflamável",
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
+                    id: 2,
+                    type: "Inflamável",
+                    createdAt: Date.now(),
+                    createdBy: "",
                 },
                 {
-                    pk_item_remittance_type: 3,
-                    irt_type: "Eletrônicos",
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
+                    id: 3,
+                    type: "Eletrônicos",
+                    createdAt: Date.now(),
+                    createdBy: "",
                 },
                 {
-                    pk_item_remittance_type: 4,
-                    irt_type: "Frágil",
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
+                    id: 4,
+                    type: "Frágil",
+                    createdAt: Date.now(),
+                    createdBy: "",
                 },
             ]);
             return true;

@@ -2,7 +2,7 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseBu
 import TextInput from '@/components/text-input/text-input.ui';
 import { ContainedButton } from '@/components/button/button.ui';
 import t from '@/infra/i18n';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FormContainer } from './create.styles';
 import { useForm } from 'react-hook-form';
 import ErrorModal from './error.modal';
@@ -15,7 +15,9 @@ type TCreateVehiclePageFormValues = {
     vehicleRenavam: string;
 };
 
-const CreateVehicleModal: React.FC<CreateVehicleModalProps> = ({ isOpen, onClose }) => {
+type TCreateVehicleModalProps = any;
+
+const CreateVehicleModal: React.FC<TCreateVehicleModalProps> = ({ isOpen, onClose }) => {
     const navigate = useNavigate();
     const { register, handleSubmit } = useForm<TCreateVehiclePageFormValues>();
     const [error, setError] = useState<string | null>(null);
@@ -64,7 +66,7 @@ const CreateVehicleModal: React.FC<CreateVehicleModalProps> = ({ isOpen, onClose
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
-            <ModalContent className="custom-modal-content" justifyContent="center" alignItems="center" size="sm">
+            <ModalContent className="custom-modal-content" justifyContent="center" alignItems="center">
                 <ModalHeader>Cadastro de Veículo</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>

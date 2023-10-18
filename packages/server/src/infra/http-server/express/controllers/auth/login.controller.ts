@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import LoginRepository from "../../../../shared/repositories/login.repository";
-import t from "../../../../infra/i18n";
+import LoginRepository from "../../../../../shared/repositories/auth/login.repository";
+import t from "../../../../i18n";
 
 async function handleFindAdmin(req: Request, res: Response) {
     try {

@@ -2,28 +2,33 @@ import IBaseRepository from "./base.repository";
 import TAddressModel from "@/shared/src/models/Address.model";
 import Address from "../../models/Address";
 
-class QuotationRepository implements IBaseRepository<TAddressModel> {
-    findAll(): Promise<TAddressModel[]> {
-        throw new Error("Method not implemented.");
+class AddressRepository implements IBaseRepository<TAddressModel> {
+    async findAll(): Promise<TAddressModel[]> {
+        const findAllResult = await Address.findAll();
+        return findAllResult;
     }
 
-    findOne({ id }: { id: string }): Promise<TAddressModel> {
-        throw new Error("Method not implemented.");
+    async findOne({ id }: { id: string }): Promise<TAddressModel | null> {
+        const findOneResult = await Address.findOne({ where: { id } });
+        return findOneResult;
     }
-    delete({ id }: { id: string }): Promise<void> {
-        throw new Error("Method not implemented.");
+
+    async delete({ id }: { id: string }): Promise<boolean> {
+        const deletedRows = await Address.destroy({ where: { id } });
+
+        if (deletedRows > 0) return true;
+        return false;
     }
     async create({ data }: { data: TAddressModel }): Promise<TAddressModel> {
-        const databaseAddress = await Address.create(data);
-
-        console.log({ databaseAddress });
-
-        return databaseAddress;
+        const createResult = await Address.create(data);
+        return createResult;
     }
 
-    update({ data }: { data: TAddressModel }): Promise<TAddressModel> {
-        throw new Error("Method not implemented.");
+    async update({ data }: { data: TAddressModel }): Promise<TAddressModel | null> {
+        const [affectedRows] = await Address.update(data, { where: { id: data.id } });
+        if (affectedRows > 0) return data;
+        return null;
     }
 }
 
-export default new QuotationRepository();
+export default new AddressRepository();

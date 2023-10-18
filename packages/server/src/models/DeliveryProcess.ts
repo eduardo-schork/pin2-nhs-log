@@ -1,55 +1,85 @@
-import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import Offer from './Offer';
-import Feedback from './Feedback';
+import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from "sequelize-typescript";
+import Offer from "./Offer";
+import Feedback from "./Feedback";
+import TDeliveryProcessModel from "@/shared/src/models/DeliveryProcess.model";
 
 @Table({
-    tableName: 'Delivery_Process',
-    modelName: 'DeliveryProcess',
+    tableName: "Delivery_Process",
+    modelName: "DeliveryProcess",
 })
-class DeliveryProcess extends Model {
+class DeliveryProcess extends Model<TDeliveryProcessModel> {
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
+        field: "pk_delivery_process",
     })
-    pk_delivery_process!: number;
+    id!: number;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
+        field: "dp_status",
     })
-    dp_status!: string;
+    status!: string;
 
     @ForeignKey(() => Offer)
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
+        field: "fk_offer",
     })
-    fk_offer!: number;
+    offerId!: number;
 
     @ForeignKey(() => Feedback)
     @Column({
         type: DataType.INTEGER,
-        allowNull: false,
+        field: "fk_feedback",
     })
-    fk_feedback!: number;
+    feedbackId!: number;
 
-    @BelongsTo(() => Offer, 'fkOffer')
+    @BelongsTo(() => Offer, "fkOffer")
     Offer?: Offer;
 
-    @BelongsTo(() => Feedback, 'fkFeedback')
+    @BelongsTo(() => Feedback, "fkFeedback")
     Feedback?: Feedback;
 
     @Column({
         type: DataType.DATE,
+        field: "created_at",
     })
     createdAt!: Date;
 
     @Column({
+        type: DataType.STRING(255),
+        field: "created_by",
+    })
+    createdBy!: string;
+
+    @Column({
         type: DataType.DATE,
+        field: "updated_at",
     })
     updatedAt!: Date;
+
+    @Column({
+        type: DataType.STRING(255),
+        field: "updated_by",
+    })
+    updatedBy!: string;
+
+    @Column({
+        type: DataType.DATE,
+        field: "deleted_at",
+    })
+    deletedAt!: Date;
+
+    @Column({
+        type: DataType.STRING(255),
+        field: "deleted_by",
+    })
+    deletedBy!: string;
 }
 
 export default DeliveryProcess;

@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
-import fleetVehicleRepository from "../../../../shared/repositories/fleet-vehicle.repository";
+import FleetVehicleRepository from "../../../../shared/repositories/fleet-vehicle.repository";
 import t from "../../../i18n";
 import FleetVehicle from "../../../../models/FleetVehicle";
+import TFleetVehicleModel from "@/shared/src/models/FleetVehicle.model";
 
 async function handleFindAllFleetVehicles(req: Request, res: Response) {
     try {
-        const vehicles = await fleetVehicleRepository.findAll();
+        const vehicles = await FleetVehicleRepository.findAll();
 
         if (vehicles) {
             res.status(200).send(vehicles);
@@ -24,7 +25,7 @@ async function createFleetVehicle(req: Request, res: Response) {
         const vehicleCpfDriver = req.query.vehicleCpfDriver;
         const vehicleRenavam = req.query.vehicleRenavam;
 
-        const vehicles = await fleetVehicleRepository.createFleetVehicle(
+        const vehicles = await FleetVehicleRepository.createFleetVehicle(
             vehicleModal,
             vehiclePlate,
             vehicleCpfDriver,
@@ -51,7 +52,7 @@ async function deleteFleetVehicle(req: Request, res: Response) {
             return res.status(404).send({ error: "Veículo não encontrado." });
         }
 
-        const isDeleted = await fleetVehicleRepository.deleteFleetVehicle(vehicleId);
+        const isDeleted = await FleetVehicleRepository.deleteFleetVehicle(vehicleId);
 
         if (isDeleted) {
             return res.status(200).send({ success: true });
@@ -66,8 +67,7 @@ async function deleteFleetVehicle(req: Request, res: Response) {
 
 async function updateFleetVehicle(req: Request, res: Response) {
     const vehicleId = req.params.vehicleId;
-    const { fv_modal, fv_plate, fv_cpf_driver, fv_revam } = req.body;
-
+    const { model, plate, cpfDriver, renavam } = req.body as TFleetVehicleModel;
     try {
         const existingVehicle = await FleetVehicle.findByPk(vehicleId);
 
@@ -75,12 +75,12 @@ async function updateFleetVehicle(req: Request, res: Response) {
             return res.status(404).send({ error: "Veículo não encontrado." });
         }
 
-        const updated = await fleetVehicleRepository.updateFleetVehicle(
+        const updated = await FleetVehicleRepository.updateFleetVehicle(
             vehicleId,
-            fv_modal,
-            fv_plate,
-            fv_cpf_driver,
-            fv_revam
+            model,
+            plate,
+            cpfDriver,
+            renavam
         );
 
         if (updated) {
@@ -94,4 +94,77 @@ async function updateFleetVehicle(req: Request, res: Response) {
     }
 }
 
-export { handleFindAllFleetVehicles, createFleetVehicle, deleteFleetVehicle, updateFleetVehicle };
+async function findAll(req: Request, res: Response) {
+    try {
+        const findAllResult = await FleetVehicleRepository.findAll();
+        return res.status(200).send(findAllResult);
+    } catch (error) {
+        console.log("error");
+        return res.status(500).send("");
+    }
+}
+
+async function findOne(req: Request, res: Response) {
+    const idToFind = req.params.id;
+    try {
+        const findOneResult = await FleetVehicleRepository.findOne({ id: idToFind });
+        return res.status(200).send(findOneResult);
+    } catch (error) {
+        console.log("error");
+        return res.status(500).send("");
+    }
+}
+
+async function create(req: Request, res: Response) {
+    try {
+        const body = req.body;
+
+        const createResult = await FleetVehicleRepository.create({ data: body });
+        return res.status(201).send(createResult);
+    } catch (error) {
+        console.log("error");
+        return res.status(500).send("");
+    }
+}
+
+async function update(req: Request, res: Response) {
+    try {
+        const body = req.body;
+
+        const updateReturn = await FleetVehicleRepository.update({ data: body });
+        return res.status(204).send(updateReturn);
+    } catch (error) {
+        console.log("error");
+        return res.status(500).send("");
+    }
+}
+
+async function deleteOne(req: Request, res: Response) {
+    try {
+        const idToFind = req.params.id;
+
+        const deleteReturn = await FleetVehicleRepository.delete({ id: idToFind });
+
+        if (deleteReturn) return res.status(204).send("");
+        return res.status(400).send("");
+    } catch (error) {
+        console.log("error");
+        return res.status(500).send("");
+    }
+}
+
+const FleetVehicleController = {
+    findAll,
+    findOne,
+    create,
+    update,
+    delete: deleteOne,
+
+    // created before refactor handlers
+    handleFindAllFleetVehicles,
+    createFleetVehicle,
+    deleteFleetVehicle,
+    updateFleetVehicle,
+};
+
+export default FleetVehicleController;

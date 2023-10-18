@@ -1,52 +1,84 @@
 import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from "sequelize-typescript";
 import Fleet from "./Fleet";
+import TFleetVehicleModel from "@/shared/src/models/FleetVehicle.model";
 
 @Table({
     tableName: "Fleet_Vehicle",
     modelName: "FleetVehicle",
 })
-class FleetVehicle extends Model {
+class FleetVehicle extends Model<TFleetVehicleModel> {
     @Column({
         type: DataType.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
+        field: "pk_fleet_vehicle",
     })
-    pk_fleet_vehicle!: number;
+    id!: number;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
+        field: "fv_model",
     })
-    fv_modal!: string;
+    model!: string;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
+        field: "fv_plate",
     })
-    fv_plate!: string;
+    plate!: string;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
+        field: "fv_cpf_driver",
     })
-    fv_cpf_driver!: string;
+    cpfDriver!: string;
 
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
+        field: "fv_renavam",
     })
-    fv_revam!: string;
+    renavam!: string;
 
     @Column({
         type: DataType.DATE,
+        field: "created_at",
     })
     createdAt!: Date;
 
     @Column({
+        type: DataType.STRING(255),
+        field: "created_by",
+    })
+    createdBy!: string;
+
+    @Column({
         type: DataType.DATE,
+        field: "updated_at",
     })
     updatedAt!: Date;
+
+    @Column({
+        type: DataType.STRING(255),
+        field: "updated_by",
+    })
+    updatedBy!: string;
+
+    @Column({
+        type: DataType.DATE,
+        field: "deleted_at",
+    })
+    deletedAt!: Date;
+
+    @Column({
+        type: DataType.STRING(255),
+        field: "deleted_by",
+    })
+    deletedBy!: string;
 }
 
 export default FleetVehicle;

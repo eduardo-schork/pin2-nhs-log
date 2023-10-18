@@ -1,5 +1,4 @@
 import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from "sequelize-typescript";
-import ItemRemittanceType from "./ItemRemittanceType";
 import TItemRemittanceModel from "@/shared/src/models/ItemRemittance.model";
 import Quotation from "./Quotation";
 
@@ -44,13 +43,39 @@ class ItemRemittance extends Model<TItemRemittanceModel> {
 
     @Column({
         type: DataType.DATE,
+        field: "created_at",
     })
     createdAt!: Date;
 
     @Column({
+        type: DataType.STRING(255),
+        field: "created_by",
+    })
+    createdBy!: string;
+
+    @Column({
         type: DataType.DATE,
+        field: "updated_at",
     })
     updatedAt!: Date;
+
+    @Column({
+        type: DataType.STRING(255),
+        field: "updated_by",
+    })
+    updatedBy!: string;
+
+    @Column({
+        type: DataType.DATE,
+        field: "deleted_at",
+    })
+    deletedAt!: Date;
+
+    @Column({
+        type: DataType.STRING(255),
+        field: "deleted_by",
+    })
+    deletedBy!: string;
 }
 
 export default ItemRemittance;

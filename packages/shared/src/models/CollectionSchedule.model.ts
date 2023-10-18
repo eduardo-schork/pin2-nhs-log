@@ -2,8 +2,8 @@ import TBaseModel from "./Base.model";
 
 type TCollectionScheduleModel = {
     id: number;
-    data: number;
-    comment: string;
+    date: Date;
+    comment: string | null;
     collectionAddressId: number;
 } & TBaseModel;
 

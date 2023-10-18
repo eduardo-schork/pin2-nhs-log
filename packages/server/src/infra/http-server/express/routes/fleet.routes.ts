@@ -5,14 +5,14 @@ const fleetRoutes = Router();
 
 fleetRoutes.post("/fleet/create", FleetController.createWithVehicles);
 
-fleetRoutes.get("/user", FleetController.findAll);
+fleetRoutes.get("/fleet", FleetController.findAll);
 
-fleetRoutes.get("/user/:id", FleetController.findOne);
+fleetRoutes.get("/fleet/:id", FleetController.findOne);
 
-fleetRoutes.post("/user", FleetController.create);
+fleetRoutes.post("/fleet", FleetController.create);
 
-fleetRoutes.delete("/user/:id", FleetController.delete);
+fleetRoutes.delete("/fleet/:id", FleetController.delete);
 
-fleetRoutes.put("/user", FleetController.update);
+fleetRoutes.put("/fleet", FleetController.update);
 
 export default fleetRoutes;

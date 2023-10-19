@@ -147,7 +147,7 @@ function CreateFleet({ ...props }) {
                                                     isChecked={selectedFleetVehicles.includes(vehicle.id.toString())}
                                                     onChange={() => handleCheckboxChange(vehicle.id)}
                                                 >
-                                                    {vehicle.id}
+                                                    {vehicle.plate}
                                                 </Checkbox>
                                                 <Button
                                                     onClick={() => selectEditVehicle(vehicle)}

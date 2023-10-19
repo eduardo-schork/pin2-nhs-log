@@ -18,10 +18,15 @@ type TCreateVehiclePageFormValues = {
 type TCreateVehicleModalProps = any;
 
 const CreateVehicleModal: React.FC<TCreateVehicleModalProps> = ({ isOpen, onClose }) => {
-    const navigate = useNavigate();
-    const { register, handleSubmit } = useForm<TCreateVehiclePageFormValues>();
+    const { register, handleSubmit, reset } = useForm<TCreateVehiclePageFormValues>();
     const [error, setError] = useState<string | null>(null);
     const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+    const [formData, setFormData] = useState<TCreateVehiclePageFormValues>({
+        vehicleModal: '',
+        vehiclePlate: '',
+        vehicleCpfDriver: '',
+        vehicleRenavam: '',
+    });
 
     const closeErrorModal = () => {
         setError(null);
@@ -50,7 +55,13 @@ const CreateVehicleModal: React.FC<TCreateVehicleModalProps> = ({ isOpen, onClos
 
                 if (res.status === 200) {
                     console.log(res);
-                    navigate('/admin/fleet');
+                    reset(); 
+                    setFormData({
+                        vehicleModal: '',
+                        vehiclePlate: '',
+                        vehicleCpfDriver: '',
+                        vehicleRenavam: '',
+                    });
                 } else {
                     setError(t('Register.error'));
                     setIsErrorModalOpen(true);
@@ -71,11 +82,42 @@ const CreateVehicleModal: React.FC<TCreateVehicleModalProps> = ({ isOpen, onClos
                 <ModalCloseButton />
                 <ModalBody>
                     <FormContainer>
-                        <TextInput {...register('vehicleModal')} placeholder={t('Register.modal')} />
-                        <TextInput {...register('vehiclePlate')} placeholder={t('Register.plate')} />
-                        <TextInput {...register('vehicleCpfDriver')} placeholder={t('Register.cpfDriver')} />
-                        <TextInput {...register('vehicleRenavam')} placeholder={t('Register.renavam')} />
-
+                    <TextInput
+                            {...register('vehicleModal')}
+                            placeholder={t('Register.modal')}
+                            value={formData.vehicleModal} 
+                            onChange={(e) =>
+                                setFormData({ ...formData, vehicleModal: e.target.value })
+                            }
+                        />
+                        <TextInput
+                            {...register('vehiclePlate')}
+                            placeholder={t('Register.plate')}
+                            value={formData.vehiclePlate}
+                            onChange={(e) => {
+                                const inputValue = e.target.value;
+                                if (inputValue.length <= 7) {
+                                    setFormData({ ...formData, vehiclePlate: inputValue });
+                                }
+                            }}
+                            maxLength={7} // Defina a propriedade maxLength para 7 caracteres
+                        />
+                        <TextInput
+                            {...register('vehicleCpfDriver')}
+                            placeholder={t('Register.cpfDriver')}
+                            value={formData.vehicleCpfDriver} 
+                            onChange={(e) =>
+                                setFormData({ ...formData, vehicleCpfDriver: e.target.value })
+                            }
+                        />
+                        <TextInput
+                            {...register('vehicleRenavam')}
+                            placeholder={t('Register.renavam')}
+                            value={formData.vehicleRenavam} // Use o valor do estado formData
+                            onChange={(e) =>
+                                setFormData({ ...formData, vehicleRenavam: e.target.value })
+                            }
+                        />
                         <ContainedButton onClick={handleSubmit(handleFormSubmit)}>
                             <Text>{t('common.Register')}</Text>
                         </ContainedButton>

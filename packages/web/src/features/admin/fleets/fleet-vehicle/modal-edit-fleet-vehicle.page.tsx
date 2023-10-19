@@ -26,9 +26,12 @@ const EditVehicleModal: React.FC<TEditVehicleModalProps> = ({ isOpen, onClose, v
     };
 
     async function handleFormSubmit(data: Pick<TFleetVehicleModel, 'model' | 'plate' | 'cpfDriver' | 'renavam'>) {
-        // TODO bring back parameters validation
-        // setError(t('common.MissingParameter'));
-        // setIsErrorModalOpen(true);
+        
+        if (!data.model || !data.plate || !data.cpfDriver || !data.renavam) {
+            setError(t('common.MissingParameter'));
+            setIsErrorModalOpen(true);
+            return; 
+        }
 
         try {
             const res = await fetch(`http://localhost:8000/api/fleetVehicle/update/${vehicle.id}`, {

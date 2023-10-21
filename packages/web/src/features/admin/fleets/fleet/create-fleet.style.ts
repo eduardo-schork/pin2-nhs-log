@@ -50,3 +50,43 @@ export const LoginText = styled.span`
     font-size: ${FontSizes.DEFAULT};
     font-weight: bold;
 `;
+
+export const TableContainer = styled.div`
+    width: 70%;
+    margin: 0 auto;
+`;
+
+export const TableRow = styled.tr``;
+
+export const Table = styled.table`
+    width: 10% !important; 
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+`;
+
+export const TableHeader = styled.th`
+    width: auto !important; 
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+`;
+
+export const TableCell = styled.td`
+    width: auto !important; 
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+`;
+
+export const MergedTableRow = styled.tr`
+    background-color: #f2f2f2;
+`;
+
+export const handleEdit = (fleetId: any) => {
+    console.log(`Editar frota ${fleetId}`);
+};
+
+export const handleDelete = (fleetId: any) => {
+    console.log(`Excluir frota ${fleetId}`);
+};

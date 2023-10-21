@@ -44,7 +44,9 @@ const EditVehicleModal: React.FC<TEditVehicleModalProps> = ({ isOpen, onClose, v
 
             if (res.status === 200) {
                 console.log(res);
-                // navigate('/admin/fleet');
+                
+                window.location.reload();
+                
             } else {
                 setError(t('Update.error'));
                 setIsErrorModalOpen(true);
@@ -74,6 +76,7 @@ const EditVehicleModal: React.FC<TEditVehicleModalProps> = ({ isOpen, onClose, v
                             {...register('plate')}
                             placeholder={t('Register.plate')}
                             defaultValue={vehicle.plate}
+                            maxLength={7}
                         />
                         <TextInput
                             {...register('cpfDriver')}

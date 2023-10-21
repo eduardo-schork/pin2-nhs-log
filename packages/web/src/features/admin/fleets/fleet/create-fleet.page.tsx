@@ -33,7 +33,6 @@ type TCreateFleetPageFormValues = {
 };
 
 function CreateFleet({ ...props }) {
-    const navigate = useNavigate();
     const { register, handleSubmit } = useForm<TCreateFleetPageFormValues>();
 
     const [fleetVehicles, setFleetVehicles] = useState<TFleetVehicleModel[]>([]);
@@ -102,7 +101,7 @@ function CreateFleet({ ...props }) {
 
                 if (res.status === 200) {
                     console.log(res);
-                    navigate('/admin/fleet');
+                    window.location.reload();
                 } else {
                     setError(t('Register.error'));
                     setIsErrorModalOpen(true);

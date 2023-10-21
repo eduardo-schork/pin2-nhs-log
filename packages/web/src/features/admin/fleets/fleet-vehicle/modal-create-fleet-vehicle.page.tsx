@@ -62,6 +62,9 @@ const CreateVehicleModal: React.FC<TCreateVehicleModalProps> = ({ isOpen, onClos
                         vehicleCpfDriver: '',
                         vehicleRenavam: '',
                     });
+
+                    window.location.reload();
+                    
                 } else {
                     setError(t('Register.error'));
                     setIsErrorModalOpen(true);
@@ -100,7 +103,7 @@ const CreateVehicleModal: React.FC<TCreateVehicleModalProps> = ({ isOpen, onClos
                                     setFormData({ ...formData, vehiclePlate: inputValue });
                                 }
                             }}
-                            maxLength={7} // Defina a propriedade maxLength para 7 caracteres
+                            maxLength={7} 
                         />
                         <TextInput
                             {...register('vehicleCpfDriver')}

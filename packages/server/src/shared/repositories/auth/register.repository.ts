@@ -9,7 +9,7 @@ class RegisterRepository implements IBaseRepository<RegisterModel> {
         userCpf: any,
         userEmail: any,
         userPassword: any
-    ): Promise<boolean> {
+    ): Promise<number> {
         const hashedPassword = await bcrypt.hash(userPassword, 10);
 
         const user = await User.create({
@@ -20,7 +20,7 @@ class RegisterRepository implements IBaseRepository<RegisterModel> {
             createdAt: new Date(),
             createdBy: "",
         });
-        return !!user;
+        return user.id;
     }
 
     findAll(): Promise<RegisterModel[]> {

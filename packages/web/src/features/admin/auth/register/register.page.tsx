@@ -53,8 +53,9 @@ function RegisterPage({ ...props }) {
                     });
 
                     if (res.status === 200) {
-                        console.log(res);
-                        navigate('/');
+                        const result = await res.json();
+
+                        navigate('/admin', { state: { userId: result } });
                     } else {
                         setError(t('Register.error'));
                         setIsErrorModalOpen(true);

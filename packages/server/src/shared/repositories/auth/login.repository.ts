@@ -8,8 +8,9 @@ class LoginRepository implements IBaseRepository<LoginModel> {
         const user = await User.findOne({ where: { email: userEmail } });
         if (user) {
             const isPasswordValid = await bcrypt.compare(userPassword, user.password);
-
-            if (isPasswordValid) return user.id;
+            if (isPasswordValid) {
+                return user.id;
+            }
         }
         return null;
     }

@@ -34,24 +34,36 @@ function LoginPage({ ...props }) {
                 userEmail: data.userEmail,
                 userPassword: data.userPassword,
             });
-
-            const res = await fetch(`http://localhost:8000/api/admin/login?${queryParams}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            const result = await res.json();
-
-            if (res.status === 200) {
-                navigate('/admin', { state: { userId: result } });
-            } else {
+    
+            try {
+                const res = await fetch(`http://localhost:8000/api/admin/login?${queryParams}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                console.log(res)
+    
+                if (res.status === 200) {
+                    const result = await res.json();
+                    if (result) {
+                        navigate('/admin', { state: { userId: result } });
+                    } else {
+                        setError(t('Login.userNotFound'));
+                        setIsErrorModalOpen(true);
+                    }
+                } else {
+                    setError(t('Login.userNotFound'));
+                    setIsErrorModalOpen(true);
+                }
+            } catch (error) {
+                console.error('Error:', error);
                 setError(t('Login.userNotFound'));
                 setIsErrorModalOpen(true);
             }
         }
     }
+    
 
     return (
         <PageContainer {...props}>

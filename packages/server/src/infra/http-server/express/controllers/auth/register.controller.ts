@@ -16,7 +16,7 @@ async function handleRegisterAdmin(req: Request, res: Response) {
             userPassword
         );
         if (result) {
-            res.status(200).send(result);
+            res.status(200).send({ userId: result });
         } else {
             res.status(400).send({ "error ": t("User.notRegistered") });
         }

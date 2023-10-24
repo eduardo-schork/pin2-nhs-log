@@ -8,12 +8,13 @@ class UserRepository implements IBaseRepository<TUserModel> {
         return findAllResult;
     }
 
-    async findOne({ id }: { id: string }): Promise<TUserModel | null> {
+    async findOne({ id }: { id: any }): Promise<TUserModel | null> {
         const findOneResult = await User.findOne({ where: { id } });
         return findOneResult;
     }
 
-    async delete({ id }: { id: string }): Promise<boolean> {
+    async delete({ id }: { id: any }): Promise<boolean> {
+        console.log(id)
         const deletedRows = await User.destroy({ where: { id } });
 
         if (deletedRows > 0) return true;
@@ -25,7 +26,7 @@ class UserRepository implements IBaseRepository<TUserModel> {
         return createResult;
     }
 
-    async update({ data }: { data: TUserModel }): Promise<TUserModel | null> {
+    async update({ data }: { data: any }): Promise<TUserModel | null> {
         const [affectedRows] = await User.update(data, { where: { id: data.id } });
         if (affectedRows > 0) return data;
         return null;

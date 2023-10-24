@@ -5,14 +5,14 @@ const userRoutes = Router();
 
 userRoutes.get("/admin/get", UserController.getUserById);
 
-userRoutes.get("/user", UserController.findAll);
+userRoutes.get("/admin", UserController.findAll);
 
-userRoutes.get("/user/:id", UserController.findOne);
+// userRoutes.get("/admin/:id", UserController.findOne);
 
-userRoutes.post("/user", UserController.create);
+userRoutes.post("/admin", UserController.create);
 
-userRoutes.delete("/user/:id", UserController.delete);
+userRoutes.delete("/admin", UserController.delete);
 
-userRoutes.put("/user", UserController.update);
+userRoutes.put("/admin", UserController.update);
 
 export default userRoutes;

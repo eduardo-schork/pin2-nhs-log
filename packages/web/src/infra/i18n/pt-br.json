@@ -6,6 +6,7 @@
     "common.Save": "SALVAR",
     "common.Delete": "EXCLUIR",
     "common.MissingParameter": "Os campos obrigatórios devem ser preenchidos!",
+    "common.Edit": "Todos os campos devem ser editados!",
     "common.VehicleInFleet": "Não é possível deletar o veículo pois ele está vinculado em uma frota!",
     "Home.Copyright": "Copyright NHS-LOG. All rights reserved",
     "Home.ShippingTracking": "Rastrear sua remessa",

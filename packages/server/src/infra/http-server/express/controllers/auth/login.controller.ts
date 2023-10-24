@@ -7,6 +7,7 @@ async function handleFindAdmin(req: Request, res: Response) {
         const userEmail = req.query.userEmail as string;
         const userPassword = req.query.userPassword as string;
 
+
         if (!userEmail || !userPassword) {
             res.status(400).send({ error: t("common.MissingParameter") });
         }

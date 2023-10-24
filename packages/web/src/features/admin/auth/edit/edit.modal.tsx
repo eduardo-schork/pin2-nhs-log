@@ -39,9 +39,8 @@ const EditModal: React.FC<TEditModalFormValues> = ({ isOpen, onClose, user }) =>
     }, [isOpen, user.id]);
 
     async function handleFormSubmitEdition(data: any) {
-        console.log(data);
         if (!data.userName || !data.userCpf || !data.userEmail) {
-            setError(t('common.MissingParameter'));
+            setError(t('common.Edit'));
             setIsErrorModalOpen(true);
         } else {
             if (!cpf.isValid(data.userCpf)) {
@@ -49,12 +48,13 @@ const EditModal: React.FC<TEditModalFormValues> = ({ isOpen, onClose, user }) =>
                 setIsErrorModalOpen(true);
             } else {
                 const queryParams = new URLSearchParams({
-                    userName: data.userName,
-                    userCpf: data.userCpf,
-                    userEmail: data.userEmail,
+                    id: userData?.id,
+                    name: data.userName,
+                    cpf: data.userCpf,
+                    email: data.userEmail,
                 });
 
-                const res = await fetch(`http://localhost:8000/api/admin/login?${queryParams}`, {
+                const res = await fetch(`http://localhost:8000/api/admin?${queryParams}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -62,45 +62,27 @@ const EditModal: React.FC<TEditModalFormValues> = ({ isOpen, onClose, user }) =>
                 });
 
                 const result = await res.json();
-
-                if (res.status === 200) {
-                    navigate('/admin');
-                } else {
-                    setError(t('User.edit.notPossible'));
-                    setIsErrorModalOpen(true);
-                }
+                onClose();
+                navigate('/admin', { state: { userId: result }});
             }
         }
     }
 
-    async function handleFormSubmitDelete(data: TEditModalFormValues) {
-        if (!data.userEmail || !data.userPassword) {
-            setError(t('common.MissingParameter'));
-            setIsErrorModalOpen(true);
-        } else {
+    async function handleFormSubmitDelete() {
             const queryParams = new URLSearchParams({
-                userEmail: data.userEmail,
-                userPassword: data.userPassword,
+                id: userData?.id,
             });
 
-            const res = await fetch(`http://localhost:8000/api/admin/login?${queryParams}`, {
+            const res = await fetch(`http://localhost:8000/api/admin?${queryParams}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
 
-            const result = await res.json();
-
-            if (res.status === 200) {
-                console.log(result);
-                navigate('/');
-            } else {
-                setError(t('Login.userNotFound'));
-                setIsErrorModalOpen(true);
-            }
+            onClose();
+            navigate('/');
         }
-    }
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>

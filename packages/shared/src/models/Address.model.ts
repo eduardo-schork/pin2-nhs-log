@@ -1,7 +1,7 @@
 import TBaseModel from "./Base.model";
 
 type TAddressModel = {
-    id: number;
+    id?: number;
     streetAddress: string;
     number: number;
     city: string;

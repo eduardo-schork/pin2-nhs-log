@@ -40,8 +40,9 @@ function useQuotationLogic() {
     }
 
     function onSubmitTrackQuotation(value: string) {
-        console.log({ value });
-        navigate('/quotation/track');
+        const formattedValue = value.replace(/[^0-9]/g, '');
+        console.log({ formattedValue });
+        navigate(`/quotation/track/${formattedValue}`);
     }
     return {
         isOpenCreateModal,

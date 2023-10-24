@@ -8,6 +8,11 @@ class QuotationRepository implements IBaseRepository<TQuotationModel> {
         return findAllResult;
     }
 
+    async findAllByCPF({ cpf }: { cpf: string }): Promise<TQuotationModel[]> {
+        const findAllResult = await Quotation.findAll({ where: { cpf } });
+        return findAllResult;
+    }
+
     async findOne({ id }: { id: string }): Promise<TQuotationModel | null> {
         const findOneResult = await Quotation.findOne({ where: { id } });
         return findOneResult;

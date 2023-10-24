@@ -1,10 +1,10 @@
 import TBaseModel from "./Base.model";
 
 type TItemRemittanceModel = {
-    id: number;
+    id?: number;
     objectType: string;
     weight: number;
     quotationId: number;
-} & TBaseModel
+} & TBaseModel;
 
-export default TItemRemittanceModel
+export default TItemRemittanceModel;

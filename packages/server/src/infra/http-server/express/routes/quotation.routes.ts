@@ -11,6 +11,8 @@ quotationRoutes.get("/quotation", QuotationController.findAll);
 
 quotationRoutes.get("/quotation/:id", QuotationController.findOne);
 
+quotationRoutes.get("/quotation-by-cpf/:cpf", QuotationController.findAllByCPF);
+
 quotationRoutes.delete("/quotation/:id", QuotationController.delete);
 
 quotationRoutes.put("/quotation", QuotationController.update);

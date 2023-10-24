@@ -40,7 +40,7 @@ class Quotation extends Model<TQuotationModel> {
     @ForeignKey(() => Address)
     @Column({
         type: DataType.INTEGER,
-        allowNull: false,
+        allowNull: true,
         field: "fk_origin_address",
     })
     originAddressId!: number;
@@ -48,7 +48,7 @@ class Quotation extends Model<TQuotationModel> {
     @ForeignKey(() => Address)
     @Column({
         type: DataType.INTEGER,
-        allowNull: false,
+        allowNull: true,
         field: "fk_destination_address",
     })
     destinationAddressId!: number;

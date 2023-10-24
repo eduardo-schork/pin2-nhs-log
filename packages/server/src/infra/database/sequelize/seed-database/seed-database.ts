@@ -1,13 +1,7 @@
 import * as dotenv from "dotenv";
 
 import DatabasePort from "../../database.port";
-import seedPaymentType from "./seed-payment-type";
-import seedOfferStatus from "./seed-offer-status";
-import seedItemRemittanceType from "./seed-item-remittance-type";
-import seedDeliveryAppointmentStatus from "./seed-delivery-appointment-status";
-import seedDeliveryProccessStatus from "./seed-delivery-proccess-status";
-import seedPaymentStatus from "./seed-payment-status";
-import seedRemittanceTypeTax from "./seed-remittance-type-tax";
+import { SeedQuotation } from "./seed-quotation";
 
 dotenv.config();
 
@@ -15,6 +9,7 @@ async function seedSequelizeDatabase() {
     await DatabasePort.connectDataBase(true);
     console.log("==============================");
 
+    await SeedQuotation.execute();
     // await seedPaymentType.execute();
     // console.log("Table PaymentType seeded");
     // console.log("==============================");

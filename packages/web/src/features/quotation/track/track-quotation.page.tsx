@@ -1,25 +1,28 @@
 import BaseLayout from '@/components/layout/base-layout/base-layout.ui';
 import { Text, useDisclosure } from '@chakra-ui/react';
 
-import QuotationItemMock from '@shared/fixtures/quotation-item.mock.json';
-
 import QuotationOffersModal from '@/components/modals/quotation-offers-modal.ui';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import QuotationItem from './quotation-item.ui';
-
-const QUOTATION_LIST = [
-    QuotationItemMock,
-    QuotationItemMock,
-    QuotationItemMock,
-    QuotationItemMock,
-    QuotationItemMock,
-    QuotationItemMock,
-];
+import Container from '@/components/container/container.ui';
+import styled from 'styled-components';
+import Spacings from '@/styles/tokens/spacing';
+import HttpRequestPort from '@/infra/http-request/http-request.port';
+import TQuotationModel from '@shared/models/Quotation.model';
+import { useParams } from 'react-router-dom';
 
 function TrackQuotationPage({ ...props }) {
-    const data = QUOTATION_LIST;
+    const params = useParams();
 
     const [selectedQuotationId, setSelectedQuotationId] = useState<number>();
+    const [quotationList, setQuotationList] = useState<TQuotationModel[]>();
+
+    useEffect(() => {
+        (async () => {
+            const returnData = await HttpRequestPort.get({ path: `/api/quotation-by-cpf/${params.id}` });
+            setQuotationList(returnData as TQuotationModel[]);
+        })();
+    }, [params.id]);
 
     const {
         isOpen: isOpenQuotationOffersModal,
@@ -42,11 +45,21 @@ function TrackQuotationPage({ ...props }) {
 
             <Text>Acompanhar cotações</Text>
 
-            {data?.map((quotationItem) => (
-                <QuotationItem onItemSeeOffersPress={onShowOffersFromQuotationPress} item={quotationItem} />
-            ))}
+            <QuotationsContainer grid gap={Spacings.LARGE}>
+                {quotationList?.map((quotationItem, index) => (
+                    <QuotationItem
+                        key={index}
+                        item={quotationItem}
+                        onItemSeeOffersPress={onShowOffersFromQuotationPress}
+                    />
+                ))}
+            </QuotationsContainer>
         </BaseLayout>
     );
 }
+
+const QuotationsContainer = styled(Container)`
+    grid-template-columns: auto auto auto auto;
+`;
 
 export default TrackQuotationPage;

@@ -14,8 +14,10 @@
         "@chakra-ui/react": "^2.8.0",
         "@emotion/react": "^11.11.1",
         "@emotion/styled": "^11.11.0",
+        "@types/luxon": "^3.3.3",
         "axios": "^1.4.0",
         "framer-motion": "^10.16.0",
+        "luxon": "^3.4.3",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-hook-form": "^7.46.2",
@@ -26,6 +28,7 @@
     },
     "devDependencies": {
         "@/shared": "1.0.0",
+        "@faker-js/faker": "^8.2.0",
         "@types/axios": "^0.14.0",
         "@types/node": "^20.5.1",
         "@types/react": "^18.2.15",

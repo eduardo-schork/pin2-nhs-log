@@ -21,7 +21,7 @@ const BASE_ROUTES = [
         element: <QuotationPage />,
     },
     {
-        path: '/quotation/track',
+        path: '/quotation/track/:id',
         element: <TrackQuotationPage />,
     },
     {

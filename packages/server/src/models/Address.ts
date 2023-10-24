@@ -58,7 +58,7 @@ class Address extends Model<TAddressModel> {
     zipCode!: string;
 
     @Column({
-        type: DataType.INTEGER,
+        type: DataType.FLOAT,
         allowNull: true,
         field: "ad_geo_latitude",
     })

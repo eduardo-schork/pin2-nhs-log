@@ -14,7 +14,7 @@ class UserRepository implements IBaseRepository<TUserModel> {
     }
 
     async delete({ id }: { id: any }): Promise<boolean> {
-        console.log(id)
+        console.log(id);
         const deletedRows = await User.destroy({ where: { id } });
 
         if (deletedRows > 0) return true;
@@ -30,6 +30,32 @@ class UserRepository implements IBaseRepository<TUserModel> {
         const [affectedRows] = await User.update(data, { where: { id: data.id } });
         if (affectedRows > 0) return data;
         return null;
+    }
+
+    async updateUser(userId: any, userName: any, userCpf: any, userEmail: any): Promise<any> {
+        try {
+            const user = await User.update(
+                {
+                    name: userName,
+                    cpf: userCpf,
+                    email: userEmail,
+                },
+                {
+                    where: {
+                        id: userId,
+                    },
+                    returning: true,
+                }
+            );
+
+            if (user) {
+                return user;
+            } else {
+                return null;
+            }
+        } catch (error) {
+            throw error;
+        }
     }
 
     async findUser(id: any): Promise<User | null> {

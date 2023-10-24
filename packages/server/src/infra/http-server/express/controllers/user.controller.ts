@@ -35,16 +35,16 @@ async function findAll(req: Request, res: Response) {
     }
 }
 
-// async function findOne(req: Request, res: Response) {
-//     const idToFind = req.query.id;
-//     try {
-//         const findOneResult = await UserRepository.findOne({ id: idToFind });
-//         return res.status(200).send(findOneResult);
-//     } catch (error) {
-//         console.log("error");
-//         return res.status(500).send("");
-//     }
-// }
+async function findOne(req: Request, res: Response) {
+    const idToFind = req.query.id;
+    try {
+        const findOneResult = await UserRepository.findOne({ id: idToFind });
+        return res.status(200).send(findOneResult);
+    } catch (error) {
+        console.log("error");
+        return res.status(500).send("");
+    }
+}
 
 async function create(req: Request, res: Response) {
     try {
@@ -64,8 +64,7 @@ async function update(req: Request, res: Response) {
         const updateReturn = await UserRepository.update({ data: body });
         if (updateReturn) {
             return res.status(200).send({ userId: updateReturn.id });
-        }
-        else {
+        } else {
             return res.status(400);
         }
     } catch (error) {
@@ -89,7 +88,7 @@ async function deleteOne(req: Request, res: Response) {
 
 const UserController = {
     findAll,
-    // findOne,
+    findOne,
     create,
     update,
     delete: deleteOne,

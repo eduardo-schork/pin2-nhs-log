@@ -4,14 +4,19 @@ import TQuotationModel from '@/models/Quotation.model';
 import BaseLayout from '@/components/layout/base-layout/base-layout.ui';
 import { styled } from 'styled-components';
 import Spacings from '@/styles/tokens/spacing';
+import { useEffect, useState } from 'react';
 
 // const mock = [QuotationMock, QuotationMock, QuotationMock, QuotationMock, QuotationMock];
 
-function AdminQuoationPage({ quotations, ...props }: { quotations?: TQuotationModel[] }) {
+function AdminQuoationPage({ ...props }: { quotations?: TQuotationModel[] }) {
+    const [quotationList, setQuotationList] = useState<TQuotationModel[]>([]);
+
+    useEffect(() => {}, []);
+
     return (
         <BaseLayout>
             <QuotationPageContainer {...props}>
-                {quotations.map((quotation) => (
+                {quotationList?.map((quotation) => (
                     <QuotationItem quotation={quotation} />
                 ))}
             </QuotationPageContainer>

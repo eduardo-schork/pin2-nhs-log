@@ -1,6 +1,9 @@
 import IBaseRepository from "./base.repository";
 import TQuotationModel from "@/shared/src/models/Quotation.model";
 import Quotation from "../../models/Quotation";
+import Address from "../../models/Address";
+import ItemRemittance from "../../models/ItemRemittance";
+import { Op, Sequelize } from "sequelize";
 
 class QuotationRepository implements IBaseRepository<TQuotationModel> {
     async findAll(): Promise<TQuotationModel[]> {
@@ -9,7 +12,22 @@ class QuotationRepository implements IBaseRepository<TQuotationModel> {
     }
 
     async findAllByCPF({ cpf }: { cpf: string }): Promise<TQuotationModel[]> {
-        const findAllResult = await Quotation.findAll({ where: { cpf } });
+        const findAllResult = await Quotation.findAll({
+            where: { cpf },
+            include: [
+                { model: Address, as: "originAddress", required: false },
+                { model: Address, as: "destinationAddress", required: false },
+                {
+                    model: ItemRemittance,
+                    required: false,
+                    where: {
+                        quotationId: {
+                            [Op.col]: "Quotation.pk_quotation",
+                        },
+                    },
+                },
+            ],
+        });
         return findAllResult;
     }
 

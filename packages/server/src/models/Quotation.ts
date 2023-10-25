@@ -1,6 +1,15 @@
-import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from "sequelize-typescript";
+import {
+    Model,
+    DataType,
+    Table,
+    Column,
+    ForeignKey,
+    BelongsTo,
+    HasMany,
+} from "sequelize-typescript";
 import Address from "./Address";
 import TQuotationModel from "@/shared/src/models/Quotation.model";
+import ItemRemittance from "./ItemRemittance";
 
 @Table({
     tableName: "Quotation",
@@ -54,10 +63,13 @@ class Quotation extends Model<TQuotationModel> {
     destinationAddressId!: number;
 
     @BelongsTo(() => Address, "fk_origin_address")
-    OriginAddress!: Address;
+    originAddress!: Address;
 
     @BelongsTo(() => Address, "fk_destination_address")
-    DestinationAddress!: Address;
+    destinationAddress!: Address;
+
+    @HasMany(() => ItemRemittance, "quotationId")
+    itemRemittances?: ItemRemittance[];
 
     @Column({
         type: DataType.DATE,

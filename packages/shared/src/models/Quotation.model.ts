@@ -1,3 +1,4 @@
+import TAddressModel from "./Address.model";
 import TBaseModel from "./Base.model";
 import TItemRemittanceModel from "./ItemRemittance.model";
 
@@ -8,7 +9,9 @@ type TQuotationModel = {
     currentDate: Date;
     originAddressId?: number;
     destinationAddressId?: number;
-    itemRemittance?: TItemRemittanceModel;
+    originAddress?: TAddressModel;
+    destinationAddress?: TAddressModel;
+    itemRemittances?: TItemRemittanceModel[];
 } & TBaseModel;
 
 export default TQuotationModel;

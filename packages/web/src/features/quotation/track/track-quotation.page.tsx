@@ -43,7 +43,9 @@ function TrackQuotationPage({ ...props }) {
                 isOpen={isOpenQuotationOffersModal}
             />
 
-            <Text>Acompanhar cotações</Text>
+            <Text fontWeight={'bold'} alignSelf={'center'} fontSize="2xl">
+                Acompanhar cotações
+            </Text>
 
             <QuotationsContainer grid gap={Spacings.LARGE}>
                 {quotationList?.map((quotationItem, index) => (
@@ -59,7 +61,19 @@ function TrackQuotationPage({ ...props }) {
 }
 
 const QuotationsContainer = styled(Container)`
-    grid-template-columns: auto auto auto auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: ${Spacings.MEDIUM};
+
+    padding: ${Spacings.MEDIUM};
+
+    @media (max-width: 900px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr; /* Reduz para 1 coluna */
+    }
 `;
 
 export default TrackQuotationPage;

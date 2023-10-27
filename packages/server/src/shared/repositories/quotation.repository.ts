@@ -4,11 +4,57 @@ import Quotation from "../../models/Quotation";
 import Address from "../../models/Address";
 import ItemRemittance from "../../models/ItemRemittance";
 import { Op, Sequelize } from "sequelize";
+import Offer from "../../models/Offer";
+import DatabasePort from "../../infra/database/database.port";
 
 class QuotationRepository implements IBaseRepository<TQuotationModel> {
     async findAll(): Promise<TQuotationModel[]> {
         const findAllResult = await Quotation.findAll();
         return findAllResult;
+    }
+
+    // Old findAllWithoutApprovedOffers raw query without joins
+    // const query = `
+    //     SELECT "Quotation".*
+    //     FROM "Quotation"
+    //     LEFT JOIN "Offer" ON "Quotation"."pk_quotation" = "Offer"."fk_quotation"
+    //     WHERE "Offer"."fk_quotation" is null and
+    //     (("Offer"."of_status" <> 'Aprovado') or ("Offer"."of_status" is null))
+    // `;
+
+    // const quotations = await DatabasePort?.instance?.query(query, {
+    //     model: Quotation,
+    //     mapToModel: true,
+    // });
+
+    // @ts-ignore`
+    // return quotations;
+    async findAllWithoutApprovedOffers(): Promise<TQuotationModel[]> {
+        const quotations = await Quotation.findAll({
+            include: [
+                {
+                    model: Offer,
+                    where: { status: { [Op.not]: "Aprovado" } },
+                    required: false,
+                },
+                {
+                    model: ItemRemittance,
+                    required: false,
+                    where: { quotationId: { [Op.col]: "Quotation.pk_quotation" } },
+                },
+                { model: Address, as: "originAddress", required: false },
+                { model: Address, as: "destinationAddress", required: false },
+            ],
+        });
+
+        const quotationsWithoutApprovedOffers = quotations.filter((quotation) => {
+            return (
+                quotation?.offers?.length === 0 ||
+                quotation?.offers?.every((offer) => offer.status !== "Aprovado")
+            );
+        });
+
+        return quotationsWithoutApprovedOffers;
     }
 
     async findAllByCPF({ cpf }: { cpf: string }): Promise<TQuotationModel[]> {
@@ -32,6 +78,8 @@ class QuotationRepository implements IBaseRepository<TQuotationModel> {
     }
 
     async findOne({ id }: { id: string }): Promise<TQuotationModel | null> {
+        console.log(`//////////////  //////////////`);
+
         const findOneResult = await Quotation.findOne({ where: { id } });
         return findOneResult;
     }

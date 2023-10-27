@@ -3,8 +3,6 @@ import QuotationController from "../controllers/quotation.controller";
 
 const quotationRoutes = Router();
 
-// quotationRoutes.post("/quotation", QuotationController.create);
-
 quotationRoutes.post("/quotation", QuotationController.createWithAddresses);
 
 quotationRoutes.get("/quotation", QuotationController.findAll);
@@ -12,6 +10,8 @@ quotationRoutes.get("/quotation", QuotationController.findAll);
 quotationRoutes.get("/quotation/:id", QuotationController.findOne);
 
 quotationRoutes.get("/quotation-by-cpf/:cpf", QuotationController.findAllByCPF);
+
+quotationRoutes.get("/quotation-not-approved/", QuotationController.findAllWithoutApprovedOffers);
 
 quotationRoutes.delete("/quotation/:id", QuotationController.delete);
 

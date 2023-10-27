@@ -30,8 +30,8 @@ async function findAll(req: Request, res: Response) {
         const findAllResult = await UserRepository.findAll();
         return res.status(200).send(findAllResult);
     } catch (error) {
-        console.log("error");
-        return res.status(500).send("");
+        console.log({ error });
+        return res.status(500).send(error);
     }
 }
 
@@ -41,8 +41,8 @@ async function findOne(req: Request, res: Response) {
         const findOneResult = await UserRepository.findOne({ id: idToFind });
         return res.status(200).send(findOneResult);
     } catch (error) {
-        console.log("error");
-        return res.status(500).send("");
+        console.log({ error });
+        return res.status(500).send(error);
     }
 }
 
@@ -53,8 +53,8 @@ async function create(req: Request, res: Response) {
         const createResult = await UserRepository.create({ data: body });
         return res.status(201).send(createResult);
     } catch (error) {
-        console.log("error");
-        return res.status(500).send("");
+        console.log({ error });
+        return res.status(500).send(error);
     }
 }
 
@@ -68,8 +68,8 @@ async function update(req: Request, res: Response) {
             return res.status(400);
         }
     } catch (error) {
-        console.log("error");
-        return res.status(500).send("");
+        console.log({ error });
+        return res.status(500).send(error);
     }
 }
 
@@ -81,8 +81,8 @@ async function deleteOne(req: Request, res: Response) {
         if (deleteReturn) return res.status(200).send("");
         return res.status(400).send("");
     } catch (error) {
-        console.log("error");
-        return res.status(500).send("");
+        console.log({ error });
+        return res.status(500).send(error);
     }
 }
 

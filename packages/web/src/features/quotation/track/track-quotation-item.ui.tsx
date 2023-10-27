@@ -1,14 +1,17 @@
 import { ContainedButton } from '@/components/button/button.ui';
 import { HContainer, VContainer } from '@/components/container/container.ui';
+import Divider from '@/components/divider';
+import QuotationItem from '@/components/quotation/quotation-item.ui';
 import Spacings from '@/styles/tokens/spacing';
-import { Divider, Text } from '@chakra-ui/react';
+import normalizeAddressLabel from '@/utils/normalize-address-label';
+import { Text } from '@chakra-ui/react';
 import TAddressModel from '@shared/models/Address.model';
 import TQuotationModel from '@shared/models/Quotation.model';
 
 import styled from 'styled-components';
 
 // TODO i18n
-function QuotationItem({
+function TrackQuotationItem({
     item,
     onItemSeeOffersPress,
     ...props
@@ -16,19 +19,10 @@ function QuotationItem({
     item: TQuotationModel;
     onItemSeeOffersPress: (quotationId: number) => void;
 }) {
-    function normalizeAddressLabel(address?: TAddressModel) {
-        if (!address) return;
-
-        const { city, state, number, country } = address;
-        if (city && state && number) return `${city}, ${state}, ${country}, Nº ${number}`;
-
-        return '';
-    }
-
     if (!item.id) return <></>;
 
     return (
-        <QuotationItemContainer {...props}>
+        <QuotationItem.Container {...props}>
             <Text fontWeight={'bold'} fontSize="xl">
                 #{item.id} - {item?.itemRemittances?.[0]?.objectType}
             </Text>
@@ -36,11 +30,11 @@ function QuotationItem({
             <Divider />
 
             <VContainer gap={Spacings.SMALL}>
-                <QuotationInfoLabel label="Data de criação" value={item.createdAt} />
-                <QuotationInfoLabel label="Peso" value={item?.itemRemittances?.[0]?.weight} />
+                <QuotationItem.InfoLabel label="Data de criação" value={item.createdAt} />
+                <QuotationItem.InfoLabel label="Peso" value={item?.itemRemittances?.[0]?.weight} />
 
-                <QuotationInfoLabel label="Endereço de origem" value={normalizeAddressLabel(item.originAddress)} />
-                <QuotationInfoLabel
+                <QuotationItem.InfoLabel label="Endereço de origem" value={normalizeAddressLabel(item.originAddress)} />
+                <QuotationItem.InfoLabel
                     label="Endereço de destino"
                     value={normalizeAddressLabel(item.destinationAddress)}
                 />
@@ -54,15 +48,7 @@ function QuotationItem({
                     Ver ofertas
                 </ContainedButton>
             </ActionButtonContainer>
-        </QuotationItemContainer>
-    );
-}
-
-function QuotationInfoLabel({ label, value, ...props }: { label: string; value: any }) {
-    return (
-        <Text {...props}>
-            <b>{label}</b>: {value}
-        </Text>
+        </QuotationItem.Container>
     );
 }
 
@@ -71,10 +57,4 @@ const ActionButtonContainer = styled(HContainer)`
     justify-content: flex-end;
 `;
 
-const QuotationItemContainer = styled(VContainer)`
-    padding: ${Spacings.LARGE};
-    gap: ${Spacings.MEDIUM};
-    border-radius: ${Spacings.SMALL};
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-`;
-export default QuotationItem;
+export default TrackQuotationItem;

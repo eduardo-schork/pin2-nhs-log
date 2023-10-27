@@ -99,8 +99,8 @@ async function findAll(req: Request, res: Response) {
         const findAllResult = await FleetVehicleRepository.findAll();
         return res.status(200).send(findAllResult);
     } catch (error) {
-        console.log("error");
-        return res.status(500).send("");
+        console.log({ error });
+        return res.status(500).send(error);
     }
 }
 
@@ -110,8 +110,8 @@ async function findOne(req: Request, res: Response) {
         const findOneResult = await FleetVehicleRepository.findOne({ id: idToFind });
         return res.status(200).send(findOneResult);
     } catch (error) {
-        console.log("error");
-        return res.status(500).send("");
+        console.log({ error });
+        return res.status(500).send(error);
     }
 }
 
@@ -122,8 +122,8 @@ async function create(req: Request, res: Response) {
         const createResult = await FleetVehicleRepository.create({ data: body });
         return res.status(201).send(createResult);
     } catch (error) {
-        console.log("error");
-        return res.status(500).send("");
+        console.log({ error });
+        return res.status(500).send(error);
     }
 }
 
@@ -134,8 +134,8 @@ async function update(req: Request, res: Response) {
         const updateReturn = await FleetVehicleRepository.update({ data: body });
         return res.status(204).send(updateReturn);
     } catch (error) {
-        console.log("error");
-        return res.status(500).send("");
+        console.log({ error });
+        return res.status(500).send(error);
     }
 }
 
@@ -148,8 +148,8 @@ async function deleteOne(req: Request, res: Response) {
         if (deleteReturn) return res.status(204).send("");
         return res.status(400).send("");
     } catch (error) {
-        console.log("error");
-        return res.status(500).send("");
+        console.log({ error });
+        return res.status(500).send(error);
     }
 }
 

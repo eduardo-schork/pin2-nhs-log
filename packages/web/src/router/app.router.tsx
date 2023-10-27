@@ -6,7 +6,7 @@ import RegisterPage from '@/features/admin/auth/register/register.page';
 import TrackQuotationPage from '@/features/quotation/track/track-quotation.page';
 import QuotationPage from '@/features/quotation/quotation.page';
 import AdminDashboardPage from '@/features/admin/dashboard/admin-dashboard.page';
-import AdminQuoationPage from '@/features/admin/quotation/admin-quotation.page';
+import AdminQuotationPage from '@/features/admin/quotation/admin-quotation.page';
 import ScheduleCollectionPage from '@/features/quotation/schedule-collection/schedule-collection.page';
 import CreateFleet from '@/features/admin/fleets/fleet/create-fleet.page';
 import CreateVehicleModal from '@/features/admin/fleets/fleet-vehicle/modal-create-fleet-vehicle.page';
@@ -45,7 +45,7 @@ const ADMIN_ROUTES = [
     },
     {
         path: '/admin/quotation',
-        element: <AdminQuoationPage />,
+        element: <AdminQuotationPage />,
     },
     {
         path: '/admin/fleet-vehicle',

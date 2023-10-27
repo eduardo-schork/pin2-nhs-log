@@ -1,13 +1,13 @@
-import { Button } from '@chakra-ui/react';
+import { Button, ButtonProps } from '@chakra-ui/react';
 import { styled } from 'styled-components';
 import Colors from '@/styles/tokens/color';
 
-export const ContainedButton = styled(Button)`
+export const ContainedButton = styled(Button).attrs({})<ButtonProps>`
     && {
-        width: 100%;
+        width: fit-content;
         align-self: center;
         height: 50px;
-        background-color: ${Colors.PRIMARY};
+        background-color: transparent;
         border: 1px solid ${Colors.PRIMARY};
     }
 `;

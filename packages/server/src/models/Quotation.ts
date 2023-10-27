@@ -10,6 +10,7 @@ import {
 import Address from "./Address";
 import TQuotationModel from "@/shared/src/models/Quotation.model";
 import ItemRemittance from "./ItemRemittance";
+import Offer from "./Offer";
 
 @Table({
     tableName: "Quotation",
@@ -70,6 +71,9 @@ class Quotation extends Model<TQuotationModel> {
 
     @HasMany(() => ItemRemittance, "quotationId")
     itemRemittances?: ItemRemittance[];
+
+    @HasMany(() => Offer, "quotationId")
+    offers?: Offer[];
 
     @Column({
         type: DataType.DATE,

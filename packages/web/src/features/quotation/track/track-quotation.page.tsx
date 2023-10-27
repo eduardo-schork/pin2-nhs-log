@@ -3,13 +3,11 @@ import { Text, useDisclosure } from '@chakra-ui/react';
 
 import QuotationOffersModal from '@/components/modals/quotation-offers-modal.ui';
 import { useEffect, useState } from 'react';
-import QuotationItem from './quotation-item.ui';
-import Container from '@/components/container/container.ui';
-import styled from 'styled-components';
-import Spacings from '@/styles/tokens/spacing';
+import TrackQuotationItem from './track-quotation-item.ui';
 import HttpRequestPort from '@/infra/http-request/http-request.port';
 import TQuotationModel from '@shared/models/Quotation.model';
 import { useParams } from 'react-router-dom';
+import QuotationItem from '@/components/quotation/quotation-item.ui';
 
 function TrackQuotationPage({ ...props }) {
     const params = useParams();
@@ -47,33 +45,17 @@ function TrackQuotationPage({ ...props }) {
                 Acompanhar cotações
             </Text>
 
-            <QuotationsContainer grid gap={Spacings.LARGE}>
+            <QuotationItem.ListContainer>
                 {quotationList?.map((quotationItem, index) => (
-                    <QuotationItem
+                    <TrackQuotationItem
                         key={index}
                         item={quotationItem}
                         onItemSeeOffersPress={onShowOffersFromQuotationPress}
                     />
                 ))}
-            </QuotationsContainer>
+            </QuotationItem.ListContainer>
         </BaseLayout>
     );
 }
-
-const QuotationsContainer = styled(Container)`
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: ${Spacings.MEDIUM};
-
-    padding: ${Spacings.MEDIUM};
-
-    @media (max-width: 900px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    @media (max-width: 600px) {
-        grid-template-columns: 1fr; /* Reduz para 1 coluna */
-    }
-`;
 
 export default TrackQuotationPage;

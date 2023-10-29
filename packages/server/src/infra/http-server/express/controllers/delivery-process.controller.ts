@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import DeliveryProcessRepository from "../../../../shared/repositories/collection-schedule.repository";
+import DeliveryProcessRepository from "../../../../shared/repositories/delivery-process.repository";
 
 async function findAll(req: Request, res: Response) {
     try {
@@ -27,7 +27,9 @@ async function create(req: Request, res: Response) {
         const body = req.body;
 
         const createResult = await DeliveryProcessRepository.create({ data: body });
-        return res.status(201).send(createResult);
+        if (createResult) {
+            return res.status(200).send(createResult);
+        }
     } catch (error) {
         console.log({ error });
         return res.status(500).send(error);

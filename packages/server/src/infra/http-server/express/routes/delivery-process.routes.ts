@@ -1,5 +1,5 @@
 import { Router } from "express";
-import DeliveryProcessController from "../controllers/delivery-appointment.controller";
+import DeliveryProcessController from "../controllers/delivery-process.controller";
 
 const deliveryProcessRoutes = Router();
 

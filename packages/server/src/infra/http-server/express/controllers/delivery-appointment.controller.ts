@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import DeliveryAppointmentRepository from "../../../../shared/repositories/collection-schedule.repository";
+import DeliveryAppointmentRepository from "../../../../shared/repositories/delivery-process.repository";
 
 async function findAll(req: Request, res: Response) {
     try {

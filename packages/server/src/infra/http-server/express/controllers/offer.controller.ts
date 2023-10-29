@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import OfferRepository from "../../../../shared/repositories/address.repository";
+import OfferRepository from "../../../../shared/repositories/offer.repository";
 
 async function findAll(req: Request, res: Response) {
     try {
@@ -25,9 +25,8 @@ async function findOne(req: Request, res: Response) {
 async function create(req: Request, res: Response) {
     try {
         const body = req.body;
-
         const createResult = await OfferRepository.create({ data: body });
-        return res.status(201).send(createResult);
+        return res.status(200).send(createResult);
     } catch (error) {
         console.log({ error });
         return res.status(500).send(error);

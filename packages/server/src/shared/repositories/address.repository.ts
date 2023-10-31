@@ -8,7 +8,7 @@ class AddressRepository implements IBaseRepository<TAddressModel> {
         return findAllResult;
     }
 
-    async findOne({ id }: { id: string }): Promise<TAddressModel | null> {
+    async findOne({ id }: { id: any }): Promise<TAddressModel | null> {
         const findOneResult = await Address.findOne({ where: { id } });
         return findOneResult;
     }

@@ -9,10 +9,8 @@ import normalizeAddressLabel from '@/utils/normalize-address-label';
 import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react';
 import { VContainer } from '@/components/container/container.ui';
 import FormTextInput from '@/components/form/text-input/form-text-input.ui';
-import { FormattedNumber } from 'react-intl';
 import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
-import { CheckCircleIcon } from '@chakra-ui/icons';
 
 function AdminCreateOffer({ isOpen, onClose, data, ...props }) {
     const [selectedFleet, setSelectedFleet] = useState('');

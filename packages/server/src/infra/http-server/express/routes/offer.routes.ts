@@ -7,6 +7,8 @@ offerRoutes.get("/offer", OfferController.findAll);
 
 offerRoutes.get("/offer/:id", OfferController.findOne);
 
+offerRoutes.get("/offerByQuotation/:id", OfferController.findOfferByQuotationId);
+
 offerRoutes.post("/offer", OfferController.create);
 
 offerRoutes.delete("/offer/:id", OfferController.delete);

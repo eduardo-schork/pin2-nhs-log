@@ -6,10 +6,18 @@ import Colors from '@/styles/tokens/color';
 import Spacings from '@/styles/tokens/spacing';
 import normalizeAddressLabel from '@/utils/normalize-address-label';
 import TQuotationModel from '@shared/models/Quotation.model';
+import AdminCreateOffer from '../offer/admin-offer-create';
+import AdminCancelOffer from '../offer/admin-offer-cancel';
+import React, { useState } from 'react';
+
 
 function AdminTrackQuotationItem({ data, ...props }: { data: TQuotationModel }) {
+    const [isCreateOfferModalOpen, setIsCreateOfferModalOpen] = useState(false);
+    const [isCancelOfferModalOpen, setIsCancelOfferModalOpen] = useState(false);
+
     return (
         <QuotationItem.Container {...props}>
+
             <QuotationItem.InfoTitle>#{data.id}</QuotationItem.InfoTitle>
 
             <Divider borderColor={Colors.PRIMARY} />
@@ -30,8 +38,18 @@ function AdminTrackQuotationItem({ data, ...props }: { data: TQuotationModel }) 
             <Divider borderColor={Colors.PRIMARY} />
 
             <HContainer gap={Spacings.MEDIUM} style={{ justifyContent: 'flex-end' }}>
-                <ContainedButton>Cancelar</ContainedButton>
-                <ContainedButton>Criar oferta</ContainedButton>
+                <ContainedButton onClick={() => setIsCancelOfferModalOpen(true)}>Cancelar</ContainedButton>
+                <AdminCancelOffer
+                isOpen={isCancelOfferModalOpen}
+                onClose={() => setIsCancelOfferModalOpen(false)}
+                data={data}
+                />
+                <ContainedButton onClick={() => setIsCreateOfferModalOpen(true)}>Criar oferta</ContainedButton>
+                <AdminCreateOffer
+                isOpen={isCreateOfferModalOpen}
+                onClose={() => setIsCreateOfferModalOpen(false)}
+                data={data}
+                />
             </HContainer>
         </QuotationItem.Container>
     );

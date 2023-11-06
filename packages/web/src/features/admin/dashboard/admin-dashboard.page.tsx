@@ -17,7 +17,9 @@ function AdminDashboardPage({ ...props }) {
             <Link to="/admin/fleet">
                 <ActionButton>{t('Dashboard.ManageFleets')}</ActionButton>
             </Link>
+            <Link to="/admin/quotation">
                 <ActionButton>{t('Dashboard.FollowQuotation')}</ActionButton>
+            </Link>
                 <ActionButton>{t('Dashboard.ManageProcess')}</ActionButton>
             </Containers.PageActions>
             <CopyrightText />

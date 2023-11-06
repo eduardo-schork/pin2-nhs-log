@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import PaymentRepository from "../../../../shared/repositories/address.repository";
+import PaymentRepository from "../../../../shared/repositories/payment.repository";
+import { sendEmailAfterProcessPayment } from "../../../../shared/service/email-service";
 
 async function findAll(req: Request, res: Response) {
     try {
@@ -27,7 +28,15 @@ async function create(req: Request, res: Response) {
         const body = req.body;
 
         const createResult = await PaymentRepository.create({ data: body });
-        return res.status(201).send(createResult);
+        if (createResult) {
+            //TODO fazer com que de alguma forma, na requisição pegue o email que o usuário deseja receber o código de rastreio
+            const userEmail = "?";
+            const emailSent = await sendEmailAfterProcessPayment(userEmail, body.deliveryProcessId);
+            if (emailSent) {
+                return res.status(200).send(createResult);
+            }
+        }
+        return res.status(400);
     } catch (error) {
         console.log({ error });
         return res.status(500).send(error);

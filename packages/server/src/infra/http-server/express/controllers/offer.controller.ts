@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import OfferRepository from "../../../../shared/repositories/address.repository";
+import OfferRepository from "../../../../shared/repositories/offer.repository";
 
 async function findAll(req: Request, res: Response) {
     try {
@@ -22,12 +22,23 @@ async function findOne(req: Request, res: Response) {
     }
 }
 
+async function findOfferByQuotationId(req: Request, res: Response) {
+    const idToFind = req.params.id;
+    try {
+        console.log(idToFind)
+        const foundOffers = await OfferRepository.findAllByQuotation(idToFind);
+        return res.status(200).send(foundOffers);
+    } catch (error) {
+        console.log({ error });
+        return res.status(500).send(error);
+    }
+}
+
 async function create(req: Request, res: Response) {
     try {
         const body = req.body;
-
         const createResult = await OfferRepository.create({ data: body });
-        return res.status(201).send(createResult);
+        return res.status(200).send(createResult);
     } catch (error) {
         console.log({ error });
         return res.status(500).send(error);
@@ -39,7 +50,7 @@ async function update(req: Request, res: Response) {
         const body = req.body;
 
         const updateReturn = await OfferRepository.update({ data: body });
-        return res.status(204).send(updateReturn);
+        return res.status(200).send(updateReturn);
     } catch (error) {
         console.log({ error });
         return res.status(500).send(error);
@@ -66,6 +77,7 @@ const OfferController = {
     create,
     update,
     delete: deleteOne,
+    findOfferByQuotationId
 };
 
 export default OfferController;

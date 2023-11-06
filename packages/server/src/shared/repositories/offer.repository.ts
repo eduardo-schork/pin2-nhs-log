@@ -26,14 +26,13 @@ class OfferRepository implements IBaseRepository<TOfferModel> {
     }
 
     async update({ data }: { data: TOfferModel }): Promise<TOfferModel | null> {
-        const [affectedRows] = await Offer.update(data, { where: { id: data.id } });
+        const [affectedRows] = await Offer.update(data, { where: { quotationId: data.quotationId } });
         if (affectedRows > 0) return data;
         return null;
     }
 
-    async findAllByQuotation(quotationId: number): Promise<TOfferModel[]> {
-        const offersByQuotation = await Offer.findAll({ where: { id: quotationId } });
-
+    async findAllByQuotation(quotationId: any): Promise<TOfferModel[]> {
+        const offersByQuotation = await Offer.findAll({ where: { quotationId: quotationId } });
         return offersByQuotation;
     }
 }

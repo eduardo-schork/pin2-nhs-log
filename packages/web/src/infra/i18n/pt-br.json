@@ -28,6 +28,7 @@
     "Register.password": "Senha",
     "Quotation.NewQuotationForm.Follow": "Pesquisar 🔎",
     "Quotation.NewQuotationForm.InsertQuotationCPF": "Digite o número de CPF vinculado a cotação",
+    "Quotation.LookUpByCreatedTime": "Buscar por horário",
     "Quotation.NewQuotationForm.NewQuotation": "Criar nova cotação:",
     "Register.modal": "Modelo",
     "Register.plate": "Placa",

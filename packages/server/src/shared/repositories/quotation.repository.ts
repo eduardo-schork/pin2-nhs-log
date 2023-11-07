@@ -58,6 +58,7 @@ class QuotationRepository implements IBaseRepository<TQuotationModel> {
     }
 
     async findAllByCPF({ cpf }: { cpf: string }): Promise<TQuotationModel[]> {
+        //TODO formatar a data e peso
         const findAllResult = await Quotation.findAll({
             where: { cpf },
             include: [
@@ -78,8 +79,6 @@ class QuotationRepository implements IBaseRepository<TQuotationModel> {
     }
 
     async findOne({ id }: { id: string }): Promise<TQuotationModel | null> {
-        console.log(`//////////////  //////////////`);
-
         const findOneResult = await Quotation.findOne({ where: { id } });
         return findOneResult;
     }

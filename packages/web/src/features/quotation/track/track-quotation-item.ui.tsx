@@ -5,7 +5,6 @@ import QuotationItem from '@/components/quotation/quotation-item.ui';
 import Spacings from '@/styles/tokens/spacing';
 import normalizeAddressLabel from '@/utils/normalize-address-label';
 import { Text } from '@chakra-ui/react';
-import TAddressModel from '@shared/models/Address.model';
 import TQuotationModel from '@shared/models/Quotation.model';
 
 import styled from 'styled-components';

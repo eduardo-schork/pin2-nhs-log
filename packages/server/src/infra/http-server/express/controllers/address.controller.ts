@@ -25,7 +25,6 @@ async function findOne(req: Request, res: Response) {
 async function create(req: Request, res: Response) {
     try {
         const body = req.body;
-
         const createResult = await AddressRepository.create({ data: body });
         return res.status(201).send(createResult);
     } catch (error) {

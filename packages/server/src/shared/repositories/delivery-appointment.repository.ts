@@ -19,6 +19,7 @@ class DeliveryAppointmentRepository implements IBaseRepository<TDeliveryAppointm
         if (deletedRows > 0) return true;
         return false;
     }
+    
     async create({
         data,
     }: {

@@ -21,7 +21,7 @@ class Payment extends Model<TPaymentModel> {
         allowNull: false,
         field: "pa_status",
     })
-    status!: string;
+    status!: number;
 
     @Column({
         type: DataType.STRING(255),

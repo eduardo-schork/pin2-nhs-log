@@ -7,7 +7,7 @@ paymentRoutes.get("/payment", PaymentController.findAll);
 
 paymentRoutes.get("/payment/:id", PaymentController.findOne);
 
-paymentRoutes.post("/payment", PaymentController.create);
+paymentRoutes.post("/payment/create", PaymentController.createPayment);
 
 paymentRoutes.delete("/payment/:id", PaymentController.delete);
 

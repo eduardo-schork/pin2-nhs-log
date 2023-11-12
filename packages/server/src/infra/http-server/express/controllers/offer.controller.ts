@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import OfferRepository from "../../../../shared/repositories/offer.repository";
+import approveOfferUsecase from "../../../../shared/usecases/approve-offer.usecase";
 
 async function findAll(req: Request, res: Response) {
     try {
@@ -45,10 +46,20 @@ async function create(req: Request, res: Response) {
     }
 }
 
+async function approveOffer(req: Request, res: Response) {
+    try {
+        const body = req.body;
+        const createResult = await approveOfferUsecase(body.offer);
+        return res.status(200).send(createResult);
+    } catch (error) {
+        console.log({ error });
+        return res.status(500).send(error);
+    }
+}
+
 async function update(req: Request, res: Response) {
     try {
         const body = req.body;
-
         const updateReturn = await OfferRepository.update({ data: body });
         return res.status(200).send(updateReturn);
     } catch (error) {
@@ -77,6 +88,7 @@ const OfferController = {
     create,
     update,
     delete: deleteOne,
+    approveOffer,
     findOfferByQuotationId
 };
 

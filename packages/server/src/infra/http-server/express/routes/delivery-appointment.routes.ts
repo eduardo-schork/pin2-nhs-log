@@ -5,7 +5,7 @@ const deliveryAppointmentRoutes = Router();
 
 deliveryAppointmentRoutes.get("/delivery-appointment", DeliveryAppointmentController.findAll);
 
-deliveryAppointmentRoutes.get("/delivery-appointment/:id", DeliveryAppointmentController.findOne);
+deliveryAppointmentRoutes.get("/delivery-appointment-one", DeliveryAppointmentController.findOne);
 
 deliveryAppointmentRoutes.post("/delivery-appointment", DeliveryAppointmentController.create);
 

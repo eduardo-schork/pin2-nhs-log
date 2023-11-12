@@ -11,6 +11,8 @@ offerRoutes.get("/offerByQuotation/:id", OfferController.findOfferByQuotationId)
 
 offerRoutes.post("/offer", OfferController.create);
 
+offerRoutes.post("/approveOffer", OfferController.approveOffer);
+
 offerRoutes.delete("/offer/:id", OfferController.delete);
 
 offerRoutes.put("/offer", OfferController.update);

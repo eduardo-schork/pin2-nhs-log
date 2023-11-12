@@ -1,7 +1,7 @@
 const Colors = {
-    PRIMARY: '#ba99cb',
-    SECONDARY: '#54007d',
-    TERCIARY: '#54007d',
+    PRIMARY: '#9fd7f9',
+    SECONDARY: '#0c8ce9',
+    TERCIARY: '#0c8ce9',
     PRIMARY_COMPL: '#b3b300',
     SECONDARY_COMPL: '#7d7d00',
     DARK_GREY: '#121212',

@@ -25,7 +25,7 @@ async function findOne(req: Request, res: Response) {
 async function create(req: Request, res: Response) {
     try {
         const body = req.body;
-
+        console.log(body);
         const createResult = await DeliveryProcessRepository.create({ data: body });
         if (createResult) {
             return res.status(200).send(createResult);
@@ -33,6 +33,28 @@ async function create(req: Request, res: Response) {
     } catch (error) {
         console.log({ error });
         return res.status(500).send(error);
+    }
+}
+
+async function createDeliveryProcess(req: Request, res: Response) {
+    try {
+        const body = req.body;
+        const { status, offerId, feedbackId } = body;
+        console.log('do');
+        const deliveryProcess = await DeliveryProcessRepository.create({
+            data: {
+                status: 'body.status',
+                offerId: body.offerId,
+                feedbackId: body.feedbackId,
+                createdAt: new Date(),
+                createdBy: "", 
+            },
+        });
+
+        return res.status(201).json(deliveryProcess);
+    } catch (error) {
+        console.error('Error creating delivery process:', error);
+        return res.status(500).json({ error: 'Failed to create delivery process' });
     }
 }
 
@@ -67,6 +89,7 @@ const DeliveryProcessController = {
     findOne,
     create,
     update,
+    createDeliveryProcess,
     delete: deleteOne,
 };
 

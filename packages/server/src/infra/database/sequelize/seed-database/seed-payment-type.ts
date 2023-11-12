@@ -6,16 +6,17 @@ class SeedPaymentType {
             await PaymentType.bulkCreate([
                 {
                     pk_payment_type: 1,
-                    pt_type: "PIX",
+                    pt_type: "Cartão de crédito",
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
                 {
                     pk_payment_type: 2,
-                    pt_type: "Cartão de crédito",
+                    pt_type: "PIX",
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
+                
             ]).then(() => {
                 console.log("Registros inseridos com sucesso.");
             });

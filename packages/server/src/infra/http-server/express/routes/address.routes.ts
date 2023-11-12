@@ -5,7 +5,7 @@ const addressRoutes = Router();
 
 addressRoutes.get("/address", AddressController.findAll);
 
-addressRoutes.get("/address/:id", AddressController.findOne);
+addressRoutes.get("/address-one", AddressController.findOne);
 
 addressRoutes.post("/address", AddressController.create);
 

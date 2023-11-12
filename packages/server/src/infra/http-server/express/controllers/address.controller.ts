@@ -12,7 +12,7 @@ async function findAll(req: Request, res: Response) {
 }
 
 async function findOne(req: Request, res: Response) {
-    const idToFind = req.params.id;
+    const idToFind = req.query.idAddress;
     try {
         const findOneResult = await AddressRepository.findOne({ id: idToFind });
         return res.status(200).send(findOneResult);
@@ -25,7 +25,6 @@ async function findOne(req: Request, res: Response) {
 async function create(req: Request, res: Response) {
     try {
         const body = req.body;
-
         const createResult = await AddressRepository.create({ data: body });
         return res.status(201).send(createResult);
     } catch (error) {

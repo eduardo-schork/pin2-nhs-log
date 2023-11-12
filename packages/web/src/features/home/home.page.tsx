@@ -12,7 +12,7 @@ function HomePage({ ...props }) {
         <BaseLayout {...props}>
             <HeroImage />
             <Containers.PageActions>
-                <ActionButton>{t('Home.ShippingTracking')}</ActionButton>
+                <ActionButton onClick={() => navigate('/delivery-process')}>{t('Home.ShippingTracking')}</ActionButton>
                 <ActionButton onClick={() => navigate('/quotation')}>{t('Home.FollowQuotation')}</ActionButton>
             </Containers.PageActions>
         </BaseLayout>

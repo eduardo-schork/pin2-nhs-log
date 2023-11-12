@@ -10,6 +10,8 @@ collectionScheduleRoutes.get("/collection-schedule/:id", CollectionScheduleContr
 
 collectionScheduleRoutes.post("/collection-schedule", CollectionScheduleController.create);
 
+collectionScheduleRoutes.post("/collection-schedule/create", CollectionScheduleController.createCollectionSchedule);
+
 collectionScheduleRoutes.delete("/collection-schedule/:id", CollectionScheduleController.delete);
 
 collectionScheduleRoutes.put("/collection-schedule", CollectionScheduleController.update);

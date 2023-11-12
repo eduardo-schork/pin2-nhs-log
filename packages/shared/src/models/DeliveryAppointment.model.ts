@@ -1,11 +1,11 @@
 import TBaseModel from "./Base.model";
 
 type TDeliveryAppointmentModel = {
-    id: number;
+    id?: number;
     date: Date;
     status: string;
     currentAddressId: number;
-    deliveryProcessId: number;
+    deliveryProcessId: any;
 } & TBaseModel;
 
 export default TDeliveryAppointmentModel;

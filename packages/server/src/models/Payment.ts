@@ -1,6 +1,8 @@
 import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from "sequelize-typescript";
 import DeliveryProcess from "./DeliveryProcess";
 import TPaymentModel from "@/shared/src/models/Payment.model";
+import PaymentType from "./PaymentType";
+import PaymentStatus from "./PaymentStatus";
 
 @Table({
     tableName: "Payment",
@@ -16,19 +18,27 @@ class Payment extends Model<TPaymentModel> {
     })
     id!: number;
 
+    @ForeignKey(() => PaymentStatus)
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
-        field: "pa_status",
+        field: "fk_payment_status",
     })
-    status!: string;
+    status!: number;
 
+    @BelongsTo(() => PaymentStatus, "fk_payment_status")
+    PaymentStatus?: PaymentStatus;
+
+    @ForeignKey(() => PaymentType)
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
-        field: "pa_type",
+        field: "fk_payment_type",
     })
     paymentType!: string;
+
+    @BelongsTo(() => PaymentType, "fk_payment_type")
+    PaymentType?: PaymentType;
 
     @ForeignKey(() => DeliveryProcess)
     @Column({

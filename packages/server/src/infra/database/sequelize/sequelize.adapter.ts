@@ -14,13 +14,14 @@ import Payment from "../../../models/Payment";
 import Quotation from "../../../models/Quotation";
 import RemittanceTypeTax from "../../../models/RemittanceTypeTax";
 import User from "../../../models/User";
+import DeliveryProcessStatus from "../../../models/DeliveryProcessStatus";
+import PaymentType from "../../../models/PaymentType";
+import PaymentStatus from "../../../models/PaymentStatus";
 
-// import PaymentType from "../../../models/PaymentType";
 // import DeliveryAppointmentStatus from "../../../models/DeliveryAppointmentStatus";
-// import DeliveryProcessStatus from "../../../models/DeliveryProcessStatus";
 // import ItemRemittanceType from "../../../models/ItemRemittanceType";
 // import OfferStatus from "../../../models/OfferStatus";
-// import PaymentStatus from "../../../models/PaymentStatus";
+
 
 dotenv.config();
 
@@ -38,6 +39,9 @@ const DATABASE_MODELS = [
     Quotation,
     RemittanceTypeTax,
     User,
+    DeliveryProcessStatus,
+    PaymentType,
+    PaymentStatus,
 ];
 
 class SequelizeAdapter {

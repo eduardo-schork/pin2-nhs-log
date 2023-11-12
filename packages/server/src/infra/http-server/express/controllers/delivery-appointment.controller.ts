@@ -12,9 +12,10 @@ async function findAll(req: Request, res: Response) {
 }
 
 async function findOne(req: Request, res: Response) {
-    const idToFind = req.params.id;
+    
     try {
-        const findOneResult = await DeliveryAppointmentRepository.findOne({ id: idToFind });
+        const idToFind = req.query.idDelivery;
+        const findOneResult = await DeliveryAppointmentRepository.findOneDeliveryProcess(idToFind);
         return res.status(200).send(findOneResult);
     } catch (error) {
         console.log({ error });
@@ -25,6 +26,7 @@ async function findOne(req: Request, res: Response) {
 async function create(req: Request, res: Response) {
     try {
         const body = req.body;
+
 
         const createResult = await DeliveryAppointmentRepository.create({ data: body });
         return res.status(201).send(createResult);

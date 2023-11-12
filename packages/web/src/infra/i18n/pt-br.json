@@ -39,5 +39,11 @@
     "User.delete": "Deseja mesmo deletar o usuário?",
     "User.delete.confirmation": "Usuário deletado com sucesso!",
     "User.edit.confirmation": "Informações do usuário salvas com sucesso!",
-    "User.edit.notPossible": "Não foi possível atualizar as informações do usuário! Tente novamente"  
+    "User.edit.notPossible": "Não foi possível atualizar as informações do usuário! Tente novamente",
+    "Delivery.Process.Serch" : "Digite o número da remessa",
+    "Delivery.Process.TrackBack" : "Rastrear 🔎",
+    "DeliveryProcess.NotFound": "Remessa não encontrada, insira um novo número.",
+    "Confirm": "Confirmar",
+    "Prox": "Próximo",
+    "Finish": "Finalizar"
 }

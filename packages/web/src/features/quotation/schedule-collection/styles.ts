@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import BaseLayout from '@/components/layout/base-layout/base-layout.ui';
 import Spacings from '@/styles/tokens/spacing';
-import FontSizes from '@/styles/tokens/font-size';
-import { Input, Tab, Text } from '@chakra-ui/react';
+import { Tab, TabList, Text } from '@chakra-ui/react';
 
 export const RegisterDivMargin = {
     MARGINTOP: '0px',
@@ -46,8 +45,6 @@ export const StyledTab2 = styled(Tab)`
 export const Divs = styled.div`
     display: flex;
     flex-direction: row;
-<<<<<<< Updated upstream
-=======
     width: 200%;
     margin-bottom: 10px;
 `;
@@ -95,22 +92,4 @@ transition: background-color 0.3s;
 &:hover {
   background-color: #0a6ebd; 
 }
-`;
-
-export const ButtonAddress = styled.button`
-align-self: center;
-background-color: #0c8ce9;
-margin-top: 30px;
-color: white;
-border: none;
-cursor: pointer;
-display: flex;
-justify-content: center;
-align-items: center;
-transition: background-color 0.3s; 
-
-&:hover {
-  background-color: #0a6ebd; 
-}
->>>>>>> Stashed changes
 `;

@@ -10,6 +10,7 @@ import AdminQuotationPage from '@/features/admin/quotation/admin-quotation.page'
 import ScheduleCollectionPage from '@/features/quotation/schedule-collection/schedule-collection.page';
 import CreateFleet from '@/features/admin/fleets/fleet/create-fleet.page';
 import CreateVehicleModal from '@/features/admin/fleets/fleet-vehicle/modal-create-fleet-vehicle.page';
+import DeliveryProcessPage from '@/features/delivery-process/delivery-process.page';
 
 const BASE_ROUTES = [
     {
@@ -27,6 +28,10 @@ const BASE_ROUTES = [
     {
         path: '/quotation/schedule-collection',
         element: <ScheduleCollectionPage />,
+    },
+    {
+        path: '/delivery-process',
+        element: <DeliveryProcessPage />,
     },
 ];
 

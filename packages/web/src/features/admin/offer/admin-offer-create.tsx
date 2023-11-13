@@ -1,4 +1,4 @@
-import { Select } from '@chakra-ui/react'; // Importe o componente Select do Chakra UI
+import { FormLabel, Modal, Select } from '@chakra-ui/react'; // Importe o componente Select do Chakra UI
 import { ContainedButton } from '@/components/button/button.ui';
 import { HContainer } from '@/components/container/container.ui';
 import Divider from '@/components/divider';
@@ -12,7 +12,7 @@ import FormTextInput from '@/components/form/text-input/form-text-input.ui';
 import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import HttpRequestPort from '@/infra/http-request/http-request.port';
-import Modal from '@/components/modal.ui';
+import t from '@/infra/i18n';
 
 function AdminCreateOffer({ isOpen, onClose, data, ...props }) {
     const [selectedFleet, setSelectedFleet] = useState('');
@@ -75,50 +75,74 @@ function AdminCreateOffer({ isOpen, onClose, data, ...props }) {
     }, [subtotal, taxes]);
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} title={'Criar Oferta'}>
-            <QuotationItem.Container {...props}>
-                <QuotationItem.InfoTitle>#{data.id}</QuotationItem.InfoTitle>
-                <Divider borderColor={Colors.PRIMARY} />
-                <VContainer gap={Spacings.EXTRA_LARGE}>
-                    <FormTextInput label="CPF" value={data.cpf} isRequired />
-                    <FormTextInput label="Email" value={data.email} isRequired />
-                    <FormTextInput
-                        label="Previsão de entrega"
-                        value={deliveryForecast}
-                        onChange={(e) => setDeliveryForecast(e.target.value)}
-                        isRequired
-                    />
-                    <Select
-                        placeholder="Selecionar veículo"
-                        value={selectedFleet}
-                        onChange={(event) => setSelectedFleet(event.target.value)}
-                        isRequired
-                    >
-                        {fleetVehicles.map((vehicle) => (
-                            <option key={vehicle.id} value={vehicle.id}>
-                                {vehicle.model} | {vehicle.plate}
-                            </option>
-                        ))}
-                    </Select>
-                    <FormTextInput
-                        label="Endereço de origem"
-                        value={normalizeAddressLabel(data.originAddress)}
-                        isRequired
-                    />
-                    <FormTextInput
-                        label="Subtotal"
-                        value={subtotal}
-                        onChange={(e) => setSubtotal(e.target.value)}
-                        isRequired
-                    />
-                    <FormTextInput label="Impostos" value={taxes} isRequired />
-                    <FormTextInput label="Total" value={total} isRequired />
-                    <Divider borderColor={Colors.PRIMARY} />
-                </VContainer>
-                <HContainer gap={Spacings.MEDIUM} style={{ justifyContent: 'center' }}>
-                    <ContainedButton onClick={handleSubmit}>Salvar</ContainedButton>
-                </HContainer>
-            </QuotationItem.Container>
+        <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+                <ModalHeader>Criar Oferta</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                    <VContainer {...props} gap={Spacings.LARGE}>
+                        <QuotationItem.InfoTitle>#{data.id}</QuotationItem.InfoTitle>
+                        <Divider borderColor={Colors.PRIMARY} />
+
+                        <VContainer gap={Spacings.LARGE}>
+                            <HContainer style={{ gap: Spacings.LARGE }}>
+                                <FormTextInput isDisabled={true} label="CPF" value={data.cpf} isRequired />
+                                <FormTextInput isDisabled={true} label="Email" value={data.email} isRequired />
+                            </HContainer>
+
+                            <HContainer style={{ gap: Spacings.LARGE }}>
+                                <FormTextInput
+                                    label="Previsão de entrega"
+                                    value={deliveryForecast}
+                                    onChange={(e) => setDeliveryForecast(e.target.value)}
+                                    isRequired
+                                />
+
+                                <VContainer style={{ width: '100%' }}>
+                                    <FormLabel>Veículo</FormLabel>
+                                    <Select
+                                        placeholder="Selecionar veículo"
+                                        value={selectedFleet}
+                                        onChange={(event) => setSelectedFleet(event.target.value)}
+                                        isRequired
+                                    >
+                                        {fleetVehicles.map((vehicle) => (
+                                            <option key={vehicle.id} value={vehicle.id}>
+                                                {vehicle.model} | {vehicle.plate}
+                                            </option>
+                                        ))}
+                                    </Select>
+                                </VContainer>
+                            </HContainer>
+
+                            <FormTextInput
+                                isDisabled={true}
+                                label="Endereço de origem"
+                                value={normalizeAddressLabel(data.originAddress)}
+                                isRequired
+                            />
+
+                            <HContainer style={{ gap: Spacings.LARGE }}>
+                                <FormTextInput isDisabled={true} label="Impostos" value={taxes} isRequired />
+
+                                <FormTextInput
+                                    label="Subtotal"
+                                    value={subtotal}
+                                    onChange={(e) => setSubtotal(e.target.value)}
+                                    isRequired
+                                />
+                            </HContainer>
+
+                            <FormTextInput label="Total" isDisabled={true} value={total} isRequired />
+                        </VContainer>
+
+                        <HContainer gap={Spacings.MEDIUM} style={{ justifyContent: 'flex-end' }}>
+                            <ContainedButton onClick={handleSubmit}>{t('common.Register')}</ContainedButton>
+                        </HContainer>
+                    </VContainer>
+                </ModalBody>
+            </ModalContent>
         </Modal>
     );
 }

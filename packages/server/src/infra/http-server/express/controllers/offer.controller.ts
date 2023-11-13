@@ -26,7 +26,6 @@ async function findOne(req: Request, res: Response) {
 async function findOfferByQuotationId(req: Request, res: Response) {
     const idToFind = req.params.id;
     try {
-        console.log(idToFind)
         const foundOffers = await OfferRepository.findAllByQuotation(idToFind);
         return res.status(200).send(foundOffers);
     } catch (error) {
@@ -89,7 +88,7 @@ const OfferController = {
     update,
     delete: deleteOne,
     approveOffer,
-    findOfferByQuotationId
+    findOfferByQuotationId,
 };
 
 export default OfferController;

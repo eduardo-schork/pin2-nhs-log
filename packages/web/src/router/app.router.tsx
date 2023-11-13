@@ -11,6 +11,7 @@ import ScheduleCollectionPage from '@/features/quotation/schedule-collection/sch
 import CreateFleet from '@/features/admin/fleets/fleet/create-fleet.page';
 import CreateVehicleModal from '@/features/admin/fleets/fleet-vehicle/modal-create-fleet-vehicle.page';
 import DeliveryProcessPage from '@/features/delivery-process/delivery-process.page';
+import AdminManageDeliveryProcessPage from '@/features/admin/delivery-process/admin-manage-delivery-process.page';
 
 const BASE_ROUTES = [
     {
@@ -55,6 +56,10 @@ const ADMIN_ROUTES = [
     {
         path: '/admin/fleet-vehicle',
         element: <CreateVehicleModal />,
+    },
+    {
+        path: '/admin/delivery-process',
+        element: <AdminManageDeliveryProcessPage />,
     },
     {
         path: '/admin/fleet',

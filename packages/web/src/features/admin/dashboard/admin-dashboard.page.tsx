@@ -9,18 +9,20 @@ import { Link, useLocation } from 'react-router-dom';
 function AdminDashboardPage({ ...props }) {
     const location = useLocation();
     const userId = location.state?.userId.userId;
-    
+
     return (
-        <BaseLayout {...props} userId={userId}> 
+        <BaseLayout {...props} userId={userId}>
             <HeroImage />
             <Containers.PageActions>
-            <Link to="/admin/fleet">
-                <ActionButton>{t('Dashboard.ManageFleets')}</ActionButton>
-            </Link>
-            <Link to="/admin/quotation">
-                <ActionButton>{t('Dashboard.FollowQuotation')}</ActionButton>
-            </Link>
-                <ActionButton>{t('Dashboard.ManageProcess')}</ActionButton>
+                <Link to="/admin/fleet">
+                    <ActionButton>{t('Dashboard.ManageFleets')}</ActionButton>
+                </Link>
+                <Link to="/admin/quotation">
+                    <ActionButton>{t('Dashboard.FollowQuotation')}</ActionButton>
+                </Link>
+                <Link to="/admin/delivery-process">
+                    <ActionButton>{t('Dashboard.ManageProcess')}</ActionButton>
+                </Link>
             </Containers.PageActions>
             <CopyrightText />
         </BaseLayout>

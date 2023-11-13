@@ -12,6 +12,7 @@ import {
     Title,
     DivText,
     ButtonProx,
+    ButtonAddress,
 } from './styles';
 import { HContainer, VContainer } from '@/components/container/container.ui';
 import FormTextInput from '@/components/form/text-input/form-text-input.ui';

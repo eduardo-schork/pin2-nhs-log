@@ -93,3 +93,22 @@ transition: background-color 0.3s;
   background-color: #0a6ebd; 
 }
 `;
+
+
+export const ButtonAddress = styled.button`
+align-self: center;
+background-color: #0c8ce9;
+color: white;
+border: none;
+padding: 2px 10px;
+cursor: pointer;
+margin-top: 30px;
+display: flex;
+justify-content: center;
+align-items: center;
+transition: background-color 0.3s; 
+
+&:hover {
+  background-color: #0a6ebd; 
+}
+`;

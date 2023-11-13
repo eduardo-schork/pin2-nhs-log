@@ -1,6 +1,15 @@
-import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from "sequelize-typescript";
+import {
+    Model,
+    DataType,
+    Table,
+    Column,
+    ForeignKey,
+    BelongsTo,
+    BelongsToMany,
+} from "sequelize-typescript";
 import Fleet from "./Fleet";
 import TFleetVehicleModel from "@/shared/src/models/FleetVehicle.model";
+import FleetVehicleFleet from "./FleetVehicleFleet";
 
 @Table({
     tableName: "Fleet_Vehicle",
@@ -15,6 +24,9 @@ class FleetVehicle extends Model<TFleetVehicleModel> {
         field: "pk_fleet_vehicle",
     })
     id!: number;
+
+    @BelongsToMany(() => Fleet, () => FleetVehicleFleet)
+    fleets?: Fleet[];
 
     @Column({
         type: DataType.STRING(255),

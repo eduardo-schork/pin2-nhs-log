@@ -1,84 +1,93 @@
-import { Heading, IconButton, Table, TableContainer } from '@chakra-ui/react';
+import { IconButton, Table, TableContainer } from '@chakra-ui/react';
 import TFleetModel from '@shared/models/Fleet.model';
 import { useEffect, useState } from 'react';
-import { MergedTableRow, TableCell, TableHeader, TableRow, handleDelete, handleEdit } from './create-fleet.style';
+import { MergedTableRow, TableCell, TableHeader, TableRow } from './create-fleet.style';
 import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
-import DeleteVehicleModal from './delete-fleet.page';
+import HttpRequestPort from '@/infra/http-request/http-request.port';
+import { toast } from 'react-toastify';
+import Spacings from '@/styles/tokens/spacing';
+import { HContainer } from '@/components/container/container.ui';
+import DeleteFleetModal from './delete-fleet-modal';
 
-function ListFleets() {
+function ListFleets({ ...props }) {
     const [fleets, setFleets] = useState<TFleetModel[]>([]);
-    const [error, setError] = useState(null);
-    const [isDeleteVehicleModalOpen, setIsDeleteVehicleModalOpen] = useState(false);
+    const [selectedFleet, setSelectedFleet] = useState<TFleetModel | null>(null);
 
-    console.log(fleets);
+    const [isEditFleetModalOpen, setIsEditFletModalOpen] = useState<boolean>(false);
+    const [isDeleteFleetModalOpen, setIsDeleteFletModalOpen] = useState<boolean>(false);
+
     useEffect(() => {
-        fetch('http://localhost:8000/api/fleet')
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Erro ao buscar as frotas');
-                }
-                return response.json();
-            })
-            .then((data) => setFleets(data))
-            .catch((error) => setError(error.message));
+        (async () => {
+            try {
+                const result = await HttpRequestPort.get({ path: '/api/fleet' });
+                setFleets(result);
+            } catch (error) {
+                toast.error('Ocorreu um erro ao buscar frotas, recarregue a página');
+            }
+        })();
     }, []);
 
-    if (error) {
-        return <div>Erro: {error}</div>;
-    }
-
-    const openDeleteVehicleModal = (fleetId) => {
-        setIsDeleteVehicleModalOpen(true);
-        setSelectedFleetId(fleetId);
+    const openDeleteFleetModal = (fleet: TFleetModel) => {
+        setSelectedFleet(fleet);
+        setIsDeleteFletModalOpen(true);
     };
-      
+
+    const openEditFleetModel = (fleet: TFleetModel) => {
+        setSelectedFleet(fleet);
+        console.log(`Editar frota ${fleet}`);
+    };
+
     return (
-        <TableContainer>
-            <Table>
-            <thead>
-                <MergedTableRow>
-                    <TableHeader colSpan="3"><center>Listagem de Frotas</center></TableHeader>
-                </MergedTableRow>
-                <TableRow>
-                    <TableHeader>Nome</TableHeader>
-                    <TableHeader>Veículos</TableHeader>
-                    <TableHeader>Ações</TableHeader> 
-                </TableRow>
-            </thead>
-            <tbody>
-                {fleets.map((fleet) => (
-                    <TableRow key={fleet.name}>
-                        <TableCell>{fleet.name}</TableCell>
-                        <TableCell>{fleet.fleetVehicleId}</TableCell>
-                        <TableCell>
-                            <IconButton
-                                icon={<EditIcon />}
-                                aria-label="Editar"
-                                onClick={() => handleEdit(fleet.id)} 
-                            />
-                            <IconButton
-                                icon={<DeleteIcon />}
-                                aria-label="Excluir"
-                                onClick={() => openDeleteVehicleModal(fleet.id)}
-                            />
-                        </TableCell>
-                    </TableRow>
-                ))}
-            </tbody>
-            </Table>
-        </TableContainer>
+        <HContainer style={{ width: '100%', display: 'flex', marginBottom: Spacings.EXTRA_LARGE }}>
+            {isDeleteFleetModalOpen && (
+                <DeleteFleetModal
+                    fleet={selectedFleet}
+                    isOpen={isDeleteFleetModalOpen}
+                    onClose={() => setIsDeleteFletModalOpen(false)}
+                />
+            )}
+
+            <TableContainer style={{ width: '80%', margin: 'auto' }} {...props}>
+                <Table>
+                    <thead>
+                        <MergedTableRow>
+                            <TableHeader colSpan="3">
+                                <center>Listagem de Frotas</center>
+                            </TableHeader>
+                        </MergedTableRow>
+                        <TableRow>
+                            <TableHeader>Nome</TableHeader>
+                            <TableHeader>Veículos</TableHeader>
+                            <TableHeader>Ações</TableHeader>
+                        </TableRow>
+                    </thead>
+                    <tbody>
+                        {fleets.map((fleet) => (
+                            <TableRow key={fleet.name}>
+                                <TableCell>{fleet.name}</TableCell>
+                                <TableCell>{fleet.vehicles?.length}</TableCell>
+
+                                <TableCell>
+                                    <HContainer style={{ gap: Spacings.SMALL }}>
+                                        <IconButton
+                                            icon={<EditIcon />}
+                                            aria-label="Editar"
+                                            onClick={() => openEditFleetModel(fleet)}
+                                        />
+                                        <IconButton
+                                            icon={<DeleteIcon />}
+                                            aria-label="Excluir"
+                                            onClick={() => openDeleteFleetModal(fleet)}
+                                        />
+                                    </HContainer>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </tbody>
+                </Table>
+            </TableContainer>
+        </HContainer>
     );
-    {isDeleteVehicleModalOpen && (
-        <DeleteVehicleModal
-        isOpen={isDeleteVehicleModalOpen}
-        onClose={() => setIsDeleteVehicleModalOpen(false)}
-        vehicleId={undefined}
-      />  
-    )}
 }
 
 export default ListFleets;
-function setSelectedFleetId(fleetId: any) {
-    throw new Error('Function not implemented.');
-}
-

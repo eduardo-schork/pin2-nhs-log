@@ -1,15 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-    Button,
-    Popover,
-    PopoverContent,
-    PopoverArrow,
-    PopoverHeader,
-    PopoverCloseButton,
-    PopoverBody,
-    Text,
-    Checkbox,
-} from '@chakra-ui/react';
+import { Button, Text, Checkbox } from '@chakra-ui/react';
 import { ContainedButton } from '@/components/button/button.ui';
 import TextInput from '@/components/text-input/text-input.ui';
 import { FormContainer, PageContainer } from './create-fleet.style';
@@ -23,9 +13,13 @@ import ErrorModal from './error.modal';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import EditVehicleModal from '../fleet-vehicle/modal-edit-fleet-vehicle.page';
 import DeleteVehicleModal from '../fleet-vehicle/modal-delete-fleet-vehicle.page';
-import { useNavigate } from 'react-router-dom';
 import ListFleets from './list-fleet.page';
 import TFleetVehicleModel from '@shared/models/FleetVehicle.model';
+import { HContainer, VContainer } from '@/components/container/container.ui';
+import HttpRequestPort from '@/infra/http-request/http-request.port';
+import { toast } from 'react-toastify';
+import Divider from '@/components/divider';
+import Spacings from '@/styles/tokens/spacing';
 
 type TCreateFleetPageFormValues = {
     fleetName: string;
@@ -37,7 +31,6 @@ function CreateFleet({ ...props }) {
 
     const [fleetVehicles, setFleetVehicles] = useState<TFleetVehicleModel[]>([]);
     const [selectedFleetVehicles, setSelectedFleetVehicles] = useState<string[]>([]);
-    const [isPopoverOpen, setIsPopoverOpen] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
     const [isCreateVehicleModalOpen, setIsCreateVehicleModalOpen] = useState(false);
@@ -45,11 +38,19 @@ function CreateFleet({ ...props }) {
     const [isDeleteVehicleModalOpen, setIsDeleteVehicleModalOpen] = useState(false);
     const [selectedVehicle, setSelectedVehicle] = useState<TFleetVehicleModel>(null);
 
+    async function handleFetchFleetVehicles() {
+        try {
+            const result = await HttpRequestPort.get({ path: '/api/fleetVehicle' });
+            setFleetVehicles(result);
+        } catch (error) {
+            toast.error('Ocorreu um erro ao buscar veículos, recarregue a página');
+        }
+    }
+
     useEffect(() => {
-        fetch('http://localhost:8000/api/fleetVehicle')
-            .then((response) => response.json())
-            .then((data) => setFleetVehicles(data))
-            .catch((error) => console.error('Erro ao buscar os veículos:', error));
+        (async () => {
+            await handleFetchFleetVehicles();
+        })();
     }, []);
 
     const handleCheckboxChange = (vehicleId: number) => {
@@ -114,104 +115,103 @@ function CreateFleet({ ...props }) {
         }
     }
 
-    const togglePopover = () => {
-        setIsPopoverOpen(!isPopoverOpen);
-    };
-
     return (
         <BaseLayout {...props}>
-            <Containers.PageActions>
-                <PageContainer>
-                    <FormContainer>
-                        <TextInput {...register('fleetName')} placeholder={t('Register.fleetName')} />
-                        <div style={{ position: 'relative' }}>
-                            <Button
-                                onClick={togglePopover}
-                                style={{ background: 'white', color: '#718096', width: '100%' }}
-                            >
-                                Veículos
-                            </Button>
-                            <Popover isOpen={isPopoverOpen} onOpen={togglePopover} onClose={togglePopover}>
-                                <PopoverContent>
-                                    <PopoverArrow />
-                                    <PopoverCloseButton />
-                                    <PopoverHeader>Veículos</PopoverHeader>
-                                    <PopoverBody>
-                                        {fleetVehicles.map((vehicle) => (
-                                            <div
-                                                key={vehicle.id}
-                                                style={{ display: 'flex', justifyContent: 'space-between' }}
-                                            >
-                                                <Checkbox
-                                                    isChecked={selectedFleetVehicles.includes(vehicle.id.toString())}
-                                                    onChange={() => handleCheckboxChange(vehicle.id)}
-                                                >
-                                                    {vehicle.plate}
-                                                </Checkbox>
-                                                <Button
-                                                    onClick={() => selectEditVehicle(vehicle)}
-                                                    leftIcon={<EditIcon />}
-                                                    size="sm"
-                                                    variant="link"
-                                                >
-                                                    Editar
-                                                </Button>
-                                                <Button
-                                                    onClick={() => selectDeleteVehicle(vehicle)}
-                                                    leftIcon={<DeleteIcon />}
-                                                    size="sm"
-                                                    variant="link"
-                                                >
-                                                    Excluir
-                                                </Button>
-                                            </div>
-                                        ))}
-                                    </PopoverBody>
-                                </PopoverContent>
-                            </Popover>
-                        </div>
+            <ErrorModal isOpen={isErrorModalOpen} onClose={closeErrorModal} errorMessage={error || ''} />
+
+            {isCreateVehicleModalOpen && (
+                <CreateVehicleModal
+                    onCreateVehicle={() => handleFetchFleetVehicles()}
+                    isOpen={isCreateVehicleModalOpen}
+                    onClose={() => setIsCreateVehicleModalOpen(false)}
+                />
+            )}
+
+            {isEditVehicleModalOpen && (
+                <EditVehicleModal
+                    vehicle={selectedVehicle}
+                    isOpen={isEditVehicleModalOpen}
+                    onClose={() => {
+                        setIsEditVehicleModalOpen(false);
+                        setSelectedVehicle(null);
+                    }}
+                />
+            )}
+
+            {isDeleteVehicleModalOpen && (
+                <DeleteVehicleModal
+                    isOpen={isDeleteVehicleModalOpen}
+                    vehicleId={selectedVehicle?.id}
+                    onClose={() => {
+                        setIsDeleteVehicleModalOpen(false);
+                        setSelectedVehicle(null);
+                    }}
+                />
+            )}
+
+            <Text fontSize={'x-large'} alignSelf={'center'} fontWeight={'bold'}>
+                Criar/Listar frotas
+            </Text>
+
+            <FormContainer>
+                <VContainer style={{ backgroundColor: 'white', padding: Spacings.LARGE, gap: Spacings.MEDIUM }}>
+                    <Text fontSize={'large'} fontWeight={'bold'}>
+                        Criar nova frota:
+                    </Text>
+
+                    <TextInput {...register('fleetName')} placeholder={t('Register.fleetName')} />
+
+                    <Text alignSelf={'center'} fontWeight={'bold'}>
+                        Veículos da frota
+                    </Text>
+
+                    {fleetVehicles.map((vehicle) => (
+                        <VContainer key={vehicle.id}>
+                            <HContainer style={{ justifyContent: 'space-between', padding: `${Spacings.SMALL} 0` }}>
+                                <Checkbox
+                                    isChecked={selectedFleetVehicles.includes(vehicle.id.toString())}
+                                    onChange={() => handleCheckboxChange(vehicle.id)}
+                                >
+                                    {vehicle.plate}
+                                </Checkbox>
+
+                                <HContainer style={{ gap: Spacings.SMALL }}>
+                                    <Button
+                                        onClick={() => selectEditVehicle(vehicle)}
+                                        leftIcon={<EditIcon />}
+                                        size="sm"
+                                        variant="link"
+                                    >
+                                        Editar
+                                    </Button>
+
+                                    <Button
+                                        onClick={() => selectDeleteVehicle(vehicle)}
+                                        leftIcon={<DeleteIcon />}
+                                        size="sm"
+                                        variant="link"
+                                    >
+                                        Excluir
+                                    </Button>
+                                </HContainer>
+                            </HContainer>
+                            <Divider />
+                        </VContainer>
+                    ))}
+
+                    <HContainer style={{ justifyContent: 'space-between' }}>
+                        <ContainedButton onClick={openCreateVehicleModal}>
+                            <Text>CADASTRAR VEÍCULO</Text>
+                        </ContainedButton>
+
                         <ContainedButton onClick={handleSubmit(handleFormSubmit)}>
                             <Text>{t('common.Register')}</Text>
                         </ContainedButton>
-                        <ContainedButton
-                            onClick={openCreateVehicleModal}
-                            isOpen={isErrorModalOpen}
-                            onClose={closeErrorModal}
-                        >
-                            <Text>CADASTRAR VEÍCULO</Text>
-                        </ContainedButton>
-                        <ErrorModal isOpen={isErrorModalOpen} onClose={closeErrorModal} errorMessage={error || ''} />
-                        {}
-                        {isCreateVehicleModalOpen && (
-                            <CreateVehicleModal
-                                isOpen={isCreateVehicleModalOpen}
-                                onClose={() => setIsCreateVehicleModalOpen(false)}
-                            />
-                        )}
-                        {isEditVehicleModalOpen && (
-                            <EditVehicleModal
-                                vehicle={selectedVehicle}
-                                isOpen={isEditVehicleModalOpen}
-                                onClose={() => {
-                                    setIsEditVehicleModalOpen(false);
-                                    setSelectedVehicle(null);
-                                }}
-                            />
-                        )}
-                        {isDeleteVehicleModalOpen && (
-                            <DeleteVehicleModal
-                                isOpen={isDeleteVehicleModalOpen}
-                                vehicleId={selectedVehicle?.id}
-                                onClose={() => {
-                                    setIsDeleteVehicleModalOpen(false);
-                                    setSelectedVehicle(null);
-                                }}
-                            />
-                        )}
-                    </FormContainer>
-                    <ListFleets />
-                </PageContainer>
-            </Containers.PageActions>
+                    </HContainer>
+                </VContainer>
+            </FormContainer>
+
+            <ListFleets />
         </BaseLayout>
     );
 }

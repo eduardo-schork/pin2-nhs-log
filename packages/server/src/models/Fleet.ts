@@ -1,6 +1,16 @@
-import { Model, DataType, Table, Column, ForeignKey, BelongsTo } from "sequelize-typescript";
-import FleetVehicle from "./FleetVehicle";
+import {
+    Model,
+    DataType,
+    Table,
+    Column,
+    ForeignKey,
+    BelongsTo,
+    HasMany,
+    BelongsToMany,
+} from "sequelize-typescript";
 import TFleetModel from "@/shared/src/models/Fleet.model";
+import FleetVehicleFleet from "./FleetVehicleFleet";
+import FleetVehicle from "./FleetVehicle";
 
 @Table({
     tableName: "Fleet",
@@ -23,16 +33,11 @@ class Fleet extends Model<TFleetModel> {
     })
     name!: string;
 
-    @ForeignKey(() => FleetVehicle)
-    @Column({
-        type: DataType.INTEGER,
-        allowNull: false,
-        field: "fk_fleet_vehicle",
-    })
-    fleetVehicleId!: number;
+    @HasMany(() => FleetVehicleFleet, "fleetId")
+    fleetVehicleFleets?: FleetVehicleFleet[];
 
-    @BelongsTo(() => FleetVehicle, "fk_fleet_vehicle")
-    fleetVehicle?: FleetVehicle;
+    @BelongsToMany(() => FleetVehicle, () => FleetVehicleFleet)
+    fleetVehicles?: FleetVehicle[];
 
     @Column({
         type: DataType.DATE,

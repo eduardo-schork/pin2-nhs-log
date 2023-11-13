@@ -3,11 +3,6 @@ import BaseLayout from '@/components/layout/base-layout/base-layout.ui';
 import Spacings from '@/styles/tokens/spacing';
 import FontSizes from '@/styles/tokens/font-size';
 
-const RegisterDivMargin = {
-    MARGINTOP: '0px',
-    MARGINLEFT: '-45px',
-};
-
 const RegisterTextMargin = {
     MARGINTOP: '-35.7px',
     MARGINLEFT: '170.06px',
@@ -20,17 +15,14 @@ export const PageContainer = styled(BaseLayout).attrs({
 `;
 
 export const FormContainer = styled.div`
-    align-self: flex-start;
     display: flex;
-    flex-direction: column;
-    width: 150%;
     height: 100%;
+    align-self: flex-start;
+    flex-direction: column;
     justify-content: center;
 
     gap: ${Spacings.MEDIUM};
     padding: ${Spacings.MEDIUM};
-    margin-top: ${RegisterDivMargin.MARGINTOP};
-    margin-left: ${RegisterDivMargin.MARGINLEFT};
 `;
 
 export const ImageContainer = styled.img`
@@ -52,6 +44,6 @@ export const LoginText = styled.span`
 `;
 
 export const CustomModalContent = styled.div`
-    width: 400px; 
-    max-width: 90%; 
+    width: 400px;
+    max-width: 90%;
 `;

@@ -11,7 +11,7 @@ fleetRoutes.get("/fleet/:id", FleetController.findOne);
 
 fleetRoutes.post("/fleet", FleetController.create);
 
-fleetRoutes.delete("/fleet/:id", FleetController.delete);
+fleetRoutes.delete("/fleet/delete/:id", FleetController.delete);
 
 fleetRoutes.put("/fleet", FleetController.update);
 

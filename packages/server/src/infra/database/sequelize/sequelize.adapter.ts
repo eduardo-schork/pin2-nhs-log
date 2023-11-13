@@ -17,11 +17,11 @@ import User from "../../../models/User";
 import DeliveryProcessStatus from "../../../models/DeliveryProcessStatus";
 import PaymentType from "../../../models/PaymentType";
 import PaymentStatus from "../../../models/PaymentStatus";
+import FleetVehicleFleet from "../../../models/FleetVehicleFleet";
 
 // import DeliveryAppointmentStatus from "../../../models/DeliveryAppointmentStatus";
 // import ItemRemittanceType from "../../../models/ItemRemittanceType";
 // import OfferStatus from "../../../models/OfferStatus";
-
 
 dotenv.config();
 
@@ -42,6 +42,7 @@ const DATABASE_MODELS = [
     DeliveryProcessStatus,
     PaymentType,
     PaymentStatus,
+    FleetVehicleFleet,
 ];
 
 class SequelizeAdapter {

@@ -26,11 +26,10 @@ const EditVehicleModal: React.FC<TEditVehicleModalProps> = ({ isOpen, onClose, v
     };
 
     async function handleFormSubmit(data: Pick<TFleetVehicleModel, 'model' | 'plate' | 'cpfDriver' | 'renavam'>) {
-        
         if (!data.model || !data.plate || !data.cpfDriver || !data.renavam) {
             setError(t('common.MissingParameter'));
             setIsErrorModalOpen(true);
-            return; 
+            return;
         }
 
         try {
@@ -44,9 +43,8 @@ const EditVehicleModal: React.FC<TEditVehicleModalProps> = ({ isOpen, onClose, v
 
             if (res.status === 200) {
                 console.log(res);
-                
+
                 window.location.reload();
-                
             } else {
                 setError(t('Update.error'));
                 setIsErrorModalOpen(true);

@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { FormContainer } from './create.styles';
 import { useForm } from 'react-hook-form';
 import ErrorModal from './error.modal';
-import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 type TCreateVehiclePageFormValues = {
     vehicleModal: string;
@@ -17,10 +17,12 @@ type TCreateVehiclePageFormValues = {
 
 type TCreateVehicleModalProps = any;
 
-const CreateVehicleModal: React.FC<TCreateVehicleModalProps> = ({ isOpen, onClose }) => {
+const CreateVehicleModal: React.FC<TCreateVehicleModalProps> = ({ isOpen, onClose, onCreateVehicle }) => {
     const { register, handleSubmit, reset } = useForm<TCreateVehiclePageFormValues>();
+
     const [error, setError] = useState<string | null>(null);
     const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+
     const [formData, setFormData] = useState<TCreateVehiclePageFormValues>({
         vehicleModal: '',
         vehiclePlate: '',
@@ -37,43 +39,41 @@ const CreateVehicleModal: React.FC<TCreateVehicleModalProps> = ({ isOpen, onClos
         if (!data.vehicleModal || !data.vehiclePlate || !data.vehicleCpfDriver || !data.vehicleRenavam) {
             setError(t('common.MissingParameter'));
             setIsErrorModalOpen(true);
-        } else {
-            const requestData = new URLSearchParams({
-                vehicleModal: data.vehicleModal,
-                vehiclePlate: data.vehiclePlate,
-                vehicleCpfDriver: data.vehicleCpfDriver,
-                vehicleRenavam: data.vehicleRenavam,
+            return;
+        }
+
+        const requestData = new URLSearchParams({
+            vehicleModal: data.vehicleModal,
+            vehiclePlate: data.vehiclePlate,
+            vehicleCpfDriver: data.vehicleCpfDriver,
+            vehicleRenavam: data.vehicleRenavam,
+        });
+
+        try {
+            await fetch(`http://localhost:8000/api/fleetVehicle/create?${requestData}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             });
 
-            try {
-                const res = await fetch(`http://localhost:8000/api/fleetVehicle/create?${requestData}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
+            reset();
 
-                if (res.status === 200) {
-                    console.log(res);
-                    reset(); 
-                    setFormData({
-                        vehicleModal: '',
-                        vehiclePlate: '',
-                        vehicleCpfDriver: '',
-                        vehicleRenavam: '',
-                    });
+            setFormData({
+                vehicleModal: '',
+                vehiclePlate: '',
+                vehicleCpfDriver: '',
+                vehicleRenavam: '',
+            });
 
-                    window.location.reload();
-                    
-                } else {
-                    setError(t('Register.error'));
-                    setIsErrorModalOpen(true);
-                }
-            } catch (error) {
-                console.error(error);
-                setError(t('Register.error'));
-                setIsErrorModalOpen(true);
-            }
+            toast.success('Sucesso! O veículo foi cadastrado.');
+
+            if (onCreateVehicle) onCreateVehicle();
+            onClose();
+        } catch (error) {
+            console.error(error);
+            setError(t('Register.error'));
+            setIsErrorModalOpen(true);
         }
     }
 
@@ -85,13 +85,11 @@ const CreateVehicleModal: React.FC<TCreateVehicleModalProps> = ({ isOpen, onClos
                 <ModalCloseButton />
                 <ModalBody>
                     <FormContainer>
-                    <TextInput
+                        <TextInput
                             {...register('vehicleModal')}
                             placeholder={t('Register.modal')}
-                            value={formData.vehicleModal} 
-                            onChange={(e) =>
-                                setFormData({ ...formData, vehicleModal: e.target.value })
-                            }
+                            value={formData.vehicleModal}
+                            onChange={(e) => setFormData({ ...formData, vehicleModal: e.target.value })}
                         />
                         <TextInput
                             {...register('vehiclePlate')}
@@ -103,23 +101,19 @@ const CreateVehicleModal: React.FC<TCreateVehicleModalProps> = ({ isOpen, onClos
                                     setFormData({ ...formData, vehiclePlate: inputValue });
                                 }
                             }}
-                            maxLength={7} 
+                            maxLength={7}
                         />
                         <TextInput
                             {...register('vehicleCpfDriver')}
                             placeholder={t('Register.cpfDriver')}
-                            value={formData.vehicleCpfDriver} 
-                            onChange={(e) =>
-                                setFormData({ ...formData, vehicleCpfDriver: e.target.value })
-                            }
+                            value={formData.vehicleCpfDriver}
+                            onChange={(e) => setFormData({ ...formData, vehicleCpfDriver: e.target.value })}
                         />
                         <TextInput
                             {...register('vehicleRenavam')}
                             placeholder={t('Register.renavam')}
                             value={formData.vehicleRenavam} // Use o valor do estado formData
-                            onChange={(e) =>
-                                setFormData({ ...formData, vehicleRenavam: e.target.value })
-                            }
+                            onChange={(e) => setFormData({ ...formData, vehicleRenavam: e.target.value })}
                         />
                         <ContainedButton onClick={handleSubmit(handleFormSubmit)}>
                             <Text>{t('common.Register')}</Text>

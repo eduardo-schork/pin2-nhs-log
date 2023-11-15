@@ -24,7 +24,7 @@ function Modal({
         <>
             <ChakraModal {...props} isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
-                <ModalContent style={{ alignSelf: 'center' }}>
+                <ModalContent minWidth="fit-content" height="fit-content">
                     <ModalHeader>{title}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>{children}</ModalBody>

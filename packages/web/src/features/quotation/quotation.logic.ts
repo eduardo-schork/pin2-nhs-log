@@ -41,7 +41,6 @@ function useQuotationLogic() {
 
     function onSubmitTrackQuotation(value: string) {
         const formattedValue = value.replace(/[^0-9]/g, '');
-        console.log({ formattedValue });
         navigate(`/quotation/track/${formattedValue}`);
     }
     return {

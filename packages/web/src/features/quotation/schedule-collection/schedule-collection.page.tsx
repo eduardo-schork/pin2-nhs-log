@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { TabPanel, TabPanels, Tabs, Text } from '@chakra-ui/react';
 import BaseLayout from '@/components/layout/base-layout/base-layout.ui';
 import {
     Divs,
@@ -22,6 +22,8 @@ import t from '@/infra/i18n';
 import ScheduleCollectionPay from './schedule-collection-pay.page';
 import { toast } from 'react-toastify';
 import { useLocation } from 'react-router-dom';
+import QuotationItem from '@/components/quotation/quotation-item.ui';
+import PageTitleBar from '@/components/page-title-bar.ui';
 
 type TCreateScheduleCollectionForm = {
     date: string;
@@ -143,135 +145,141 @@ function ScheduleCollectionPage({ onSubmit, ...props }: { onSubmit: (data: TCrea
 
     return (
         <BaseLayout {...props}>
+            <PageTitleBar title={'Agendamento de Coleta'} />
             <PageContainer withoutHeader={true}>
-                <Title textAlign="center" mt="100px" fontSize="2rem">
-                    Agendamento de Coleta
-                </Title>
-                <Tabs index={activeTab} onChange={(index) => setActiveTab(index)}>
+                <Tabs
+                    index={activeTab}
+                    onChange={(index) => setActiveTab(index)}
+                    style={{ width: '80%', alignSelf: 'center' }}
+                >
                     <StyledTabList>
                         <StyledTab1>Agendamento</StyledTab1>
                         <StyledTab2>Pagamento</StyledTab2>
                     </StyledTabList>
-                    <GridContainer>
-                        <form
-                            {...props}
-                            onSubmit={methods.handleSubmit(onSubmit)}
-                            style={{ margin: '0px 0px 0px 50px' }}
-                        >
-                            <TabPanels>
-                                <TabPanel>
-                                    <FormContainer>
-                                        <Divs>
-                                            <VContainer gap={Spacings.MEDIUM} style={{ width: '100%' }}>
-                                                <FormTextInput
-                                                    label="Data e Horário"
-                                                    name={'date'}
-                                                    methods={methods}
-                                                    type="datetime-local"
-                                                />
-                                            </VContainer>
-                                        </Divs>
-                                        <DivText>LOCAL DE COLETA</DivText>
-                                        <Divs>
-                                            <HContainer gap={Spacings.MEDIUM} style={{ width: '100%' }}>
-                                                <FormTextInput
-                                                    label="CEP"
-                                                    name={'addressScheduleCollection.zipCode'}
-                                                    methods={methods}
-                                                    isRequired
-                                                />
-                                                <HContainer gap={Spacings.MEDIUM}>
-                                                    <ButtonAddress
-                                                        onClick={() => {
-                                                            const cep = methods.getValues(
-                                                                'addressScheduleCollection.zipCode',
-                                                            );
-                                                            fetchOriginAddressInfo(cep);
-                                                        }}
-                                                    >
-                                                        Buscar Endereço
-                                                    </ButtonAddress>
-                                                </HContainer>
-                                            </HContainer>
-                                        </Divs>
-                                        <Divs>
-                                            <VContainer
-                                                gap={Spacings.MEDIUM}
-                                                style={{ width: '50%', margin: '0px 20px 0px 0px' }}
-                                            >
-                                                <FormTextInput
-                                                    label="Cidade"
-                                                    name={'addressScheduleCollection.city'}
-                                                    methods={methods}
-                                                    defaultValue={originAddressInfo.localidade}
-                                                />
-                                            </VContainer>
-                                            <HContainer gap={Spacings.MEDIUM} style={{ width: '50%' }}>
-                                                <FormTextInput
-                                                    label="Rua"
-                                                    name={'addressScheduleCollection.streetAddress'}
-                                                    methods={methods}
-                                                    defaultValue={originAddressInfo.logradouro}
-                                                />
-                                            </HContainer>
-                                        </Divs>
-                                        <Divs>
-                                            <VContainer
-                                                gap={Spacings.MEDIUM}
-                                                style={{ width: '50%', margin: '0px 20px 0px 0px' }}
-                                            >
-                                                <FormTextInput
-                                                    label="País"
-                                                    name={'addressScheduleCollection.country'}
-                                                    methods={methods}
-                                                    value="Brasil"
-                                                />
-                                            </VContainer>
-                                            <HContainer gap={Spacings.MEDIUM} style={{ width: '50%' }}>
-                                                <FormTextInput
-                                                    label="Estado"
-                                                    name={'addressScheduleCollection.state'}
-                                                    methods={methods}
-                                                    defaultValue={originAddressInfo.uf}
-                                                />
-                                            </HContainer>
-                                        </Divs>
-                                        <Divs>
-                                            <VContainer
-                                                gap={Spacings.MEDIUM}
-                                                style={{ width: '50%', margin: '0px 20px 0px 0px' }}
-                                            >
-                                                <FormTextInput
-                                                    label="Número"
-                                                    name={'addressScheduleCollection.number'}
-                                                    methods={methods}
-                                                    isRequired
-                                                />
-                                            </VContainer>
-                                            <HContainer gap={Spacings.MEDIUM} style={{ width: '50%' }}>
-                                                <FormTextInput
-                                                    label="Instruções"
-                                                    name={'instructions'}
-                                                    methods={methods}
-                                                />
-                                            </HContainer>
-                                        </Divs>
-                                    </FormContainer>
-                                    <ButtonProx
-                                        onClick={() => {
-                                            handleNext();
-                                            setActiveTab(1);
-                                        }}
-                                    >
-                                        {t('Prox')}
-                                    </ButtonProx>
 
-                                    {/* <ErrorModal isOpen={isErrorModalOpen} onClose={closeErrorModal} errorMessage={error || ''} /> */}
-                                </TabPanel>
-                                <ScheduleCollectionPay methods={methods} />
-                            </TabPanels>
-                        </form>
-                    </GridContainer>
+                    <QuotationItem.Container>
+                        <GridContainer>
+                            <form
+                                {...props}
+                                onSubmit={methods.handleSubmit(onSubmit)}
+                                style={{ margin: '0px 0px 0px 50px' }}
+                            >
+                                <TabPanels>
+                                    <TabPanel>
+                                        <FormContainer>
+                                            <Divs>
+                                                <VContainer gap={Spacings.MEDIUM} style={{ width: '100%' }}>
+                                                    <FormTextInput
+                                                        label="Data e Horário"
+                                                        name={'date'}
+                                                        methods={methods}
+                                                        type="datetime-local"
+                                                    />
+                                                </VContainer>
+                                            </Divs>
+                                            <DivText>LOCAL DE COLETA</DivText>
+                                            <Divs>
+                                                <HContainer gap={Spacings.MEDIUM} style={{ width: '100%' }}>
+                                                    <FormTextInput
+                                                        label="CEP"
+                                                        name={'addressScheduleCollection.zipCode'}
+                                                        methods={methods}
+                                                        isRequired
+                                                    />
+                                                    <HContainer gap={Spacings.MEDIUM}>
+                                                        <ButtonAddress
+                                                            onClick={() => {
+                                                                const cep = methods.getValues(
+                                                                    'addressScheduleCollection.zipCode',
+                                                                );
+                                                                fetchOriginAddressInfo(cep);
+                                                            }}
+                                                        >
+                                                            Buscar Endereço
+                                                        </ButtonAddress>
+                                                    </HContainer>
+                                                </HContainer>
+                                            </Divs>
+                                            <Divs>
+                                                <VContainer
+                                                    gap={Spacings.MEDIUM}
+                                                    style={{ width: '50%', margin: '0px 20px 0px 0px' }}
+                                                >
+                                                    <FormTextInput
+                                                        label="Cidade"
+                                                        name={'addressScheduleCollection.city'}
+                                                        methods={methods}
+                                                        defaultValue={originAddressInfo.localidade}
+                                                    />
+                                                </VContainer>
+                                                <HContainer gap={Spacings.MEDIUM} style={{ width: '50%' }}>
+                                                    <FormTextInput
+                                                        label="Rua"
+                                                        name={'addressScheduleCollection.streetAddress'}
+                                                        methods={methods}
+                                                        defaultValue={originAddressInfo.logradouro}
+                                                    />
+                                                </HContainer>
+                                            </Divs>
+                                            <Divs>
+                                                <VContainer
+                                                    gap={Spacings.MEDIUM}
+                                                    style={{ width: '50%', margin: '0px 20px 0px 0px' }}
+                                                >
+                                                    <FormTextInput
+                                                        label="País"
+                                                        name={'addressScheduleCollection.country'}
+                                                        methods={methods}
+                                                        value="Brasil"
+                                                    />
+                                                </VContainer>
+                                                <HContainer gap={Spacings.MEDIUM} style={{ width: '50%' }}>
+                                                    <FormTextInput
+                                                        label="Estado"
+                                                        name={'addressScheduleCollection.state'}
+                                                        methods={methods}
+                                                        defaultValue={originAddressInfo.uf}
+                                                    />
+                                                </HContainer>
+                                            </Divs>
+                                            <Divs>
+                                                <VContainer
+                                                    gap={Spacings.MEDIUM}
+                                                    style={{ width: '50%', margin: '0px 20px 0px 0px' }}
+                                                >
+                                                    <FormTextInput
+                                                        label="Número"
+                                                        name={'addressScheduleCollection.number'}
+                                                        methods={methods}
+                                                        isRequired
+                                                    />
+                                                </VContainer>
+                                                <HContainer gap={Spacings.MEDIUM} style={{ width: '50%' }}>
+                                                    <FormTextInput
+                                                        label="Instruções"
+                                                        name={'instructions'}
+                                                        methods={methods}
+                                                    />
+                                                </HContainer>
+                                            </Divs>
+                                        </FormContainer>
+                                        <ButtonProx
+                                            onClick={() => {
+                                                handleNext();
+                                                setActiveTab(1);
+                                            }}
+                                        >
+                                            {t('Prox')}
+                                        </ButtonProx>
+
+                                        {/* <ErrorModal isOpen={isErrorModalOpen} onClose={closeErrorModal} errorMessage={error || ''} /> */}
+                                    </TabPanel>
+
+                                    <ScheduleCollectionPay methods={methods} />
+                                </TabPanels>
+                            </form>
+                        </GridContainer>
+                    </QuotationItem.Container>
                 </Tabs>
             </PageContainer>
         </BaseLayout>

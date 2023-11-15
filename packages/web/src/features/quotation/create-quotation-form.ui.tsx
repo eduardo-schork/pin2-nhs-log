@@ -8,7 +8,7 @@ import { Text } from '@chakra-ui/react';
 import { ITEM_REMITTANCE_TYPE } from '@shared/constants/item-remittance-type.const';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 type TCreateQuotationForm = {

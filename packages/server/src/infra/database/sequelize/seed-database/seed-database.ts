@@ -2,6 +2,7 @@ import * as dotenv from "dotenv";
 
 import DatabasePort from "../../database.port";
 import { SeedQuotation } from "./seed-quotation";
+import { SeedFleetAndOffers } from "./seed-fleet-and-offers";
 
 dotenv.config();
 
@@ -10,6 +11,8 @@ async function seedSequelizeDatabase() {
     console.log("==============================");
 
     await SeedQuotation.execute();
+    await SeedFleetAndOffers.execute();
+
     // await seedPaymentType.execute();
     // console.log("Table PaymentType seeded");
     // console.log("==============================");

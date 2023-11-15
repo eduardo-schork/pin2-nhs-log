@@ -29,7 +29,6 @@ async function findOne(req: Request, res: Response) {
 async function create(req: Request, res: Response) {
     try {
         const body = req.body;
-        console.log(body);
         const createResult = await PaymentRepository.create({ data: body });
         if (createResult) {
             //TODO fazer com que de alguma forma, na requisição pegue o email que o usuário deseja receber o código de rastreio
@@ -51,33 +50,33 @@ async function createPayment(req: Request, res: Response) {
         const body = req.body;
         const payment = await PaymentRepository.create({
             data: {
-                status : 1,
-                paymentType : body.paymentType,
-                deliveryProcessId : body.deliveryProcessId,
+                status: 1,
+                paymentType: body.paymentType,
+                deliveryProcessId: body.deliveryProcessId,
                 createdAt: new Date(),
-                createdBy: "", 
+                createdBy: "",
             },
         });
 
         const deliveryAppointment = await deliveryAppointmentRepository.create({
             data: {
-                status : DELIVERY_PROCESS_STATUS.INVOICED, 
-                date : new Date(),
-                deliveryProcessId : body.deliveryProcessId,
-                currentAddressId : 1,
-                createdBy : "", 
-                createdAt : new Date()
-            }
+                status: DELIVERY_PROCESS_STATUS.INVOICED,
+                date: new Date(),
+                deliveryProcessId: body.deliveryProcessId,
+                currentAddressId: 1,
+                createdBy: "",
+                createdAt: new Date(),
+            },
         });
-        
+
         //FALTA RECEBER O EMAIL POR PARÂMETRO
         const userEmail = "?";
         const emailSent = await sendEmailAfterProcessPayment(userEmail, body.deliveryProcessId);
-        
+
         return res.status(201).json(payment);
     } catch (error) {
-        console.error('Error creating delivery process:', error);
-        return res.status(500).json({ error: 'Failed to create delivery process' });
+        console.error("Error creating delivery process:", error);
+        return res.status(500).json({ error: "Failed to create delivery process" });
     }
 }
 

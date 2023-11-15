@@ -9,7 +9,7 @@ async function execute() {
     try {
         const commonCPF = "12345678900"; // Defina um CPF comum
 
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 20; i++) {
             await Address.create({
                 streetAddress: faker.address.streetAddress(),
                 number: faker.number.int({ min: 1, max: 100 }),
@@ -26,7 +26,7 @@ async function execute() {
             });
         }
 
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 20; i++) {
             const mockData = {
                 cpf: commonCPF,
                 email: faker.internet.email(),

@@ -8,6 +8,7 @@ import HttpRequestPort from '@/infra/http-request/http-request.port';
 import TQuotationModel from '@shared/models/Quotation.model';
 import { useParams } from 'react-router-dom';
 import QuotationItem from '@/components/quotation/quotation-item.ui';
+import PageTitleBar from '@/components/page-title-bar.ui';
 
 function TrackQuotationPage({ ...props }) {
     const params = useParams();
@@ -41,9 +42,7 @@ function TrackQuotationPage({ ...props }) {
                 isOpen={isOpenQuotationOffersModal}
             />
 
-            <Text fontWeight={'bold'} alignSelf={'center'} fontSize="2xl">
-                Acompanhar cotações
-            </Text>
+            <PageTitleBar title={'Acompanhar cotações'} />
 
             <QuotationItem.ListContainer>
                 {quotationList?.map((quotationItem, index) => (

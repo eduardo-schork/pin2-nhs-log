@@ -14,7 +14,9 @@ class DeliveryAppointmentRepository implements IBaseRepository<TDeliveryAppointm
     }
 
     async findOneDeliveryProcess(id: any): Promise<any | null> {
-        const findOneResult = await DeliveryAppointment.findAll({ where: { deliveryProcessId : id } });
+        const findOneResult = await DeliveryAppointment.findAll({
+            where: { deliveryProcessId: id },
+        });
         return findOneResult;
     }
 
@@ -24,7 +26,7 @@ class DeliveryAppointmentRepository implements IBaseRepository<TDeliveryAppointm
         if (deletedRows > 0) return true;
         return false;
     }
-    
+
     async create({
         data,
     }: {

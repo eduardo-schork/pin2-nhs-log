@@ -69,7 +69,7 @@ class Offer extends Model<TOfferModel> {
     quotation?: Quotation;
 
     @BelongsTo(() => FleetVehicle)
-    fleet_vehicle?: FleetVehicle;
+    fleetVehicle?: FleetVehicle;
 
     @Column({
         type: DataType.DATE,

@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 import { Button, Text, Checkbox } from '@chakra-ui/react';
 import { ContainedButton } from '@/components/button/button.ui';
 import TextInput from '@/components/text-input/text-input.ui';
-import { FormContainer, PageContainer } from './create-fleet.style';
+import { FormContainer } from './create-fleet.style';
 import t from '@/infra/i18n';
 import BaseLayout from './nav-bar-fleet.page';
-import Containers from '@/components/containers.ui';
 
 import CreateVehicleModal from '../fleet-vehicle/modal-create-fleet-vehicle.page';
 import { useForm } from 'react-hook-form';
@@ -165,39 +164,41 @@ function CreateFleet({ ...props }) {
                         Veículos da frota
                     </Text>
 
-                    {fleetVehicles.map((vehicle) => (
-                        <VContainer key={vehicle.id}>
-                            <HContainer style={{ justifyContent: 'space-between', padding: `${Spacings.SMALL} 0` }}>
-                                <Checkbox
-                                    isChecked={selectedFleetVehicles.includes(vehicle.id.toString())}
-                                    onChange={() => handleCheckboxChange(vehicle.id)}
-                                >
-                                    {vehicle.plate}
-                                </Checkbox>
-
-                                <HContainer style={{ gap: Spacings.SMALL }}>
-                                    <Button
-                                        onClick={() => selectEditVehicle(vehicle)}
-                                        leftIcon={<EditIcon />}
-                                        size="sm"
-                                        variant="link"
+                    <VContainer style={{ height: '40vh', overflow: 'auto' }}>
+                        {fleetVehicles.map((vehicle) => (
+                            <VContainer key={vehicle.id}>
+                                <HContainer style={{ justifyContent: 'space-between', padding: `${Spacings.SMALL} 0` }}>
+                                    <Checkbox
+                                        isChecked={selectedFleetVehicles.includes(vehicle.id.toString())}
+                                        onChange={() => handleCheckboxChange(vehicle.id)}
                                     >
-                                        Editar
-                                    </Button>
+                                        {vehicle.plate}
+                                    </Checkbox>
 
-                                    <Button
-                                        onClick={() => selectDeleteVehicle(vehicle)}
-                                        leftIcon={<DeleteIcon />}
-                                        size="sm"
-                                        variant="link"
-                                    >
-                                        Excluir
-                                    </Button>
+                                    <HContainer style={{ gap: Spacings.SMALL }}>
+                                        <Button
+                                            onClick={() => selectEditVehicle(vehicle)}
+                                            leftIcon={<EditIcon />}
+                                            size="sm"
+                                            variant="link"
+                                        >
+                                            Editar
+                                        </Button>
+
+                                        <Button
+                                            onClick={() => selectDeleteVehicle(vehicle)}
+                                            leftIcon={<DeleteIcon />}
+                                            size="sm"
+                                            variant="link"
+                                        >
+                                            Excluir
+                                        </Button>
+                                    </HContainer>
                                 </HContainer>
-                            </HContainer>
-                            <Divider />
-                        </VContainer>
-                    ))}
+                                <Divider />
+                            </VContainer>
+                        ))}
+                    </VContainer>
 
                     <HContainer style={{ justifyContent: 'space-between' }}>
                         <ContainedButton onClick={openCreateVehicleModal}>

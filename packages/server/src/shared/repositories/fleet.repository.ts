@@ -20,7 +20,6 @@ class FleetRepository implements IBaseRepository<TFleetModel> {
         });
 
         const result = fleets?.map((fleet) => {
-            console.log(fleet);
             return {
                 id: fleet.id,
                 name: fleet.name,
@@ -68,6 +67,8 @@ class FleetRepository implements IBaseRepository<TFleetModel> {
 
             const fleet = await Fleet.create({
                 name: fleetName,
+                createdAt: new Date(),
+                createdBy: "",
             });
 
             for (const vehicleId of vehicleIds) {

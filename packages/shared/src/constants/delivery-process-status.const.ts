@@ -3,7 +3,7 @@ export const DELIVERY_PROCESS_STATUS = {
     SCHEDULED_COLLECTION: "Coleta agendada",
     INVOICED: "Faturado",
     COLLECTED: "Coletada",
-    ON_WAY: "Um caminho",
+    ON_WAY: "A caminho",
     DELIVERED: "Entregue",
     DELIVERY_CONFIRMED: "Entrega confirmada",
 } as const;

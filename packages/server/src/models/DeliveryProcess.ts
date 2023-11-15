@@ -39,11 +39,11 @@ class DeliveryProcess extends Model<TDeliveryProcessModel> {
     })
     feedbackId!: number;
 
-    @BelongsTo(() => Offer, "fkOffer")
-    Offer?: Offer;
+    @BelongsTo(() => Offer, "fk_offer")
+    offer?: Offer;
 
-    @BelongsTo(() => Feedback, "fkFeedback")
-    Feedback?: Feedback;
+    @BelongsTo(() => Feedback, "fk_feedback")
+    feedback?: Feedback;
 
     @Column({
         type: DataType.DATE,

@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { TabPanel } from '@chakra-ui/react';
-import {
-    Divs,
-    FormContainer,
-    ButtonProx,
-} from './styles';
+import { Divs, FormContainer, ButtonProx } from './styles';
 import { VContainer } from '@/components/container/container.ui';
 import FormTextInput from '@/components/form/text-input/form-text-input.ui';
 import Spacings from '@/styles/tokens/spacing';
@@ -23,76 +19,85 @@ type TCreatePaymentForm = {
     pixKey: string;
 };
 
-function ScheduleCollectionPay({ methods, onSubmit, ...props}: {
+function ScheduleCollectionPay({
+    methods,
+    onSubmit,
+    ...props
+}: {
     methods: any;
     onSubmit: (data: TCreatePaymentForm) => void;
 }) {
-    const location = useLocation()
+    const location = useLocation();
     const quotationEmail = location.state.quotationEmail || '';
-    const [currentOffer, setCurrentOffer] = useState<any | null>(null)
+    const [currentOffer, setCurrentOffer] = useState<any | null>(null);
     const navigate = useNavigate();
 
-    useEffect(() =>{ 
+    useEffect(() => {
         (async () => {
             const offerId = location.state.offerId;
-            const result = await HttpRequestPort.get({path: `/api/offer/${offerId}`})
-            setCurrentOffer(result)
-        })()
-    },[])
+            const result = await HttpRequestPort.get({ path: `/api/offer/${offerId}` });
+            setCurrentOffer(result);
+        })();
+    }, []);
 
     async function handleFinish() {
-      const { totalValue, paymentType } = methods.getValues();
-  
-    let mappedPaymentType;
-    
-    if (paymentType === PAYMENT_TYPE.CREDIT_CARD) {
-        mappedPaymentType = 1;
-    } else if (paymentType === PAYMENT_TYPE.PIX) {
-        mappedPaymentType = 2;
-    } else {
-        mappedPaymentType = 0; 
-    }
-    const deliveryProcessId = location.state.deliveryProcessId;
+        const { totalValue, paymentType } = methods.getValues();
 
-    const requestData = {
-        totalValue,
-        paymentType: mappedPaymentType,
-        deliveryProcessId : deliveryProcessId,
-        quotationEmail : quotationEmail
-    };
-  
-    console.log(requestData);
-      
-      try {
-          const res = await fetch(`http://localhost:8000/api/payment/create`, {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(requestData),
-          });
-    
-          if (res.status === 201) {
-              console.log(res);
-              navigate('/delivery-process');
+        let mappedPaymentType;
 
-          } else {
-              setError(t('Register.error'));
-              setIsErrorModalOpen(true);
-          }
-      } catch (error) {
-          console.error(error);
-      }
+        if (paymentType === PAYMENT_TYPE.CREDIT_CARD) {
+            mappedPaymentType = 1;
+        } else if (paymentType === PAYMENT_TYPE.PIX) {
+            mappedPaymentType = 2;
+        } else {
+            mappedPaymentType = 0;
+        }
+        const deliveryProcessId = location.state.deliveryProcessId;
+
+        const requestData = {
+            totalValue,
+            paymentType: mappedPaymentType,
+            deliveryProcessId: deliveryProcessId,
+            quotationEmail: quotationEmail,
+        };
+
+        console.log(requestData);
+
+        try {
+            const res = await fetch(`http://localhost:8000/api/payment/create`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestData),
+            });
+
+            if (res.status === 201) {
+                console.log(res);
+                navigate('/delivery-process');
+            } else {
+                setError(t('Register.error'));
+                setIsErrorModalOpen(true);
+            }
+        } catch (error) {
+            console.error(error);
+        }
     }
-    
+
     return (
         <TabPanel>
             <FormContainer>
                 <Divs>
                     <VContainer gap={Spacings.MEDIUM} style={{ width: '50%', margin: '0px 20px 0px 0px' }}>
-                        <FormTextInput label="Valor Total" name="totalValue" methods={methods} value={currentOffer?.total} isDisabled={true}/>
+                        <FormTextInput
+                            label="Valor Total"
+                            name="totalValue"
+                            methods={methods}
+                            value={currentOffer?.total}
+                            isDisabled={true}
+                        />
                     </VContainer>
-                    
+
                     <VContainer gap={Spacings.MEDIUM} style={{ width: '50%', margin: '0px 20px 0px 0px' }}>
                         <FormSelectInput label={'Tipo de pagamento'} name={'paymentType'} methods={methods}>
                             <option value={null}></option>

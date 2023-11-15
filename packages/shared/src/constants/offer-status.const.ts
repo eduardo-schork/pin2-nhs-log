@@ -1,4 +1,4 @@
-export const OfferStatus = {
+export const OFFER_STATUS = {
     OPENED: "Em aberto",
     IN_NEGOCIATION: "Em negociação",
     CANCELED: "Cancelado",
@@ -6,4 +6,4 @@ export const OfferStatus = {
     DISAPPROVED: "Reprovado",
 } as const;
 
-export type TOfferStatus = (typeof OfferStatus)[keyof typeof OfferStatus];
+export type TOfferStatus = (typeof OFFER_STATUS)[keyof typeof OFFER_STATUS];

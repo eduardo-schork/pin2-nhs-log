@@ -111,7 +111,6 @@ function DeliveryProcessPage({ ...props }) {
                 for (const item of deliveryProcessData) {
                     const addressData = await fetchAddress(item.currentAddressId);
                     updatedDeliveryData.push({ ...item, addressData });
-                    console.log(addressData);
                 }
                 setDeliveryProcessData(updatedDeliveryData);
             } else {

@@ -34,7 +34,7 @@ function LoginPage({ ...props }) {
                 userEmail: data.userEmail,
                 userPassword: data.userPassword,
             });
-    
+
             try {
                 const res = await fetch(`http://localhost:8000/api/admin/login?${queryParams}`, {
                     method: 'GET',
@@ -42,8 +42,7 @@ function LoginPage({ ...props }) {
                         'Content-Type': 'application/json',
                     },
                 });
-                console.log(res)
-    
+
                 if (res.status === 200) {
                     const result = await res.json();
                     if (result) {
@@ -63,7 +62,6 @@ function LoginPage({ ...props }) {
             }
         }
     }
-    
 
     return (
         <PageContainer {...props}>

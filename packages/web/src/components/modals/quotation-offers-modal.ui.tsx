@@ -6,6 +6,10 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import HttpRequestPort from '@/infra/http-request/http-request.port';
 import TOfferModel from '@shared/models/Offer.model';
+import { VContainer } from '../container/container.ui';
+import Divider from '../divider';
+import Spacings from '@/styles/tokens/spacing';
+import { Text } from '@chakra-ui/react';
 
 type TQuotationOffersModal = TModalProps & {
     quotationId?: number;
@@ -18,23 +22,26 @@ function QuotationOffersModal({ quotationId, closeCreateModalHandler, ...props }
 
     const [quotationOffers, setQuotationOffers] = useState<TOfferModel[]>([]);
 
+    async function handleFindOffersByQuotation(quotationId?: number) {
+        const response = (await HttpRequestPort.get({
+            path: `/api/offerByQuotation/${quotationId}`,
+        })) as TOfferModel[];
+
+        const filteredOffers = response?.filter((offer) => {
+            return offer.status === 'Em aberto' || offer.status === 'Em negociação';
+        });
+
+        setQuotationOffers(filteredOffers);
+
+        if (filteredOffers.length === 0) {
+            toast.error('Ainda não há nenhuma oferta disponível', { position: 'bottom-right' });
+        }
+    }
+
     useEffect(() => {
         (async () => {
             if (!quotationId) return;
-
-            const response = (await HttpRequestPort.get({
-                path: `/api/offerByQuotation/${quotationId}`,
-            })) as TOfferModel[];
-
-            const filteredOffers = response?.filter((offer) => {
-                return offer.status === 'Em aberto' || offer.status === 'Em negociação';
-            });
-
-            setQuotationOffers(filteredOffers);
-
-            if (filteredOffers.length === 0) {
-                toast.error('Ainda não há nenhuma oferta disponível', { position: 'bottom-right' });
-            }
+            await handleFindOffersByQuotation(quotationId);
         })();
     }, [quotationId]);
 
@@ -67,7 +74,8 @@ function QuotationOffersModal({ quotationId, closeCreateModalHandler, ...props }
                 },
                 body: requestDataString,
             });
-            const result = await res.json();
+
+            await handleFindOffersByQuotation(quotationId);
 
             if (res.status !== 200) {
                 toast.error('Ocorreu um erro ao cancelar a oferta, tente novamente', { position: 'bottom-right' });
@@ -81,41 +89,43 @@ function QuotationOffersModal({ quotationId, closeCreateModalHandler, ...props }
         }
     }
 
+    console.log({ quotationOffers });
+
     return (
         <Modal {...props} title={'Oferta da cotação'}>
-            {Array.isArray(quotationOffers) &&
-                quotationOffers.map((offer, index) => (
-                    <>
-                        <div key={index}>
+            <VContainer style={{ gap: Spacings.LARGE, height: '80vh', overflow: 'auto' }}>
+                {Array.isArray(quotationOffers) &&
+                    quotationOffers.map((offer, index) => (
+                        <VContainer key={index} style={{ gap: Spacings.LARGE }}>
+                            <Text fontWeight={'bold'}>#{offer.id}</Text>
+                            <Divider />
                             <FormTextInput label="Subtotal" value={offer.subtotal} isDisabled />
                             <FormTextInput label="Impostos" value={offer.taxes} isDisabled />
                             <FormTextInput label="Total" value={offer.total} isDisabled />
                             <FormTextInput label="Previsão de entrega" value={offer.deliveryForecast} isDisabled />
-                            {offer.status === 'Em aberto' || offer.status === 'Em negociação' ? (
-                                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                    <ContainedButton
-                                        type={'submit'}
-                                        style={{ width: '250px' }}
-                                        onClick={handleRejectOffer}
-                                    >
-                                        Reprovar
-                                    </ContainedButton>
-                                    <ContainedButton
-                                        type={'submit'}
-                                        style={{ width: '250px' }}
-                                        onClick={() => handleApproveOffer(offer)}
-                                    >
-                                        Aprovar
-                                    </ContainedButton>
-                                </div>
-                            ) : (
-                                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                    <p>Status: {offer.status}</p>
-                                </div>
-                            )}
-                        </div>
-                    </>
-                ))}
+
+                            <div
+                                style={{
+                                    gap: Spacings.MEDIUM,
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <ContainedButton type={'submit'} style={{ width: '250px' }} onClick={handleRejectOffer}>
+                                    Reprovar
+                                </ContainedButton>
+                                <ContainedButton
+                                    type={'submit'}
+                                    style={{ width: '250px' }}
+                                    onClick={() => handleApproveOffer(offer)}
+                                >
+                                    Aprovar
+                                </ContainedButton>
+                            </div>
+                        </VContainer>
+                    ))}
+            </VContainer>
+
             {/* {quotationOffers.length > 0 && ([]
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <ContainedButton type={'submit'} style={{ width: '250px' }} onClick={handleRejectOffer}>Reprovar</ContainedButton>

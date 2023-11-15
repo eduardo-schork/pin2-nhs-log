@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import DeliveryProcessRepository from "../../../../shared/repositories/delivery-process.repository";
+import updateDeliveryProcessStatusUsecase from "../../../../shared/usecases/update-delivery-process-status.usecase";
 
 async function findAll(req: Request, res: Response) {
     try {
@@ -25,7 +26,6 @@ async function findOne(req: Request, res: Response) {
 async function create(req: Request, res: Response) {
     try {
         const body = req.body;
-        console.log(body);
         const createResult = await DeliveryProcessRepository.create({ data: body });
         if (createResult) {
             return res.status(200).send(createResult);
@@ -40,21 +40,21 @@ async function createDeliveryProcess(req: Request, res: Response) {
     try {
         const body = req.body;
         const { status, offerId, feedbackId } = body;
-        console.log('do');
+
         const deliveryProcess = await DeliveryProcessRepository.create({
             data: {
-                status: 'body.status',
+                status: body.status,
                 offerId: body.offerId,
                 feedbackId: body.feedbackId,
                 createdAt: new Date(),
-                createdBy: "", 
+                createdBy: "",
             },
         });
 
         return res.status(201).json(deliveryProcess);
     } catch (error) {
-        console.error('Error creating delivery process:', error);
-        return res.status(500).json({ error: 'Failed to create delivery process' });
+        console.error("Error creating delivery process:", error);
+        return res.status(500).json({ error: "Failed to create delivery process" });
     }
 }
 
@@ -84,6 +84,32 @@ async function deleteOne(req: Request, res: Response) {
     }
 }
 
+async function findAllOpened(req: Request, res: Response) {
+    try {
+        const findAllResult = await DeliveryProcessRepository.findAllOpened();
+
+        return res.status(200).send(findAllResult);
+    } catch (error) {
+        console.log({ error });
+        return res.status(500).send(error);
+    }
+}
+async function updateStatus(req: Request, res: Response) {
+    try {
+        const body = req.body;
+
+        const findAllResult = await updateDeliveryProcessStatusUsecase({
+            deliveryProcessId: body.deliveryProcessId,
+            status: body.status,
+        });
+
+        return res.status(200).send(findAllResult);
+    } catch (error) {
+        console.log({ error });
+        return res.status(500).send(error);
+    }
+}
+
 const DeliveryProcessController = {
     findAll,
     findOne,
@@ -91,6 +117,8 @@ const DeliveryProcessController = {
     update,
     createDeliveryProcess,
     delete: deleteOne,
+    findAllOpened,
+    updateStatus,
 };
 
 export default DeliveryProcessController;

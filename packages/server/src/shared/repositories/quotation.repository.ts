@@ -34,7 +34,7 @@ class QuotationRepository implements IBaseRepository<TQuotationModel> {
             include: [
                 {
                     model: Offer,
-                    where: { status: { [Op.not]: "Aprovado" } },
+                    // where: { status: { [Op.not]: "Aprovado" } },
                     required: false,
                 },
                 {
@@ -47,14 +47,14 @@ class QuotationRepository implements IBaseRepository<TQuotationModel> {
             ],
         });
 
-        const quotationsWithoutApprovedOffers = quotations.filter((quotation) => {
-            return (
-                quotation?.offers?.length === 0 ||
-                quotation?.offers?.every((offer) => offer.status !== "Aprovado")
-            );
-        });
+        // const quotationsWithoutApprovedOffers = quotations.filter((quotation) => {
+        //     return (
+        //         quotation?.offers?.length === 0 ||
+        //         quotation?.offers?.every((offer) => offer.status !== "Aprovado")
+        //     );
+        // });
 
-        return quotationsWithoutApprovedOffers;
+        return quotations;
     }
 
     async findAllByCPF({ cpf }: { cpf: string }): Promise<TQuotationModel[]> {

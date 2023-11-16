@@ -18,27 +18,19 @@ class Payment extends Model<TPaymentModel> {
     })
     id!: number;
 
-    @ForeignKey(() => PaymentStatus)
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
-        field: "fk_payment_status",
+        field: "status",
     })
-    status!: number;
+    status!: string;
 
-    @BelongsTo(() => PaymentStatus, "fk_payment_status")
-    PaymentStatus?: PaymentStatus;
-
-    @ForeignKey(() => PaymentType)
     @Column({
         type: DataType.STRING(255),
         allowNull: false,
-        field: "fk_payment_type",
+        field: "payment_type",
     })
     paymentType!: string;
-
-    @BelongsTo(() => PaymentType, "fk_payment_type")
-    PaymentType?: PaymentType;
 
     @ForeignKey(() => DeliveryProcess)
     @Column({

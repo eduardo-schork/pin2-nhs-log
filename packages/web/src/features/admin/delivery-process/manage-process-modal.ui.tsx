@@ -4,10 +4,10 @@ import FormSelectInput from '@/components/form/select-input/form-select-input.ui
 import FormTextInput from '@/components/form/text-input/form-text-input.ui';
 import Modal, { TModalProps } from '@/components/modal.ui';
 import HttpRequestPort from '@/infra/http-request/http-request.port';
-import Colors from '@/styles/tokens/color';
 import Spacings from '@/styles/tokens/spacing';
 import { Text } from '@chakra-ui/react';
 import { DELIVERY_PROCESS_STATUS } from '@shared/constants/delivery-process-status.const';
+import { OFFER_STATUS } from '@shared/constants/offer-status.const';
 
 import TDeliveryProcessModel from '@shared/models/DeliveryProcess.model';
 import { useEffect } from 'react';
@@ -66,6 +66,13 @@ function ManageProcessModal({ deliveryProcess, ...props }: TModalProps & { deliv
     }, [formStatusValue]);
 
     if (!deliveryProcess) return;
+
+    const verifyIsSelectStatusDisabled = (status: string) =>
+        [
+            DELIVERY_PROCESS_STATUS.CREATED,
+            DELIVERY_PROCESS_STATUS.DELIVERY_CONFIRMED,
+            DELIVERY_PROCESS_STATUS.SCHEDULED_COLLECTION,
+        ].some((value) => status == value);
 
     return (
         <Modal {...props} title={'Editar processo'}>
@@ -175,12 +182,27 @@ function ManageProcessModal({ deliveryProcess, ...props }: TModalProps & { deliv
                         <FormTextInput isDisabled label="Impostos" name={'taxes'} methods={methods} />
 
                         <FormSelectInput
+                            isDisabled={verifyIsSelectStatusDisabled(deliveryProcess?.status)}
                             onChange={(event) => console.log({ event })}
-                            // defaultValue={deliveryProcess?.status.toString()}
                             label={'Status'}
                             name={'status'}
                             methods={methods}
                         >
+                            <option
+                                disabled={true}
+                                label={DELIVERY_PROCESS_STATUS.CREATED}
+                                value={DELIVERY_PROCESS_STATUS.CREATED}
+                            ></option>
+                            <option
+                                disabled={true}
+                                label={DELIVERY_PROCESS_STATUS.SCHEDULED_COLLECTION}
+                                value={DELIVERY_PROCESS_STATUS.SCHEDULED_COLLECTION}
+                            ></option>
+                            <option
+                                disabled={true}
+                                label={DELIVERY_PROCESS_STATUS.INVOICED}
+                                value={DELIVERY_PROCESS_STATUS.INVOICED}
+                            ></option>
                             <option
                                 label={DELIVERY_PROCESS_STATUS.COLLECTED}
                                 value={DELIVERY_PROCESS_STATUS.COLLECTED}
@@ -194,6 +216,7 @@ function ManageProcessModal({ deliveryProcess, ...props }: TModalProps & { deliv
                                 value={DELIVERY_PROCESS_STATUS.DELIVERED}
                             ></option>
                             <option
+                                disabled={true}
                                 label={DELIVERY_PROCESS_STATUS.DELIVERY_CONFIRMED}
                                 value={DELIVERY_PROCESS_STATUS.DELIVERY_CONFIRMED}
                             ></option>

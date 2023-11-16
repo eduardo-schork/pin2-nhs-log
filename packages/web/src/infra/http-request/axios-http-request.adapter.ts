@@ -31,6 +31,14 @@ class AxiosHttpRequest implements IHttpRequestPort {
         return response.data;
     }
 
+    async put({ path, body }: HttpRequestParams): Promise<unknown | null> {
+        const { axiosInstance, url } = this._buildRequestConfig({ path });
+
+        const response = await axiosInstance.put(url, body);
+
+        return response.data;
+    }
+
     setBaseUrl(baseUrl: string): void {
         this._getInstance();
 

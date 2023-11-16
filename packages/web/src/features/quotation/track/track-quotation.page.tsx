@@ -13,7 +13,7 @@ import PageTitleBar from '@/components/page-title-bar.ui';
 function TrackQuotationPage({ ...props }) {
     const params = useParams();
 
-    const [selectedQuotationId, setSelectedQuotationId] = useState<number>();
+    const [selectedQuotationId, setSelectedQuotationId] = useState<number | null>();
     const [quotationList, setQuotationList] = useState<TQuotationModel[]>();
 
     useEffect(() => {
@@ -34,11 +34,16 @@ function TrackQuotationPage({ ...props }) {
         openQuotationOffersModalHandler();
     }
 
+    function onCloseOffersModal() {
+        setSelectedQuotationId(null);
+        closeQuotationOffersModalHandler();
+    }
+
     return (
         <BaseLayout {...props}>
             <QuotationOffersModal
                 quotationId={selectedQuotationId}
-                onClose={closeQuotationOffersModalHandler}
+                onClose={onCloseOffersModal}
                 isOpen={isOpenQuotationOffersModal}
             />
 

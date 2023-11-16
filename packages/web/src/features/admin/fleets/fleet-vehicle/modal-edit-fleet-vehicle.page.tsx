@@ -1,7 +1,7 @@
 import TextInput from '@/components/text-input/text-input.ui';
 import t from '@/infra/i18n';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FormContainer } from './create.styles';
 import ErrorModal from './error.modal';

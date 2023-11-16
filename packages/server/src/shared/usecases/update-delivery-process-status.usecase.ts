@@ -3,6 +3,14 @@ import TQuotationModel from "@/shared/src/models/Quotation.model";
 import TItemRemittanceModel from "@/shared/src/models/ItemRemittance.model";
 import deliveryProcessRepository from "../repositories/delivery-process.repository";
 import TDeliveryProcessModel from "@/shared/src/models/DeliveryProcess.model";
+import { DELIVERY_PROCESS_STATUS } from "@/shared/src/constants/delivery-process-status.const";
+import deliveryAppointmentRepository from "../repositories/delivery-appointment.repository";
+import {
+    DELIVERY_APPOINTMENT_STATUS,
+    TDeliveryAppointmentStatus,
+} from "@/shared/src/constants/delivery-appointment-status.const";
+import addressRepository from "../repositories/address.repository";
+import generateRandomAddress from "../../utils/generate-random-address.util";
 
 export type TCreateQuotationWithAddresses = {
     quotation: TQuotationModel;
@@ -10,6 +18,26 @@ export type TCreateQuotationWithAddresses = {
     originAddress: TAddressModel;
     itemRemittance: TItemRemittanceModel;
 };
+
+async function createDeliveryAppointment(status: TDeliveryAppointmentStatus, processId: number) {
+    const randomAddress = generateRandomAddress();
+    const address = await addressRepository.create({ data: randomAddress });
+
+    if (!address.id) return null;
+
+    const response = deliveryAppointmentRepository.create({
+        data: {
+            date: new Date(),
+            status: status,
+            currentAddressId: address.id,
+            deliveryProcessId: processId,
+            createdAt: new Date(),
+            createdBy: "system",
+        },
+    });
+
+    return response;
+}
 
 async function updateDeliveryProcessStatusUsecase({
     deliveryProcessId,
@@ -22,6 +50,24 @@ async function updateDeliveryProcessStatusUsecase({
         const returnData = await deliveryProcessRepository.update({
             data: { id: deliveryProcessId, status } as TDeliveryProcessModel,
         });
+
+        if (returnData?.status == DELIVERY_PROCESS_STATUS.COLLECTED) {
+            await createDeliveryAppointment(
+                DELIVERY_APPOINTMENT_STATUS.COLLECTED,
+                deliveryProcessId
+            );
+        }
+        if (returnData?.status == DELIVERY_PROCESS_STATUS.ON_WAY) {
+            await createDeliveryAppointment(DELIVERY_APPOINTMENT_STATUS.ON_WAY, deliveryProcessId);
+        }
+        if (returnData?.status == DELIVERY_PROCESS_STATUS.DELIVERED) {
+            await createDeliveryAppointment(
+                DELIVERY_APPOINTMENT_STATUS.DELIVERED,
+                deliveryProcessId
+            );
+        }
+        if (returnData?.status == DELIVERY_PROCESS_STATUS.DELIVERY_CONFIRMED) {
+        }
 
         return returnData;
     } catch (error) {

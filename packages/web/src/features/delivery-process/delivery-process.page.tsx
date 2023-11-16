@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import TextInputWithButton from '@/components/text-input/text-input-with-button.ui';
 import t from '@/infra/i18n';
-import { Button, Text } from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
 import {
     Address,
     ContainedButton,
@@ -12,80 +12,45 @@ import {
     ImageBackground,
 } from './styles';
 import BaseLayout from '../admin/fleets/fleet/nav-bar-fleet.page';
-import TAddressModel from '@shared/models/Address.model';
 import { format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import ErrorModal from './error.modal';
 import ConfirmModal from './confirm.modal';
+import TDeliveryProcessModel from '@shared/models/DeliveryProcess.model';
+import HttpRequestPort from '@/infra/http-request/http-request.port';
+import { DELIVERY_APPOINTMENT_STATUS } from '@shared/constants/delivery-appointment-status.const';
 
-type AddressData = {
-    streetAddress: string;
-    city: string;
-    state: string;
-    zipCode: string;
-};
+const months = [
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro',
+];
 
-type DeliveryProcessData = {
-    id: number;
-    status: string;
-    date: any | null;
-    currentAddressId: number;
-    addressData: AddressData;
-};
+function formatWithCapitalizedMonth(date: any) {
+    const day = format(date, 'd', { locale: pt });
+    const monthIndex = date.getMonth();
+    const year = format(date, 'yyyy', { locale: pt });
+    const month = months[monthIndex];
 
-async function fetchDeliveryAppointment(id) {
-    try {
-        const requestData = new URLSearchParams({
-            idDelivery: id,
-        });
-
-        const res = await fetch(`http://localhost:8000/api/delivery-appointment-one?${requestData}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (res.ok) {
-            const data = await res.json();
-            return data as DeliveryProcessData[];
-        } else {
-            throw new Error(`Erro ao buscar o processo de entrega: ${res.status} ${res.statusText}`);
-        }
-    } catch (error) {
-        throw new Error(`Error fetching delivery process data: ${error}`);
-    }
-}
-
-async function fetchAddress(fkAddress) {
-    try {
-        const requestAddress = new URLSearchParams({
-            idAddress: fkAddress,
-        });
-
-        const res = await fetch(`http://localhost:8000/api/address-one?${requestAddress}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (res.ok) {
-            const data = await res.json();
-            return data as TAddressModel;
-        } else {
-            throw new Error(`Erro ao buscar o endereço: ${res.status} ${res.statusText}`);
-        }
-    } catch (error) {
-        throw new Error(`Error fetching address data: ${error}`);
-    }
+    return `${day} ${month} ${year}`;
 }
 
 function DeliveryProcessPage({ ...props }) {
-    const [deliveryProcessData, setDeliveryProcessData] = useState<DeliveryProcessData[] | null>(null);
+    const [deliveryProcessData, setDeliveryProcessData] = useState<TDeliveryProcessModel[] | null>(null);
+    const [formDeliveryProcessId, setFormDeliveryProcessId] = useState<string | null>(null);
+    const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+
     const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
     const closeErrorModal = () => {
         setError(null);
@@ -96,23 +61,35 @@ function DeliveryProcessPage({ ...props }) {
         setIsConfirmModalOpen(true);
     };
 
-    async function handleSubmit(value) {
+    async function fetchDeliveryAppointment(id?: string) {
+        try {
+            if (!id) return;
+
+            const requestData = new URLSearchParams({
+                idDelivery: id,
+            });
+
+            const response = HttpRequestPort.get({ path: `/api/delivery-appointment-one?${requestData}` });
+
+            return response;
+        } catch (error) {
+            console.log(`Erro ao buscar o processo de entrega: ${error}`);
+        }
+    }
+
+    async function handleSubmit(value: string) {
         if (!value || !value.trim()) {
             setError(t('DeliveryProcess.NotFound'));
             setIsErrorModalOpen(true);
             return;
         }
 
-        try {
-            const deliveryProcessData = await fetchDeliveryAppointment(value);
-            if (deliveryProcessData) {
-                const updatedDeliveryData = [];
+        setFormDeliveryProcessId(value);
 
-                for (const item of deliveryProcessData) {
-                    const addressData = await fetchAddress(item.currentAddressId);
-                    updatedDeliveryData.push({ ...item, addressData });
-                }
-                setDeliveryProcessData(updatedDeliveryData);
+        try {
+            const deliveryProcessData = (await fetchDeliveryAppointment(value)) as TDeliveryProcessModel[];
+            if (deliveryProcessData) {
+                setDeliveryProcessData(deliveryProcessData);
             } else {
                 setDeliveryProcessData(null);
             }
@@ -124,29 +101,14 @@ function DeliveryProcessPage({ ...props }) {
         }
     }
 
-    const months = [
-        'Janeiro',
-        'Fevereiro',
-        'Março',
-        'Abril',
-        'Maio',
-        'Junho',
-        'Julho',
-        'Agosto',
-        'Setembro',
-        'Outubro',
-        'Novembro',
-        'Dezembro',
-    ];
-
-    function formatWithCapitalizedMonth(date) {
-        const day = format(date, 'd', { locale: pt });
-        const monthIndex = date.getMonth();
-        const year = format(date, 'yyyy', { locale: pt });
-        const month = months[monthIndex];
-
-        return `${day} ${month} ${year}`;
+    async function onCloseConfirmDeliveryHandler() {
+        await fetchDeliveryAppointment(formDeliveryProcessId);
+        setIsConfirmModalOpen(false);
     }
+
+    const showConfirmDeliveryButton = !deliveryProcessData?.map(
+        (delivery) => delivery.status == DELIVERY_APPOINTMENT_STATUS.DELIVERED,
+    );
 
     return (
         <BaseLayout {...props}>
@@ -166,7 +128,9 @@ function DeliveryProcessPage({ ...props }) {
                 <ErrorModal isOpen={isErrorModalOpen} onClose={closeErrorModal} errorMessage={error || ''} />
             </ImageBackground>
 
-            {deliveryProcessData && <ContainedButton onClick={openConfirmModal}>Confirmar Entrega</ContainedButton>}
+            {deliveryProcessData && showConfirmDeliveryButton && (
+                <ContainedButton onClick={openConfirmModal}>Confirmar Entrega</ContainedButton>
+            )}
 
             {deliveryProcessData && (
                 <GridContainer>
@@ -191,10 +155,10 @@ function DeliveryProcessPage({ ...props }) {
                             <Address key={item.id} style={{ whiteSpace: 'nowrap' }}>
                                 <div className="status">Status - {item.status}</div>
                                 <div>
-                                    <Text>Rua - {item.addressData.streetAddress}</Text>
-                                    <Text>Cidade - {item.addressData.city}</Text>
-                                    <Text>Estado - {item.addressData.state}</Text>
-                                    <Text>CEP - {item.addressData.zipCode}</Text>
+                                    <Text>Rua - {item.currentAddress.streetAddress}</Text>
+                                    <Text>Cidade - {item.currentAddress.city}</Text>
+                                    <Text>Estado - {item.currentAddress.state}</Text>
+                                    <Text>CEP - {item.currentAddress.zipCode}</Text>
                                 </div>
                             </Address>
                         ))}
@@ -204,9 +168,10 @@ function DeliveryProcessPage({ ...props }) {
 
             {isConfirmModalOpen && (
                 <ConfirmModal
+                    deliveryProcessId={formDeliveryProcessId}
                     isOpen={isConfirmModalOpen}
-                    onClose={() => setIsConfirmModalOpen(false)}
-                    message="Deseja confirmar a entrega do pacote?"
+                    onClose={onCloseConfirmDeliveryHandler}
+                    message={'Deseja confirmar a entrega do pacote?'}
                 />
             )}
         </BaseLayout>

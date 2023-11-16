@@ -54,7 +54,11 @@ function AdminManageDeliveryProcessPage({ ...props }) {
             <PageContainer>
                 <QuotationItem.ListContainer>
                     {deliveryProcesses?.map((deliveryProcess) => (
-                        <DeliveryProcessItem deliveryProcess={deliveryProcess} onItemPress={onPressProcessHandler} />
+                        <DeliveryProcessItem
+                            key={deliveryProcess.id}
+                            deliveryProcess={deliveryProcess}
+                            onItemPress={onPressProcessHandler}
+                        />
                     ))}
                 </QuotationItem.ListContainer>
             </PageContainer>

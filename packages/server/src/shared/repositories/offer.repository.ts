@@ -1,6 +1,7 @@
 import IBaseRepository from "./base.repository";
 import TOfferModel from "@/shared/src/models/Offer.model";
 import Offer from "../../models/Offer";
+import Quotation from "../../models/Quotation";
 
 class OfferRepository implements IBaseRepository<TOfferModel> {
     async findAll(): Promise<TOfferModel[]> {
@@ -9,7 +10,12 @@ class OfferRepository implements IBaseRepository<TOfferModel> {
     }
 
     async findOne({ id }: { id: string }): Promise<TOfferModel | null> {
-        const findOneResult = await Offer.findOne({ where: { id } });
+        const findOneResult = await Offer.findOne({
+            where: { id },
+            include: {
+                model: Quotation,
+            },
+        });
         return findOneResult;
     }
 

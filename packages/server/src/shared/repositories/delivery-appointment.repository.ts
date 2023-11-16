@@ -1,6 +1,7 @@
 import IBaseRepository from "./base.repository";
 import DeliveryAppointment from "../../models/DeliveryAppointment";
 import TDeliveryAppointmentModel from "@/shared/src/models/DeliveryAppointment.model";
+import Address from "../../models/Address";
 
 class DeliveryAppointmentRepository implements IBaseRepository<TDeliveryAppointmentModel> {
     async findAll(): Promise<TDeliveryAppointmentModel[]> {
@@ -16,6 +17,11 @@ class DeliveryAppointmentRepository implements IBaseRepository<TDeliveryAppointm
     async findOneDeliveryProcess(id: any): Promise<any | null> {
         const findOneResult = await DeliveryAppointment.findAll({
             where: { deliveryProcessId: id },
+            include: [
+                {
+                    model: Address,
+                },
+            ],
         });
         return findOneResult;
     }

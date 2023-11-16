@@ -4,6 +4,9 @@ import { sendEmailAfterProcessPayment } from "../../../../shared/service/email-s
 import { PAYMENT_STATUS } from "@/shared/src/constants/payment-status.const";
 import deliveryAppointmentRepository from "../../../../shared/repositories/delivery-appointment.repository";
 import { DELIVERY_PROCESS_STATUS } from "@/shared/src/constants/delivery-process-status.const";
+import TDeliveryAppointmentModel from "@/shared/src/models/DeliveryAppointment.model";
+import deliveryProcessRepository from "../../../../shared/repositories/delivery-process.repository";
+import TDeliveryProcessModel from "@/shared/src/models/DeliveryProcess.model";
 
 async function findAll(req: Request, res: Response) {
     try {
@@ -50,7 +53,8 @@ async function createPayment(req: Request, res: Response) {
         const body = req.body;
         const payment = await PaymentRepository.create({
             data: {
-                status: 1,
+                // TODO change this hard coded value
+                status: PAYMENT_STATUS.APPROVED,
                 paymentType: body.paymentType,
                 deliveryProcessId: body.deliveryProcessId,
                 createdAt: new Date(),
@@ -58,20 +62,15 @@ async function createPayment(req: Request, res: Response) {
             },
         });
 
-        const deliveryAppointment = await deliveryAppointmentRepository.create({
+        await deliveryProcessRepository.update({
             data: {
+                id: body?.deliveryProcessId,
                 status: DELIVERY_PROCESS_STATUS.INVOICED,
-                date: new Date(),
-                deliveryProcessId: body.deliveryProcessId,
-                currentAddressId: 1,
-                createdBy: "",
-                createdAt: new Date(),
-            },
+            } as TDeliveryProcessModel,
         });
 
-        //FALTA RECEBER O EMAIL POR PARÂMETRO
-        const userEmail = "?";
-        const emailSent = await sendEmailAfterProcessPayment(userEmail, body.deliveryProcessId);
+        const userEmail = body?.quotationEmail;
+        await sendEmailAfterProcessPayment(userEmail, body.deliveryProcessId);
 
         return res.status(201).json(payment);
     } catch (error) {

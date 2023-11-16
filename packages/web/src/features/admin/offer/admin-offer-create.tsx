@@ -29,6 +29,7 @@ function AdminCreateOffer({ isOpen, onClose, data, ...props }) {
 
     async function handleSubmit() {
         try {
+            console.log({ id: data.id, deliveryForecast, selectedFleet, subtotal, taxes, total });
             if (!data.id || !deliveryForecast || !selectedFleet || !subtotal || !taxes || !total) {
                 toast.error('É necessário que todos os campos estejam preenchidos!', { position: 'bottom-right' });
                 return;

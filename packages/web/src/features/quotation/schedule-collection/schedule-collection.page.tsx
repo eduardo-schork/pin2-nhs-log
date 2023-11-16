@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TabPanel, TabPanels, Tabs, Text } from '@chakra-ui/react';
+import { TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import BaseLayout from '@/components/layout/base-layout/base-layout.ui';
 import {
     Divs,
@@ -9,7 +9,6 @@ import {
     StyledTab1,
     StyledTab2,
     StyledTabList,
-    Title,
     DivText,
     ButtonProx,
     ButtonAddress,
@@ -21,9 +20,11 @@ import { useForm } from 'react-hook-form';
 import t from '@/infra/i18n';
 import ScheduleCollectionPay from './schedule-collection-pay.page';
 import { toast } from 'react-toastify';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import QuotationItem from '@/components/quotation/quotation-item.ui';
 import PageTitleBar from '@/components/page-title-bar.ui';
+import HttpRequestPort from '@/infra/http-request/http-request.port';
+import TAddressModel from '@shared/models/Address.model';
 
 type TCreateScheduleCollectionForm = {
     date: string;
@@ -42,7 +43,7 @@ type TCreateScheduleCollectionForm = {
     pixKey: string;
 };
 
-function ScheduleCollectionPage({ onSubmit, ...props }: { onSubmit: (data: TCreateScheduleCollectionForm) => void }) {
+function ScheduleCollectionPage({ ...props }) {
     const methods = useForm<TCreateScheduleCollectionForm>({});
     const [activeTab, setActiveTab] = useState(0);
     const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
@@ -51,12 +52,7 @@ function ScheduleCollectionPage({ onSubmit, ...props }: { onSubmit: (data: TCrea
 
     const location = useLocation();
 
-    const deliveryProcessId = location.state.deliveryProcessId;
-
-    const closeErrorModal = () => {
-        setError(null);
-        setIsErrorModalOpen(false);
-    };
+    const deliveryProcessId = location?.state?.deliveryProcessId;
 
     const fetchOriginAddressInfo = async (cep) => {
         try {
@@ -77,7 +73,7 @@ function ScheduleCollectionPage({ onSubmit, ...props }: { onSubmit: (data: TCrea
         }
     };
 
-    async function handleNext() {
+    async function onSchudleNextPress() {
         const data = methods.getValues();
 
         const requestData = {
@@ -91,27 +87,20 @@ function ScheduleCollectionPage({ onSubmit, ...props }: { onSubmit: (data: TCrea
         };
 
         try {
-            const res = await fetch(`http://localhost:8000/api/address`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestData),
-            });
+            const response = (await HttpRequestPort.post({
+                path: '/api/address',
+                body: requestData,
+            })) as TAddressModel;
 
-            if (res.status === 201) {
-                const addressData = await res.json();
-                const addressId = addressData.id;
+            const addressId = response?.id;
 
-                createCollectionSchedule(data, addressId, deliveryProcessId);
+            createCollectionSchedule(data, addressId, deliveryProcessId);
 
-                setActiveTab(1);
-            } else {
-                setError(t('Register.error'));
-                setIsErrorModalOpen(true);
-            }
+            setActiveTab(1);
         } catch (error) {
-            console.error(error);
+            setError(t('Register.error'));
+            setIsErrorModalOpen(true);
+            console.log({ error });
         }
     }
 
@@ -124,22 +113,16 @@ function ScheduleCollectionPage({ onSubmit, ...props }: { onSubmit: (data: TCrea
         };
 
         try {
-            const secondRes = await fetch(`http://localhost:8000/api/collection-schedule/create?${requestDataWithId}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestDataWithId),
+            const response = await HttpRequestPort.post({
+                path: `/api/collection-schedule/create`,
+                body: requestDataWithId,
             });
 
-            if (secondRes.status === 200) {
-                console.log(secondRes);
-            } else {
-                setError(t('Register.error'));
-                setIsErrorModalOpen(true);
-            }
+            console.log({ response });
         } catch (error) {
             console.error(error);
+            setError(t('Register.error'));
+            setIsErrorModalOpen(true);
         }
     }
 
@@ -161,7 +144,7 @@ function ScheduleCollectionPage({ onSubmit, ...props }: { onSubmit: (data: TCrea
                         <GridContainer>
                             <form
                                 {...props}
-                                onSubmit={methods.handleSubmit(onSubmit)}
+                                onSubmit={methods.handleSubmit(() => null)}
                                 style={{ margin: '0px 0px 0px 50px' }}
                             >
                                 <TabPanels>
@@ -263,14 +246,7 @@ function ScheduleCollectionPage({ onSubmit, ...props }: { onSubmit: (data: TCrea
                                                 </HContainer>
                                             </Divs>
                                         </FormContainer>
-                                        <ButtonProx
-                                            onClick={() => {
-                                                handleNext();
-                                                setActiveTab(1);
-                                            }}
-                                        >
-                                            {t('Prox')}
-                                        </ButtonProx>
+                                        <ButtonProx onClick={onSchudleNextPress}>{t('Prox')}</ButtonProx>
 
                                         {/* <ErrorModal isOpen={isErrorModalOpen} onClose={closeErrorModal} errorMessage={error || ''} /> */}
                                     </TabPanel>

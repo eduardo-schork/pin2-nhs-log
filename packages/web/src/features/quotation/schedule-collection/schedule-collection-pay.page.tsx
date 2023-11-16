@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TabPanel } from '@chakra-ui/react';
 import { Divs, FormContainer, ButtonProx } from './styles';
 import { VContainer } from '@/components/container/container.ui';
@@ -8,84 +8,50 @@ import t from '@/infra/i18n';
 import FormSelectInput from '@/components/form/select-input/form-select-input.ui';
 import { PAYMENT_TYPE } from '@shared/constants/payment-type.const';
 import GeneratePix from './generate-pix.page';
-import { useLocation } from 'react-router-dom';
 import HttpRequestPort from '@/infra/http-request/http-request.port';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import TOfferModel from '@shared/models/Offer.model';
 
-type TCreatePaymentForm = {
-    totalValue: string;
-    paymentType: string;
-    creditCardNumber: string;
-    pixKey: string;
-};
-
-function ScheduleCollectionPay({
-    methods,
-    onSubmit,
-    ...props
-}: {
-    methods: any;
-    onSubmit: (data: TCreatePaymentForm) => void;
-}) {
+function ScheduleCollectionPay({ methods, ...props }: { methods: any }) {
     const location = useLocation();
-    const quotationEmail = location.state.quotationEmail || '';
-    const [currentOffer, setCurrentOffer] = useState<any | null>(null);
+    const locationState = location.state;
+    const deliveryProcessId = locationState?.deliveryProcessId;
     const navigate = useNavigate();
+    const [currentOffer, setCurrentOffer] = useState<TOfferModel | null>(null);
+
+    useEffect(() => {
+        methods.setValue('totalValue', currentOffer?.total);
+    }, [currentOffer]);
 
     useEffect(() => {
         (async () => {
-            const offerId = location.state.offerId;
-            const result = await HttpRequestPort.get({ path: `/api/offer/${offerId}` });
+            const result = (await HttpRequestPort.get({ path: `/api/offer/${locationState?.offerId}` })) as TOfferModel;
             setCurrentOffer(result);
         })();
-    }, []);
+    }, [locationState?.offerId]);
 
     async function handleFinish() {
         const { totalValue, paymentType } = methods.getValues();
 
-        let mappedPaymentType;
-
-        if (paymentType === PAYMENT_TYPE.CREDIT_CARD) {
-            mappedPaymentType = 1;
-        } else if (paymentType === PAYMENT_TYPE.PIX) {
-            mappedPaymentType = 2;
-        } else {
-            mappedPaymentType = 0;
-        }
-        const deliveryProcessId = location.state.deliveryProcessId;
-
         const requestData = {
             totalValue,
-            paymentType: mappedPaymentType,
+            paymentType: paymentType,
             deliveryProcessId: deliveryProcessId,
-            quotationEmail: quotationEmail,
+            quotationEmail: currentOffer?.quotation?.email,
         };
 
-        console.log(requestData);
-
         try {
-            const res = await fetch(`http://localhost:8000/api/payment/create`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestData),
-            });
-
-            if (res.status === 201) {
-                console.log(res);
-                navigate('/delivery-process');
-            } else {
-                setError(t('Register.error'));
-                setIsErrorModalOpen(true);
-            }
+            const response = await HttpRequestPort.post({ path: '/api/payment/create', body: requestData });
+            navigate('/delivery-process');
         } catch (error) {
             console.error(error);
+            // setError(t('Register.error'));
+            // setIsErrorModalOpen(true);
         }
     }
 
     return (
-        <TabPanel>
+        <TabPanel {...props}>
             <FormContainer>
                 <Divs>
                     <VContainer gap={Spacings.MEDIUM} style={{ width: '50%', margin: '0px 20px 0px 0px' }}>

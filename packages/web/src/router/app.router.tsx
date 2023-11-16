@@ -27,7 +27,7 @@ const BASE_ROUTES = [
         element: <TrackQuotationPage />,
     },
     {
-        path: '/quotation/schedule-collection',
+        path: '/quotation/schedule-collection/:id',
         element: <ScheduleCollectionPage />,
     },
     {

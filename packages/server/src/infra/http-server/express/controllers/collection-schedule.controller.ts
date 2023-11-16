@@ -39,40 +39,34 @@ async function create(req: Request, res: Response) {
 async function createCollectionSchedule(req: Request, res: Response) {
     try {
         const body = req.body;
-        const { date, instructions, idAddress } = body;
-
-        if (!date || !instructions || !idAddress) {
-            return res.status(400).json({ error: 'Incomplete data provided for collection schedule creation' });
-        }
 
         const collectionSchedule = await CollectionScheduleRepository.create({
             data: {
                 date: body.date,
                 comment: body.instructions,
                 collectionAddressId: body.idAddress,
-                createdAt: new Date(), 
-                createdBy: "", 
+                createdAt: new Date(),
+                createdBy: "",
             },
         });
 
         const deliveryAppointment = await deliveryAppointmentRepository.create({
             data: {
-                status : DELIVERY_PROCESS_STATUS.SCHEDULED_COLLECTION, 
-                date : new Date(),
-                deliveryProcessId : body.deliveryProcessId,
-                currentAddressId : body.idAddress,
-                createdBy : "", 
-                createdAt : new Date()
-            }
+                status: DELIVERY_PROCESS_STATUS.SCHEDULED_COLLECTION,
+                date: new Date(),
+                deliveryProcessId: body.deliveryProcessId,
+                currentAddressId: body.idAddress,
+                createdBy: "",
+                createdAt: new Date(),
+            },
         });
 
         return res.status(201).json({ collectionSchedule, deliveryAppointment });
     } catch (error) {
-        console.error('Error creating collection schedule:', error);
-        return res.status(500).json({ error: 'Failed to create collection schedule' });
+        console.error("Error creating collection schedule:", error);
+        return res.status(500).json({ error: "Failed to create collection schedule" });
     }
 }
-
 
 async function update(req: Request, res: Response) {
     try {

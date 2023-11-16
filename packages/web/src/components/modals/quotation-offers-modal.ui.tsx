@@ -6,10 +6,11 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import HttpRequestPort from '@/infra/http-request/http-request.port';
 import TOfferModel from '@shared/models/Offer.model';
-import { VContainer } from '../container/container.ui';
+import { HContainer, VContainer } from '../container/container.ui';
 import Divider from '../divider';
 import Spacings from '@/styles/tokens/spacing';
 import { Text } from '@chakra-ui/react';
+import { OFFER_STATUS } from '@shared/constants/offer-status.const';
 
 type TQuotationOffersModal = TModalProps & {
     quotationId?: number;
@@ -19,17 +20,25 @@ type TQuotationOffersModal = TModalProps & {
 
 function QuotationOffersModal({ quotationId, closeCreateModalHandler, ...props }: TQuotationOffersModal) {
     const navigate = useNavigate();
-
     const [quotationOffers, setQuotationOffers] = useState<TOfferModel[]>([]);
+
+    const verifyOfferIsValid = (status: string) =>
+        status === OFFER_STATUS.OPENED || status === OFFER_STATUS.IN_NEGOCIATION;
+
+    useEffect(() => {
+        (async () => {
+            if (!quotationId) return;
+            await handleFindOffersByQuotation(quotationId);
+        })();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [quotationId]);
 
     async function handleFindOffersByQuotation(quotationId?: number) {
         const response = (await HttpRequestPort.get({
             path: `/api/offerByQuotation/${quotationId}`,
         })) as TOfferModel[];
 
-        const filteredOffers = response?.filter((offer) => {
-            return offer.status === 'Em aberto' || offer.status === 'Em negociação';
-        });
+        const filteredOffers = response?.filter((offer) => verifyOfferIsValid(offer.status));
 
         setQuotationOffers(filteredOffers);
 
@@ -38,50 +47,39 @@ function QuotationOffersModal({ quotationId, closeCreateModalHandler, ...props }
         }
     }
 
-    useEffect(() => {
-        (async () => {
-            if (!quotationId) return;
-            await handleFindOffersByQuotation(quotationId);
-        })();
-    }, [quotationId]);
-
-    async function handleApproveOffer(offer: any) {
+    async function handleApproveOffer(offer: TOfferModel) {
         try {
-            const result = await HttpRequestPort.post({
+            const result: any = await HttpRequestPort.post({
                 path: '/api/approveOffer',
                 body: { offer },
             });
 
-            navigate('/quotation/schedule-collection', { state: result });
-            console.log('Oferta aprovada');
+            if (result) {
+                navigate(`/quotation/schedule-collection/${offer?.id}`, { state: result });
+                console.log('Oferta aprovada');
+            }
         } catch (error) {
             toast.error('Ocorreu um erro ao criar aprovar a oferta, tente novamente', { position: 'bottom-right' });
         }
     }
 
-    async function handleRejectOffer() {
+    async function handleRejectOffer(offerId?: number) {
         try {
-            const requestData = {
-                quotationId: quotationId,
-                status: 'Reprovado',
-            };
-            const requestDataString = JSON.stringify(requestData);
+            if (!offerId) return;
 
-            const res = await fetch(`http://localhost:8000/api/offer`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: requestDataString,
-            });
+            const requestData = {
+                id: offerId,
+                quotationId,
+                status: OFFER_STATUS.DISAPPROVED,
+            };
+
+            const response = await HttpRequestPort.put({ path: '/api/offer', body: requestData });
+
+            console.log(response);
 
             await handleFindOffersByQuotation(quotationId);
 
-            if (res.status !== 200) {
-                toast.error('Ocorreu um erro ao cancelar a oferta, tente novamente', { position: 'bottom-right' });
-            } else {
-                toast.success('Oferta Reprovada!', { position: 'bottom-right' });
-            }
+            toast.success('Oferta Reprovada!', { position: 'bottom-right' });
         } catch (error) {
             toast.error('Ocorreu um erro ao criar reprovar a oferta, tente novamente', { position: 'bottom-right' });
         } finally {
@@ -89,13 +87,11 @@ function QuotationOffersModal({ quotationId, closeCreateModalHandler, ...props }
         }
     }
 
-    console.log({ quotationOffers });
-
     return (
         <Modal {...props} title={'Oferta da cotação'}>
             <VContainer style={{ gap: Spacings.LARGE, height: '80vh', overflow: 'auto' }}>
-                {Array.isArray(quotationOffers) &&
-                    quotationOffers.map((offer, index) => (
+                {quotationOffers?.map((offer, index) => {
+                    return (
                         <VContainer key={index} style={{ gap: Spacings.LARGE }}>
                             <Text fontWeight={'bold'}>#{offer.id}</Text>
                             <Divider />
@@ -104,16 +100,20 @@ function QuotationOffersModal({ quotationId, closeCreateModalHandler, ...props }
                             <FormTextInput label="Total" value={offer.total} isDisabled />
                             <FormTextInput label="Previsão de entrega" value={offer.deliveryForecast} isDisabled />
 
-                            <div
+                            <HContainer
                                 style={{
                                     gap: Spacings.MEDIUM,
-                                    display: 'flex',
                                     justifyContent: 'center',
                                 }}
                             >
-                                <ContainedButton type={'submit'} style={{ width: '250px' }} onClick={handleRejectOffer}>
+                                <ContainedButton
+                                    type={'submit'}
+                                    style={{ width: '250px' }}
+                                    onClick={() => handleRejectOffer(offer?.id)}
+                                >
                                     Reprovar
                                 </ContainedButton>
+
                                 <ContainedButton
                                     type={'submit'}
                                     style={{ width: '250px' }}
@@ -121,17 +121,11 @@ function QuotationOffersModal({ quotationId, closeCreateModalHandler, ...props }
                                 >
                                     Aprovar
                                 </ContainedButton>
-                            </div>
+                            </HContainer>
                         </VContainer>
-                    ))}
+                    );
+                })}
             </VContainer>
-
-            {/* {quotationOffers.length > 0 && ([]
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <ContainedButton type={'submit'} style={{ width: '250px' }} onClick={handleRejectOffer}>Reprovar</ContainedButton>
-                    <ContainedButton type={'submit'} style={{ width: '250px' }} onClick={() => handleApproveOffer(offer)}>Aprovar</ContainedButton>
-                </div>
-            )} */}
         </Modal>
     );
 }

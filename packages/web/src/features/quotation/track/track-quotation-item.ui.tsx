@@ -16,9 +16,10 @@ function TrackQuotationItem({
     ...props
 }: {
     item: TQuotationModel;
-    onItemSeeOffersPress: (quotationId: number) => void;
+    onItemSeeOffersPress: (quotationId?: number) => void;
 }) {
-    if (!item.id) return <></>;
+    console.log({ item });
+    if (!item?.id) return <></>;
 
     return (
         <QuotationItem.Container {...props}>
@@ -42,7 +43,6 @@ function TrackQuotationItem({
             <Divider />
 
             <ActionButtonContainer>
-                {/* <ContainedButton style={{ width: 'fit-content' }}>Agendar coleta</ContainedButton> */}
                 <ContainedButton style={{ width: 'fit-content' }} onClick={() => onItemSeeOffersPress(item.id)}>
                     Ver ofertas
                 </ContainedButton>

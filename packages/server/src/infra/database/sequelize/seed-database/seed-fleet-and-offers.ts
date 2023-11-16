@@ -1,11 +1,10 @@
-import { OfferStatus } from "@/shared/src/constants/offer-status.const";
-
 import { faker } from "@faker-js/faker";
 import DatabasePort from "../../database.port";
 import Fleet from "../../../../models/Fleet";
 import FleetVehicle from "../../../../models/FleetVehicle";
 import FleetVehicleFleet from "../../../../models/FleetVehicleFleet";
 import Offer from "../../../../models/Offer";
+import { OFFER_STATUS } from "@/shared/src/constants/offer-status.const";
 
 async function createFleetsAndVehicles() {
     try {
@@ -66,7 +65,7 @@ async function createOffers() {
             const randomVehicle = Math.floor(Math.random() * 5) + 1;
 
             const offer = await Offer.create({
-                status: Object.values(OfferStatus)[randomStatus],
+                status: Object.values(OFFER_STATUS)[randomStatus] as string,
                 subtotal: faker.number.float({ min: 1000, max: 5000, precision: 0.01 }),
                 taxes: faker.number.float({ min: 50, max: 200, precision: 0.01 }),
                 total: faker.number.float({ min: 1050, max: 5200, precision: 0.01 }),

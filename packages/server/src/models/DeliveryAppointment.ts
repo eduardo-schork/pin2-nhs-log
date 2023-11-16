@@ -47,11 +47,11 @@ class DeliveryAppointment extends Model<TDeliveryAppointmentModel> {
     })
     deliveryProcessId!: number;
 
-    @BelongsTo(() => Address, "fkCurrentAddress")
-    CurrentAddress?: Address;
+    @BelongsTo(() => Address, "fk_current_address")
+    currentAddress?: Address;
 
-    @BelongsTo(() => DeliveryProcess, "fkDeliveryProcess")
-    DeliveryProcess?: DeliveryProcess;
+    @BelongsTo(() => DeliveryProcess, "fk_delivery_process")
+    deliveryProcess?: DeliveryProcess;
 
     @Column({
         type: DataType.DATE,

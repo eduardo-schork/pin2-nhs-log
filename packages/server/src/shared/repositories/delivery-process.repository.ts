@@ -13,8 +13,60 @@ class DeliveryProcessRepository implements IBaseRepository<TDeliveryProcessModel
         return findAllResult;
     }
 
-    async findOne({ id }: { id: string }): Promise<TDeliveryProcessModel | null> {
-        const findOneResult = await DeliveryProcess.findOne({ where: { id } });
+    async findOne({ id }: { id: string | number }): Promise<TDeliveryProcessModel | null> {
+        const findOneResult = await DeliveryProcess.findOne({
+            where: { id },
+            include: [
+                {
+                    model: Offer,
+                    attributes: ["id", "status", "subtotal", "taxes", "total", "deliveryForecast"],
+                    include: [
+                        {
+                            model: Quotation,
+                            attributes: ["id", "cpf", "email", "currentDate"],
+                            include: [
+                                {
+                                    model: Address,
+                                    as: "originAddress", // Alias para a relação com o endereço de origem
+                                    attributes: [
+                                        "streetAddress",
+                                        "number",
+                                        "city",
+                                        "state",
+                                        "country",
+                                        "zipCode",
+                                        "geoLatitude",
+                                        "geoLongitude",
+                                    ],
+                                },
+                                {
+                                    model: Address,
+                                    as: "destinationAddress", // Alias para a relação com o endereço de destino
+                                    attributes: [
+                                        "streetAddress",
+                                        "number",
+                                        "city",
+                                        "state",
+                                        "country",
+                                        "zipCode",
+                                        "geoLatitude",
+                                        "geoLongitude",
+                                    ],
+                                },
+                                {
+                                    model: ItemRemittance,
+                                    attributes: ["id", "objectType", "weight"],
+                                },
+                            ],
+                        },
+                        {
+                            model: FleetVehicle,
+                            attributes: ["id", "model", "plate", "cpfDriver", "renavam"],
+                        },
+                    ],
+                },
+            ],
+        });
         return findOneResult;
     }
 

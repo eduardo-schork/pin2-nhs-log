@@ -7,7 +7,7 @@ export const Container = styled.div`
     display: flex;
     overflow-x: hidden;
     flex-direction: column;
-    background-color: ${Colors.WHITESMOKE};
+    background-color: ${Colors.WHITE};
 `;
 
 export const Content = styled.div`

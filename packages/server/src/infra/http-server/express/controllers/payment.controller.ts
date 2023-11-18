@@ -2,9 +2,7 @@ import { Request, Response } from "express";
 import PaymentRepository from "../../../../shared/repositories/payment.repository";
 import { sendEmailAfterProcessPayment } from "../../../../shared/service/email-service";
 import { PAYMENT_STATUS } from "@/shared/src/constants/payment-status.const";
-import deliveryAppointmentRepository from "../../../../shared/repositories/delivery-appointment.repository";
 import { DELIVERY_PROCESS_STATUS } from "@/shared/src/constants/delivery-process-status.const";
-import TDeliveryAppointmentModel from "@/shared/src/models/DeliveryAppointment.model";
 import deliveryProcessRepository from "../../../../shared/repositories/delivery-process.repository";
 import TDeliveryProcessModel from "@/shared/src/models/DeliveryProcess.model";
 

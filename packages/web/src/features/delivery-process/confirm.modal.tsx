@@ -31,6 +31,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({ deliveryProcessId, isOpen, 
                 status: DELIVERY_PROCESS_STATUS.DELIVERY_CONFIRMED,
             },
         });
+
         onClose();
     }
 

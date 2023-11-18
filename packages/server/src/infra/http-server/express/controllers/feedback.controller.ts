@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import FeedbackRepository from "../../../../shared/repositories/feedback.repository";
+import createFeedbackUsecase from "../../../../shared/usecases/create-feedback.usecase";
 
 async function findAll(req: Request, res: Response) {
     try {
@@ -26,7 +27,10 @@ async function create(req: Request, res: Response) {
     try {
         const body = req.body;
 
-        const createResult = await FeedbackRepository.create({ data: body });
+        const deliveryProcessId = body?.deliveryProcessId;
+        const feedback = { rating: body?.rating, comment: body?.comment };
+
+        const createResult = await createFeedbackUsecase(deliveryProcessId, feedback);
         return res.status(201).send(createResult);
     } catch (error) {
         console.log({ error });

@@ -2,51 +2,29 @@ import { useState } from 'react';
 import TextInputWithButton from '@/components/text-input/text-input-with-button.ui';
 import t from '@/infra/i18n';
 import { Text } from '@chakra-ui/react';
-import {
-    Address,
-    ContainedButton,
-    DateContainer,
-    DividerContainer,
-    FollowQuotationContainer,
-    GridContainer,
-    ImageBackground,
-} from './styles';
+import { FollowQuotationContainer, ImageBackground } from './styles';
 import BaseLayout from '../admin/fleets/fleet/nav-bar-fleet.page';
-import { format } from 'date-fns';
-import pt from 'date-fns/locale/pt';
+
 import ErrorModal from './error.modal';
 import ConfirmModal from './confirm.modal';
 import TDeliveryProcessModel from '@shared/models/DeliveryProcess.model';
 import HttpRequestPort from '@/infra/http-request/http-request.port';
-import { DELIVERY_APPOINTMENT_STATUS } from '@shared/constants/delivery-appointment-status.const';
+import TDeliveryAppointmentModel from '@shared/models/DeliveryAppointment.model';
 
-const months = [
-    'Janeiro',
-    'Fevereiro',
-    'Março',
-    'Abril',
-    'Maio',
-    'Junho',
-    'Julho',
-    'Agosto',
-    'Setembro',
-    'Outubro',
-    'Novembro',
-    'Dezembro',
-];
+import { VContainer } from '@/components/container/container.ui';
 
-function formatWithCapitalizedMonth(date: any) {
-    const day = format(date, 'd', { locale: pt });
-    const monthIndex = date.getMonth();
-    const year = format(date, 'yyyy', { locale: pt });
-    const month = months[monthIndex];
-
-    return `${day} ${month} ${year}`;
-}
+import Spacings from '@/styles/tokens/spacing';
+import { DELIVERY_PROCESS_STATUS } from '@shared/constants/delivery-process-status.const';
+import { ContainedButton } from '@/components/button/button.ui';
+import DeliveryFeedbackSection from './delivery-feedback-section.ui';
+import DeliveryAppointmentList from './delivery-appointment-list.ui';
+import { toast } from 'react-toastify';
 
 function DeliveryProcessPage({ ...props }) {
-    const [deliveryProcessData, setDeliveryProcessData] = useState<TDeliveryProcessModel[] | null>(null);
+    const [deliveryProcess, setDeliveryProcess] = useState<TDeliveryProcessModel | null>(null);
     const [formDeliveryProcessId, setFormDeliveryProcessId] = useState<string | null>(null);
+
+    const [processAppointments, setProcessAppointments] = useState<TDeliveryAppointmentModel[] | null>(null);
     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
 
     const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
@@ -60,6 +38,20 @@ function DeliveryProcessPage({ ...props }) {
     const openConfirmModal = () => {
         setIsConfirmModalOpen(true);
     };
+
+    async function fetchDeliveryProcess(id?: string) {
+        try {
+            if (!id) return;
+
+            const deliveryProcessData = (await HttpRequestPort.get({
+                path: `/api/delivery-process/${id}`,
+            })) as TDeliveryProcessModel;
+
+            return deliveryProcessData;
+        } catch (error) {
+            console.log(`Erro ao buscar o processo de entrega: ${error}`);
+        }
+    }
 
     async function fetchDeliveryAppointment(id?: string) {
         try {
@@ -87,31 +79,64 @@ function DeliveryProcessPage({ ...props }) {
         setFormDeliveryProcessId(value);
 
         try {
-            const deliveryProcessData = (await fetchDeliveryAppointment(value)) as TDeliveryProcessModel[];
-            if (deliveryProcessData) {
-                setDeliveryProcessData(deliveryProcessData);
+            const deliveryProcessAppointments = (await fetchDeliveryAppointment(value)) as TDeliveryAppointmentModel[];
+            const deliveryProcessData = (await fetchDeliveryProcess(value)) as TDeliveryProcessModel;
+
+            if (deliveryProcessData && deliveryProcessAppointments) {
+                setDeliveryProcess(deliveryProcessData);
+                setProcessAppointments(deliveryProcessAppointments);
             } else {
-                setDeliveryProcessData(null);
+                setDeliveryProcess(null);
+                setProcessAppointments(null);
             }
         } catch (error) {
-            console.error('Error fetching data:', error);
-            setDeliveryProcessData(null);
-            setError(t('DeliveryProcess.NotFound'));
-            setIsErrorModalOpen(true);
+            setDeliveryProcess(null);
+            setProcessAppointments(null);
+            toast.error('Remessa não encontrada, insira um novo número.');
         }
     }
 
     async function onCloseConfirmDeliveryHandler() {
-        await fetchDeliveryAppointment(formDeliveryProcessId);
+        const deliveryProcessResponse = (await fetchDeliveryProcess(
+            formDeliveryProcessId?.toString(),
+        )) as TDeliveryProcessModel;
+
+        setDeliveryProcess(deliveryProcessResponse);
+
+        const deliveryAppointmentResponse = (await fetchDeliveryAppointment(
+            formDeliveryProcessId?.toString(),
+        )) as TDeliveryAppointmentModel[];
+        setProcessAppointments(deliveryAppointmentResponse);
+
         setIsConfirmModalOpen(false);
     }
 
-    const showConfirmDeliveryButton = !deliveryProcessData?.map(
-        (delivery) => delivery.status == DELIVERY_APPOINTMENT_STATUS.DELIVERED,
-    );
+    const showFeedbackSection = deliveryProcess?.status == DELIVERY_PROCESS_STATUS.DELIVERY_CONFIRMED;
+    const showConfirmDeliveryButton = deliveryProcess?.status == DELIVERY_PROCESS_STATUS.DELIVERED;
+
+    async function onSubmitFeedback(data: { comment: string; rating: number }) {
+        try {
+            await HttpRequestPort.post({
+                path: '/api/feedback',
+                body: { ...data, deliveryProcessId: formDeliveryProcessId },
+            });
+            toast.success('O feedback foi enviado com sucesso!');
+        } catch (error: any) {
+            toast.error('Ocorreu um erro ao enviar feedback, tente novamente...');
+        }
+    }
 
     return (
         <BaseLayout {...props}>
+            {isConfirmModalOpen && (
+                <ConfirmModal
+                    deliveryProcessId={formDeliveryProcessId}
+                    isOpen={isConfirmModalOpen}
+                    onClose={onCloseConfirmDeliveryHandler}
+                    message={'Deseja confirmar a entrega do pacote?'}
+                />
+            )}
+
             <ImageBackground {...props}>
                 <FollowQuotationContainer>
                     <Text fontSize={'2xl'} fontWeight={'bold'}>
@@ -128,51 +153,22 @@ function DeliveryProcessPage({ ...props }) {
                 <ErrorModal isOpen={isErrorModalOpen} onClose={closeErrorModal} errorMessage={error || ''} />
             </ImageBackground>
 
-            {deliveryProcessData && showConfirmDeliveryButton && (
-                <ContainedButton onClick={openConfirmModal}>Confirmar Entrega</ContainedButton>
+            {processAppointments && (
+                <Text marginBottom={Spacings.MEDIUM} fontWeight={'bold'} fontSize={'2xl'} alignSelf={'center'}>
+                    Detalhes da remessa #{formDeliveryProcessId}
+                </Text>
             )}
 
-            {deliveryProcessData && (
-                <GridContainer>
-                    <DateContainer>
-                        <div>
-                            <center>
-                                {deliveryProcessData.map((item) => (
-                                    <div className="date" key={item.id}>
-                                        {item.date && (
-                                            <div>
-                                                <Text>{formatWithCapitalizedMonth(new Date(item.date))}</Text>
-                                                <Text>{format(new Date(item.date), 'HH:mm')} Horário Local</Text>
-                                            </div>
-                                        )}
-                                    </div>
-                                ))}
-                            </center>
-                        </div>
-                    </DateContainer>
-                    <DividerContainer>
-                        {deliveryProcessData.map((item) => (
-                            <Address key={item.id} style={{ whiteSpace: 'nowrap' }}>
-                                <div className="status">Status - {item.status}</div>
-                                <div>
-                                    <Text>Rua - {item.currentAddress.streetAddress}</Text>
-                                    <Text>Cidade - {item.currentAddress.city}</Text>
-                                    <Text>Estado - {item.currentAddress.state}</Text>
-                                    <Text>CEP - {item.currentAddress.zipCode}</Text>
-                                </div>
-                            </Address>
-                        ))}
-                    </DividerContainer>
-                </GridContainer>
-            )}
+            {showFeedbackSection && <DeliveryFeedbackSection onSubmit={onSubmitFeedback} />}
 
-            {isConfirmModalOpen && (
-                <ConfirmModal
-                    deliveryProcessId={formDeliveryProcessId}
-                    isOpen={isConfirmModalOpen}
-                    onClose={onCloseConfirmDeliveryHandler}
-                    message={'Deseja confirmar a entrega do pacote?'}
-                />
+            {!showFeedbackSection && processAppointments && (
+                <VContainer gap={Spacings.LARGE}>
+                    {showConfirmDeliveryButton && (
+                        <ContainedButton onClick={openConfirmModal}>Confirmar Entrega</ContainedButton>
+                    )}
+
+                    <DeliveryAppointmentList data={processAppointments} />
+                </VContainer>
             )}
         </BaseLayout>
     );

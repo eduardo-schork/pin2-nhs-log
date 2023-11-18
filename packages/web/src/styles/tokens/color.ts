@@ -10,8 +10,10 @@ const Colors = {
     LIGHT_BACKGROUND: '#4D7EA8',
     DARK_TRANSPARENT: 'rgba(51, 51, 51, 0.9)',
     WHITE_TRANSPARENT: 'rgba(233, 233, 233, 0.9)',
+    BACKGROUND_TRANSPARENT: 'rgba(233, 233, 233, 0.5)',
     WHITESMOKE: 'whitesmoke',
     BLUE: 'rgba(29, 161, 242, 0.85)',
+    ERROR: '#e23c41',
 };
 
 export default Colors;

@@ -23,7 +23,7 @@ async function createDeliveryAppointment(status: TDeliveryAppointmentStatus, pro
     const randomAddress = generateRandomAddress();
     const address = await addressRepository.create({ data: randomAddress });
 
-    if (!address.id) return null;
+    if (!address.id) return;
 
     const response = deliveryAppointmentRepository.create({
         data: {
@@ -32,7 +32,7 @@ async function createDeliveryAppointment(status: TDeliveryAppointmentStatus, pro
             currentAddressId: address.id,
             deliveryProcessId: processId,
             createdAt: new Date(),
-            createdBy: "system",
+            createdBy: "system", // FIXME: assign proper user
         },
     });
 
@@ -57,15 +57,23 @@ async function updateDeliveryProcessStatusUsecase({
                 deliveryProcessId
             );
         }
+
         if (returnData?.status == DELIVERY_PROCESS_STATUS.ON_WAY) {
+            // mock data
+            await createDeliveryAppointment(DELIVERY_APPOINTMENT_STATUS.ON_WAY, deliveryProcessId);
+            await createDeliveryAppointment(DELIVERY_APPOINTMENT_STATUS.ON_WAY, deliveryProcessId);
+            await createDeliveryAppointment(DELIVERY_APPOINTMENT_STATUS.ON_WAY, deliveryProcessId);
+            await createDeliveryAppointment(DELIVERY_APPOINTMENT_STATUS.ON_WAY, deliveryProcessId);
             await createDeliveryAppointment(DELIVERY_APPOINTMENT_STATUS.ON_WAY, deliveryProcessId);
         }
+
         if (returnData?.status == DELIVERY_PROCESS_STATUS.DELIVERED) {
             await createDeliveryAppointment(
                 DELIVERY_APPOINTMENT_STATUS.DELIVERED,
                 deliveryProcessId
             );
         }
+
         if (returnData?.status == DELIVERY_PROCESS_STATUS.DELIVERY_CONFIRMED) {
         }
 

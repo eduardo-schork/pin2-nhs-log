@@ -3,6 +3,7 @@ import { Text } from '@chakra-ui/react';
 import { styled } from 'styled-components';
 
 const CopyrightText = styled(Text).attrs({
+    fontWeight: 'bold',
     children: t('Home.Copyright'),
 })`
     align-self: center;

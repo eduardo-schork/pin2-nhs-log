@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import CollectionScheduleRepository from "../../../../shared/repositories/collection-schedule.repository";
-import deliveryAppointmentRepository from "../../../../shared/repositories/delivery-appointment.repository";
-import { DELIVERY_PROCESS_STATUS } from "@/shared/src/constants/delivery-process-status.const";
 
 async function findAll(req: Request, res: Response) {
     try {
@@ -50,18 +48,7 @@ async function createCollectionSchedule(req: Request, res: Response) {
             },
         });
 
-        const deliveryAppointment = await deliveryAppointmentRepository.create({
-            data: {
-                status: DELIVERY_PROCESS_STATUS.SCHEDULED_COLLECTION,
-                date: new Date(),
-                deliveryProcessId: body.deliveryProcessId,
-                currentAddressId: body.idAddress,
-                createdBy: "",
-                createdAt: new Date(),
-            },
-        });
-
-        return res.status(201).json({ collectionSchedule, deliveryAppointment });
+        return res.status(201).json({ collectionSchedule });
     } catch (error) {
         console.error("Error creating collection schedule:", error);
         return res.status(500).json({ error: "Failed to create collection schedule" });

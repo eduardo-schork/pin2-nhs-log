@@ -2,7 +2,6 @@ import offerRepository from "../repositories/offer.repository";
 import deliveryProcessRepository from "../repositories/delivery-process.repository";
 import { DELIVERY_PROCESS_STATUS } from "@/shared/src/constants/delivery-process-status.const";
 import Offer from "../../models/Offer";
-import deliveryAppointmentRepository from "../repositories/delivery-appointment.repository";
 import { OFFER_STATUS } from "@/shared/src/constants/offer-status.const";
 
 async function approveOfferUsecase(offer: Offer) {
@@ -22,21 +21,9 @@ async function approveOfferUsecase(offer: Offer) {
             },
         });
 
-        const deliveryAppointment = await deliveryAppointmentRepository.create({
-            data: {
-                status: DELIVERY_PROCESS_STATUS.CREATED,
-                date: new Date(),
-                deliveryProcessId: deliveryProcess.id,
-                currentAddressId: 1,
-                createdBy: "",
-                createdAt: new Date(),
-            },
-        });
-
         return {
             offerId: offer.id,
             deliveryProcessId: deliveryProcess.id,
-            deliveryAppointmentId: deliveryAppointment.id,
         };
     } catch (error) {
         throw error;

@@ -12,7 +12,6 @@ async function findAll(req: Request, res: Response) {
 }
 
 async function findOne(req: Request, res: Response) {
-    
     try {
         const idToFind = req.query.idDelivery;
         const findOneResult = await DeliveryAppointmentRepository.findOneDeliveryProcess(idToFind);
@@ -26,7 +25,6 @@ async function findOne(req: Request, res: Response) {
 async function create(req: Request, res: Response) {
     try {
         const body = req.body;
-
 
         const createResult = await DeliveryAppointmentRepository.create({ data: body });
         return res.status(201).send(createResult);

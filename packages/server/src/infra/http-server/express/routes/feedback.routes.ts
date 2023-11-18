@@ -1,5 +1,5 @@
 import { Router } from "express";
-import FeedbackController from "../controllers/feedback.controlle";
+import FeedbackController from "../controllers/feedback.controller";
 
 const feedbackRoutes = Router();
 

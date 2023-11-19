@@ -1,3 +1,4 @@
+import InputErrorLabel from '@/components/InputErrorLabel.ui';
 import { VContainer } from '@/components/container/container.ui';
 import Colors from '@/styles/tokens/color';
 import { FormLabel, Select, SelectProps } from '@chakra-ui/react';
@@ -16,6 +17,7 @@ function FormSelectInput({
             <StyledSelect {...props} {...methods.register(name)}>
                 {children}
             </StyledSelect>
+            <InputErrorLabel error={methods?.formState?.errors?.[name]?.message} />
         </VContainer>
     );
 }

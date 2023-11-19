@@ -16,9 +16,6 @@ async function createFeedbackUsecase(
             feedbackId: newFeedback.id,
         } as TDeliveryProcessModel,
     });
-
-    console.log({ newFeedback });
-    console.log({ updatedDeliveryProcess });
 }
 
 export default createFeedbackUsecase;

@@ -18,7 +18,7 @@ function QuotationPage({ ...props }) {
 
             <TrackQuotationSection onSubmit={onSubmitTrackQuotation} />
 
-            <PageContainer gap={Spacings.MEDIUM}>
+            <PageContainer style={{ width: '80%' }} gap={Spacings.MEDIUM}>
                 <CreateQuotationForm onSubmit={onSubmitCreateQuotation} />
             </PageContainer>
         </BaseLayout>

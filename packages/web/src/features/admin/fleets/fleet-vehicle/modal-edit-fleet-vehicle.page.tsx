@@ -42,8 +42,6 @@ const EditVehicleModal: React.FC<TEditVehicleModalProps> = ({ isOpen, onClose, v
             });
 
             if (res.status === 200) {
-                console.log(res);
-
                 window.location.reload();
             } else {
                 setError(t('Update.error'));

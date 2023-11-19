@@ -73,9 +73,7 @@ function QuotationOffersModal({ quotationId, closeCreateModalHandler, ...props }
                 status: OFFER_STATUS.DISAPPROVED,
             };
 
-            const response = await HttpRequestPort.put({ path: '/api/offer', body: requestData });
-
-            console.log(response);
+            await HttpRequestPort.put({ path: '/api/offer', body: requestData });
 
             await handleFindOffersByQuotation(quotationId);
 

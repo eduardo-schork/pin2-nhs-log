@@ -1,5 +1,5 @@
 import { ContainedButton } from '@/components/button/button.ui';
-import { PageContainer } from '@/components/container/container.ui';
+import { HContainer, PageContainer } from '@/components/container/container.ui';
 import Divider from '@/components/divider';
 import BaseLayout from '@/components/layout/base-layout/base-layout.ui';
 import PageTitleBar from '@/components/page-title-bar.ui';
@@ -9,6 +9,9 @@ import { useDisclosure } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import ManageProcessModal from './manage-process-modal.ui';
 import TDeliveryProcessModel from '@shared/models/DeliveryProcess.model';
+import t from '@/infra/i18n';
+import VisualizeFeedbackModal from './visualize-feedback-modal.ui';
+import Spacings from '@/styles/tokens/spacing';
 
 function AdminManageDeliveryProcessPage({ ...props }) {
     const [deliveryProcesses, setDeliveryProcesses] = useState<TDeliveryProcessModel[]>([]);
@@ -18,6 +21,12 @@ function AdminManageDeliveryProcessPage({ ...props }) {
         isOpen: isOpenProcessModal,
         onOpen: openProcessModalHandler,
         onClose: closeProcessModalHandler,
+    } = useDisclosure();
+
+    const {
+        isOpen: isVisualizeFeedbackModal,
+        onOpen: openVisualizeFeedbackModalHandler,
+        onClose: closeVisualizeFeedbackModalHandler,
     } = useDisclosure();
 
     useEffect(() => {
@@ -35,6 +44,10 @@ function AdminManageDeliveryProcessPage({ ...props }) {
         setSelectedDeliveryProcess(process);
         openProcessModalHandler();
     }
+    function onFeedbackPress(process: TDeliveryProcessModel) {
+        setSelectedDeliveryProcess(process);
+        openVisualizeFeedbackModalHandler();
+    }
 
     async function onCloseModalHandler() {
         setSelectedDeliveryProcess(null);
@@ -49,7 +62,14 @@ function AdminManageDeliveryProcessPage({ ...props }) {
                 onClose={onCloseModalHandler}
                 deliveryProcess={selectedDeliveryProcess}
             />
-            <PageTitleBar title={'Gerenciar Processos'} />
+
+            <VisualizeFeedbackModal
+                isOpen={isVisualizeFeedbackModal}
+                onClose={closeVisualizeFeedbackModalHandler}
+                deliveryProcess={selectedDeliveryProcess}
+            />
+
+            <PageTitleBar title={t('Dashboard.ManageProcess')} />
 
             <PageContainer>
                 <QuotationItem.ListContainer>
@@ -58,6 +78,7 @@ function AdminManageDeliveryProcessPage({ ...props }) {
                             key={deliveryProcess.id}
                             deliveryProcess={deliveryProcess}
                             onItemPress={onPressProcessHandler}
+                            onFeedbackPress={onFeedbackPress}
                         />
                     ))}
                 </QuotationItem.ListContainer>
@@ -69,9 +90,11 @@ function AdminManageDeliveryProcessPage({ ...props }) {
 function DeliveryProcessItem({
     deliveryProcess,
     onItemPress,
+    onFeedbackPress,
 }: {
     deliveryProcess: TDeliveryProcessModel;
     onItemPress(deliveryProcess: TDeliveryProcessModel): void;
+    onFeedbackPress(deliveryProcess: TDeliveryProcessModel): void;
 }) {
     const quotation = deliveryProcess.offer?.quotation;
     const itemRemittance = deliveryProcess.offer?.quotation?.itemRemittances?.[0];
@@ -92,7 +115,12 @@ function DeliveryProcessItem({
             <QuotationItem.InfoLabel label={'Status'} value={deliveryProcess.status} />
             <Divider />
 
-            <ContainedButton onClick={() => onItemPress(deliveryProcess)}>Alterar status</ContainedButton>
+            <HContainer style={{ justifyContent: 'flex-end', gap: Spacings.MEDIUM }}>
+                {deliveryProcess?.feedback && (
+                    <ContainedButton onClick={() => onFeedbackPress(deliveryProcess)}>Ver feedback</ContainedButton>
+                )}
+                <ContainedButton onClick={() => onItemPress(deliveryProcess)}>Alterar status</ContainedButton>
+            </HContainer>
         </QuotationItem.Container>
     );
 }

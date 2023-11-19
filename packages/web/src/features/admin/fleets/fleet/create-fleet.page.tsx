@@ -19,6 +19,8 @@ import HttpRequestPort from '@/infra/http-request/http-request.port';
 import { toast } from 'react-toastify';
 import Divider from '@/components/divider';
 import Spacings from '@/styles/tokens/spacing';
+import PageTitleBar from '@/components/page-title-bar.ui';
+import QuotationItem from '@/components/quotation/quotation-item.ui';
 
 type TCreateFleetPageFormValues = {
     fleetName: string;
@@ -100,7 +102,6 @@ function CreateFleet({ ...props }) {
                 });
 
                 if (res.status === 200) {
-                    console.log(res);
                     window.location.reload();
                 } else {
                     setError(t('Register.error'));
@@ -148,12 +149,12 @@ function CreateFleet({ ...props }) {
                 />
             )}
 
-            <Text fontSize={'x-large'} alignSelf={'center'} fontWeight={'bold'}>
-                Criar/Listar frotas
-            </Text>
+            <PageTitleBar title={'Criar/Listar frotas'} />
 
             <FormContainer>
-                <VContainer style={{ backgroundColor: 'white', padding: Spacings.LARGE, gap: Spacings.MEDIUM }}>
+                <QuotationItem.Container
+                    style={{ backgroundColor: 'white', padding: Spacings.LARGE, gap: Spacings.MEDIUM }}
+                >
                     <Text fontSize={'large'} fontWeight={'bold'}>
                         Criar nova frota:
                     </Text>
@@ -209,7 +210,7 @@ function CreateFleet({ ...props }) {
                             <Text>{t('common.Register')}</Text>
                         </ContainedButton>
                     </HContainer>
-                </VContainer>
+                </QuotationItem.Container>
             </FormContainer>
 
             <ListFleets />

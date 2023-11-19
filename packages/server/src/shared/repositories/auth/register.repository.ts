@@ -18,8 +18,9 @@ class RegisterRepository implements IBaseRepository<RegisterModel> {
             email: userEmail,
             password: hashedPassword,
             createdAt: new Date(),
-            createdBy: "",
+            createdBy: "system",
         });
+
         return user.id;
     }
 

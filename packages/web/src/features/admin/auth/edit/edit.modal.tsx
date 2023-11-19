@@ -9,6 +9,7 @@ import TUserModel from '@shared/models/User.model';
 import ErrorModal from './error.modal';
 import { FormContainer } from './edit.styles';
 import { cpf } from 'cpf-cnpj-validator';
+import { HContainer } from '@/components/container/container.ui';
 
 type TEditModalFormValues = any;
 
@@ -30,7 +31,6 @@ const EditModal: React.FC<TEditModalFormValues> = ({ isOpen, onClose, user }) =>
                 .then((response) => response.json())
                 .then((data) => {
                     setUserData(data);
-                    console.log(data);
                 })
                 .catch((error) => {
                     console.error('Erro ao buscar os dados do usuário', error);
@@ -63,26 +63,26 @@ const EditModal: React.FC<TEditModalFormValues> = ({ isOpen, onClose, user }) =>
 
                 const result = await res.json();
                 onClose();
-                navigate('/admin', { state: { userId: result }});
+                navigate('/admin', { state: { userId: result } });
             }
         }
     }
 
     async function handleFormSubmitDelete() {
-            const queryParams = new URLSearchParams({
-                id: userData?.id,
-            });
+        const queryParams = new URLSearchParams({
+            id: userData?.id,
+        });
 
-            const res = await fetch(`http://localhost:8000/api/admin?${queryParams}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+        const res = await fetch(`http://localhost:8000/api/admin?${queryParams}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
 
-            onClose();
-            navigate('/');
-        }
+        onClose();
+        navigate('/');
+    }
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -107,13 +107,16 @@ const EditModal: React.FC<TEditModalFormValues> = ({ isOpen, onClose, user }) =>
                             placeholder={t('Register.email')}
                             defaultValue={userData?.email}
                         />
-                        <ContainedButton onClick={handleSubmit(handleFormSubmitEdition)}>
-                            {t('common.Save')}
-                        </ContainedButton>
 
-                        <ContainedButton onClick={handleSubmit(handleFormSubmitDelete)}>
-                            {t('common.Delete')}
-                        </ContainedButton>
+                        <HContainer style={{ justifyContent: 'space-between' }}>
+                            <ContainedButton onClick={handleSubmit(handleFormSubmitDelete)}>
+                                {t('common.Delete')}
+                            </ContainedButton>
+
+                            <ContainedButton onClick={handleSubmit(handleFormSubmitEdition)}>
+                                {t('common.Save')}
+                            </ContainedButton>
+                        </HContainer>
 
                         <ErrorModal isOpen={isErrorModalOpen} onClose={closeErrorModal} errorMessage={error || ''} />
                     </FormContainer>

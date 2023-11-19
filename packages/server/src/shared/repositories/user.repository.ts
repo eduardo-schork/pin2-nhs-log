@@ -14,7 +14,6 @@ class UserRepository implements IBaseRepository<TUserModel> {
     }
 
     async delete({ id }: { id: any }): Promise<boolean> {
-        console.log(id);
         const deletedRows = await User.destroy({ where: { id } });
 
         if (deletedRows > 0) return true;

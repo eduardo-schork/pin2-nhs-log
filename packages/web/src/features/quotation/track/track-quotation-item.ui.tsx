@@ -18,7 +18,6 @@ function TrackQuotationItem({
     item: TQuotationModel;
     onItemSeeOffersPress: (quotationId?: number) => void;
 }) {
-    console.log({ item });
     if (!item?.id) return <></>;
 
     return (

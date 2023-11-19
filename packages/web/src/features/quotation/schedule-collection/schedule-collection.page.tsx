@@ -113,12 +113,10 @@ function ScheduleCollectionPage({ ...props }) {
         };
 
         try {
-            const response = await HttpRequestPort.post({
+            await HttpRequestPort.post({
                 path: `/api/collection-schedule/create`,
                 body: requestDataWithId,
             });
-
-            console.log({ response });
         } catch (error) {
             console.error(error);
             setError(t('Register.error'));

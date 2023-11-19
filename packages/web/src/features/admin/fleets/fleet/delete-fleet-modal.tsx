@@ -20,7 +20,6 @@ const DeleteFleetModal = ({ isOpen, onClose, fleet }: any & { fleet: TFleetModel
         try {
             await HttpRequestPort.delete({ path: `/api/fleet/delete/${fleet.id}` });
 
-            console.log('Fleet deleted successfully');
             window.location.reload();
         } catch (ex) {
             console.error(ex);

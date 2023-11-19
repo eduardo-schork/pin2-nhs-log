@@ -2,7 +2,8 @@ const EMPTY_ARRAY = Array(5).fill('');
 
 type TRatingStarsProps = {
     defaultScore?: number;
-    onChange(score: number): void;
+    onChange?(score: number): void;
+    disabled?: boolean;
 };
 
 import { Icon } from '@chakra-ui/react';
@@ -12,7 +13,7 @@ import { HContainer } from './container/container.ui';
 import { MdStar } from 'react-icons/md';
 import { useState } from 'react';
 
-function RatingStars({ defaultScore, onChange, ...props }: TRatingStarsProps) {
+function RatingStars({ defaultScore, onChange, disabled = false, ...props }: TRatingStarsProps) {
     const [score, setScore] = useState(defaultScore || 0);
 
     return (
@@ -33,6 +34,7 @@ function RatingStars({ defaultScore, onChange, ...props }: TRatingStarsProps) {
                             color: Colors.PRIMARY,
                         }}
                         onClick={() => {
+                            if (disabled) return;
                             setScore(currentIndex);
                             if (onChange) onChange(currentIndex);
                         }}

@@ -45,6 +45,7 @@ function AdminQuotationPage({ ...props }: { quotations?: TQuotationModel[] }) {
                     onButtonClick={handleFollowQuotation}
                 />
             </FollowQuotationContainer>
+
             <QuotationItem.ListContainer {...props}>
                 {quotationList?.map((quotation: TQuotationModel) => (
                     <AdminTrackQuotationItem

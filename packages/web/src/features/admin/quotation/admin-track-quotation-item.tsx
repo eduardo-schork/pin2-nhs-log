@@ -26,6 +26,7 @@ function AdminTrackQuotationItem({
         fetchQuotations();
         setIsCancelOfferModalOpen(false);
     }
+
     function onCloseCreateOfferHandler() {
         fetchQuotations();
         setIsCreateOfferModalOpen(false);

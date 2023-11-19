@@ -21,7 +21,6 @@ const DeleteVehicleModal = ({ isOpen, onClose, vehicleId }) => {
             });
 
             if (response.status === 200) {
-                console.log('Vehicle deleted successfully');
                 window.location.reload();
             } else {
                 setIsErrorModalOpen(true);

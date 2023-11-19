@@ -13,18 +13,19 @@ function useQuotationLogic() {
     } = useDisclosure();
 
     function normalizeQuotationWithAddresses(data: any) {
+        const formattedCpf = data?.cpf?.replace(/[^0-9]/g, '');
         return {
             quotation: {
-                cpf: data.cpf,
-                email: data.email,
+                cpf: formattedCpf,
+                email: data?.email,
                 currentDate: Date.now(),
             },
             itemRemittance: {
-                objectType: data.remittanceType,
-                weight: data.remittanceWeight,
+                objectType: data?.remittanceType,
+                weight: data?.remittanceWeight,
             },
-            originAddress: data.originAddress,
-            destinationAddress: data.destinationAddress,
+            originAddress: data?.originAddress,
+            destinationAddress: data?.destinationAddress,
         };
     }
 
@@ -40,7 +41,7 @@ function useQuotationLogic() {
     }
 
     function onSubmitTrackQuotation(value: string) {
-        const formattedValue = value.replace(/[^0-9]/g, '');
+        const formattedValue = value?.replace(/[^0-9]/g, '');
         navigate(`/quotation/track/${formattedValue}`);
     }
     return {

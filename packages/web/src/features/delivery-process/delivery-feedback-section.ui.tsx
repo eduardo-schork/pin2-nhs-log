@@ -16,8 +16,8 @@ yup.setLocale(yupPt);
 const schema = yup
     .object()
     .shape({
-        rating: yup.number().required(),
-        comment: yup.string().required(),
+        rating: yup.number().label('Score').required(),
+        comment: yup.string().label('Comentário').required(),
     })
     .required();
 

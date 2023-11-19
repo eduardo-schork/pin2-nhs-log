@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import t from '@/infra/i18n';
 import { useNavigate } from 'react-router-dom';
 import ErrorModal from './error.modal';
+import HttpRequestPort from '@/infra/http-request/http-request.port';
 
 type TLoginPageFormValues = {
     userEmail: string;
@@ -29,37 +30,30 @@ function LoginPage({ ...props }) {
         if (!data.userEmail || !data.userPassword) {
             setError(t('common.MissingParameter'));
             setIsErrorModalOpen(true);
-        } else {
-            const queryParams = new URLSearchParams({
-                userEmail: data.userEmail,
-                userPassword: data.userPassword,
-            });
+            return;
+        }
 
-            try {
-                const res = await fetch(`http://localhost:8000/api/admin/login?${queryParams}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
+        const queryParams = new URLSearchParams({
+            userEmail: data.userEmail,
+            userPassword: data.userPassword,
+        });
 
-                if (res.status === 200) {
-                    const result = await res.json();
-                    if (result) {
-                        navigate('/admin', { state: { userId: result } });
-                    } else {
-                        setError(t('Login.userNotFound'));
-                        setIsErrorModalOpen(true);
-                    }
-                } else {
-                    setError(t('Login.userNotFound'));
-                    setIsErrorModalOpen(true);
-                }
-            } catch (error) {
-                console.error('Error:', error);
+        try {
+            const response = (await HttpRequestPort.get({ path: `/api/admin/login?${queryParams}` })) as any;
+            const userId = response?.userId;
+
+            if (!userId) {
                 setError(t('Login.userNotFound'));
                 setIsErrorModalOpen(true);
+                return;
             }
+
+            localStorage.setItem('adminId', userId);
+            navigate('/admin', { state: { userId: userId } });
+        } catch (error) {
+            console.error('Error:', error);
+            setError(t('Login.userNotFound'));
+            setIsErrorModalOpen(true);
         }
     }
 

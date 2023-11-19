@@ -16,15 +16,28 @@ function AppBar({ userId, ...props }: { userId?: number }) {
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    function getAdminId() {
+        const adminId = localStorage.getItem('adminId');
+        return adminId;
+    }
+
     function handleOnClickLogo() {
-        navigate(`/`);
+        const adminId = getAdminId();
+
+        if (adminId) {
+            navigate('/admin');
+        } else {
+            navigate(`/`);
+        }
     }
 
     function handleOnClickAdmin() {
-        if (!userId) {
-            navigate('/admin/login');
-        } else {
+        const adminId = getAdminId();
+
+        if (adminId) {
             setIsModalOpen(true);
+        } else {
+            navigate('/admin/login');
         }
     }
 

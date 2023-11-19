@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 class LoginRepository implements IBaseRepository<LoginModel> {
     async authenticateUser(userEmail: string, userPassword: string): Promise<number | null> {
         const user = await User.findOne({ where: { email: userEmail } });
+
         if (user) {
             const isPasswordValid = await bcrypt.compare(userPassword, user.password);
             if (isPasswordValid) {

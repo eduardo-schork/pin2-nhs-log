@@ -15,6 +15,7 @@ function TrackQuotationSection({ onSubmit, ...props }: { onSubmit: (value: strin
                 </Text>
 
                 <TextInputWithButton
+                    mask={'***.***.***-**'}
                     placeholder={t('Quotation.NewQuotationForm.InsertQuotationCPF')}
                     buttonLabel={t('Quotation.NewQuotationForm.Follow')}
                     onButtonClick={onSubmit}

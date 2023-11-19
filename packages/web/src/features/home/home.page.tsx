@@ -10,6 +10,7 @@ import { Icon, Text } from '@chakra-ui/react';
 import { FaShippingFast } from 'react-icons/fa';
 import Spacings from '@/styles/tokens/spacing';
 import { BsFillBoxSeamFill } from 'react-icons/bs';
+import CopyrightText from '@/components/copyright-text.ui';
 
 function HomePage({ ...props }) {
     const navigate = useNavigate();
@@ -21,14 +22,16 @@ function HomePage({ ...props }) {
 
             <Containers.PageActions>
                 <ActionButton style={{ gap: Spacings.SMALL }} onClick={() => navigate('/delivery-process')}>
-                    <Text>{t('Home.ShippingTracking')}</Text>
                     <Icon boxSize={6} as={BsFillBoxSeamFill} />
+                    <Text>{t('Home.ShippingTracking')}</Text>
                 </ActionButton>
                 <ActionButton style={{ gap: Spacings.SMALL }} onClick={() => navigate('/quotation')}>
-                    <Text>{t('Home.FollowQuotation')}</Text>
                     <Icon boxSize={6} as={FaShippingFast} />
+                    <Text>{t('Home.FollowQuotation')}</Text>
                 </ActionButton>
             </Containers.PageActions>
+
+            <CopyrightText />
         </BaseLayout>
     );
 }

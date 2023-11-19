@@ -2,12 +2,12 @@ import { HContainer, VContainer } from '@/components/container/container.ui';
 import Divider from '@/components/divider';
 import FormSelectInput from '@/components/form/select-input/form-select-input.ui';
 import FormTextInput from '@/components/form/text-input/form-text-input.ui';
+import MaskedTextInput from '@/components/form/text-input/masked-text-input.ui';
 import Modal, { TModalProps } from '@/components/modal.ui';
 import HttpRequestPort from '@/infra/http-request/http-request.port';
 import Spacings from '@/styles/tokens/spacing';
 import { Text } from '@chakra-ui/react';
 import { DELIVERY_PROCESS_STATUS } from '@shared/constants/delivery-process-status.const';
-import { OFFER_STATUS } from '@shared/constants/offer-status.const';
 
 import TDeliveryProcessModel from '@shared/models/DeliveryProcess.model';
 import { useEffect } from 'react';
@@ -39,15 +39,13 @@ function ManageProcessModal({ deliveryProcess, ...props }: TModalProps & { deliv
     async function handleUpdateProcessStatus(status?: string) {
         if (!status) return;
         try {
-            const response = await HttpRequestPort.post({
+            await HttpRequestPort.post({
                 path: '/api/update-delivery-process-status',
                 body: {
                     deliveryProcessId: deliveryProcess?.id,
                     status: status,
                 },
             });
-
-            console.log({ response });
 
             toast.success('Processo atualizado com sucesso!');
         } catch (error) {
@@ -72,6 +70,7 @@ function ManageProcessModal({ deliveryProcess, ...props }: TModalProps & { deliv
             DELIVERY_PROCESS_STATUS.CREATED,
             DELIVERY_PROCESS_STATUS.DELIVERY_CONFIRMED,
             DELIVERY_PROCESS_STATUS.SCHEDULED_COLLECTION,
+            DELIVERY_PROCESS_STATUS.DELIVERED,
         ].some((value) => status == value);
 
     return (
@@ -91,11 +90,12 @@ function ManageProcessModal({ deliveryProcess, ...props }: TModalProps & { deliv
 
                     <SectionContainer>
                         <FormTextInput isDisabled label="Email" name={'email'} methods={methods} />
-                        <FormTextInput
+                        <MaskedTextInput
                             isDisabled
                             label="Previsão de entrega"
                             name={'deliveryForecast'}
                             methods={methods}
+                            mask={'**/**/****'}
                         />
                     </SectionContainer>
                 </ColumnContainer>
@@ -182,11 +182,10 @@ function ManageProcessModal({ deliveryProcess, ...props }: TModalProps & { deliv
                         <FormTextInput isDisabled label="Impostos" name={'taxes'} methods={methods} />
 
                         <FormSelectInput
-                            isDisabled={verifyIsSelectStatusDisabled(deliveryProcess?.status)}
-                            onChange={(event) => console.log({ event })}
                             label={'Status'}
                             name={'status'}
                             methods={methods}
+                            isDisabled={verifyIsSelectStatusDisabled(deliveryProcess?.status)}
                         >
                             <option
                                 disabled={true}
@@ -225,7 +224,9 @@ function ManageProcessModal({ deliveryProcess, ...props }: TModalProps & { deliv
 
                     <SectionContainer>
                         <FormTextInput isDisabled label="Total" name={'total'} methods={methods} />
-                        <FormTextInput isDisabled label="CTE" name={'cte'} methods={methods} />
+                        {/* 
+                            <FormTextInput isDisabled label="CTE" name={'cte'} methods={methods} /> 
+                        */}
                     </SectionContainer>
                 </ColumnContainer>
             </ModalContent>

@@ -34,7 +34,6 @@ function ListFleets({ ...props }) {
 
     const openEditFleetModel = (fleet: TFleetModel) => {
         setSelectedFleet(fleet);
-        console.log(`Editar frota ${fleet}`);
     };
 
     return (

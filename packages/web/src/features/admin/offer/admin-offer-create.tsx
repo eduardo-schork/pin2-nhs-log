@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import HttpRequestPort from '@/infra/http-request/http-request.port';
 import t from '@/infra/i18n';
+import MaskedTextInput from '@/components/form/text-input/masked-text-input.ui';
 
 function AdminCreateOffer({ isOpen, onClose, data, ...props }) {
     const [selectedFleet, setSelectedFleet] = useState('');
@@ -29,7 +30,6 @@ function AdminCreateOffer({ isOpen, onClose, data, ...props }) {
 
     async function handleSubmit() {
         try {
-            console.log({ id: data.id, deliveryForecast, selectedFleet, subtotal, taxes, total });
             if (!data.id || !deliveryForecast || !selectedFleet || !subtotal || !taxes || !total) {
                 toast.error('É necessário que todos os campos estejam preenchidos!', { position: 'bottom-right' });
                 return;
@@ -93,7 +93,8 @@ function AdminCreateOffer({ isOpen, onClose, data, ...props }) {
                             </HContainer>
 
                             <HContainer style={{ gap: Spacings.LARGE }}>
-                                <FormTextInput
+                                <MaskedTextInput
+                                    mask={'**/**/****'}
                                     label="Previsão de entrega"
                                     value={deliveryForecast}
                                     onChange={(e) => setDeliveryForecast(e.target.value)}

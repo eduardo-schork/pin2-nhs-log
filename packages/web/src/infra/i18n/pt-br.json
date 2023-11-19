@@ -10,7 +10,7 @@
     "common.VehicleInFleet": "Não é possível deletar o veículo pois ele está vinculado em uma frota!",
     "Home.Copyright": "Copyright NHS-LOG. All rights reserved",
     "Home.ShippingTracking": "Rastrear sua remessa",
-    "Home.FollowQuotation": "Solicitar/Acompanhar uma cotação",
+    "Home.FollowQuotation": "Acompanhar uma cotação",
     "Dashboard.ManageFleets": "Gerenciar frota",
     "Dashboard.FollowQuotation": "Acompanhar Cotações",
     "Dashboard.ManageProcess": "Gerenciar Processos",

@@ -6,6 +6,7 @@ import Quotation from "../../models/Quotation";
 import Address from "../../models/Address";
 import ItemRemittance from "../../models/ItemRemittance";
 import FleetVehicle from "../../models/FleetVehicle";
+import Feedback from "../../models/Feedback";
 
 class DeliveryProcessRepository implements IBaseRepository<TDeliveryProcessModel> {
     async findAll(): Promise<TDeliveryProcessModel[]> {
@@ -17,6 +18,10 @@ class DeliveryProcessRepository implements IBaseRepository<TDeliveryProcessModel
         const findOneResult = await DeliveryProcess.findOne({
             where: { id },
             include: [
+                {
+                    model: Feedback,
+                },
+
                 {
                     model: Offer,
                     attributes: ["id", "status", "subtotal", "taxes", "total", "deliveryForecast"],
@@ -59,6 +64,7 @@ class DeliveryProcessRepository implements IBaseRepository<TDeliveryProcessModel
                                 },
                             ],
                         },
+
                         {
                             model: FleetVehicle,
                             attributes: ["id", "model", "plate", "cpfDriver", "renavam"],
@@ -67,6 +73,7 @@ class DeliveryProcessRepository implements IBaseRepository<TDeliveryProcessModel
                 },
             ],
         });
+
         return findOneResult;
     }
 
@@ -91,6 +98,9 @@ class DeliveryProcessRepository implements IBaseRepository<TDeliveryProcessModel
         try {
             const deliveryProcesses = await DeliveryProcess.findAll({
                 include: [
+                    {
+                        model: Feedback,
+                    },
                     {
                         model: Offer,
                         attributes: [

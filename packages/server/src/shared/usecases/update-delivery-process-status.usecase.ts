@@ -19,7 +19,11 @@ export type TCreateQuotationWithAddresses = {
     itemRemittance: TItemRemittanceModel;
 };
 
-async function createDeliveryAppointment(status: TDeliveryAppointmentStatus, processId: number) {
+async function createDeliveryAppointment(
+    status: TDeliveryAppointmentStatus,
+    processId: number,
+    adminId?: string
+) {
     const randomAddress = generateRandomAddress();
     const address = await addressRepository.create({ data: randomAddress });
 
@@ -32,7 +36,7 @@ async function createDeliveryAppointment(status: TDeliveryAppointmentStatus, pro
             currentAddressId: address.id,
             deliveryProcessId: processId,
             createdAt: new Date(),
-            createdBy: "system", // FIXME: assign proper user
+            createdBy: adminId || "system",
         },
     });
 
@@ -42,35 +46,59 @@ async function createDeliveryAppointment(status: TDeliveryAppointmentStatus, pro
 async function updateDeliveryProcessStatusUsecase({
     deliveryProcessId,
     status,
+    adminId,
 }: {
     deliveryProcessId: number;
     status: string;
+    adminId?: string;
 }) {
     try {
         const returnData = await deliveryProcessRepository.update({
-            data: { id: deliveryProcessId, status } as TDeliveryProcessModel,
+            data: { id: deliveryProcessId, status, updatedBy: adminId } as TDeliveryProcessModel,
         });
 
         if (returnData?.status == DELIVERY_PROCESS_STATUS.COLLECTED) {
             await createDeliveryAppointment(
                 DELIVERY_APPOINTMENT_STATUS.COLLECTED,
-                deliveryProcessId
+                deliveryProcessId,
+                adminId
             );
         }
 
         if (returnData?.status == DELIVERY_PROCESS_STATUS.ON_WAY) {
             // mock data
-            await createDeliveryAppointment(DELIVERY_APPOINTMENT_STATUS.ON_WAY, deliveryProcessId);
-            await createDeliveryAppointment(DELIVERY_APPOINTMENT_STATUS.ON_WAY, deliveryProcessId);
-            await createDeliveryAppointment(DELIVERY_APPOINTMENT_STATUS.ON_WAY, deliveryProcessId);
-            await createDeliveryAppointment(DELIVERY_APPOINTMENT_STATUS.ON_WAY, deliveryProcessId);
-            await createDeliveryAppointment(DELIVERY_APPOINTMENT_STATUS.ON_WAY, deliveryProcessId);
+            await createDeliveryAppointment(
+                DELIVERY_APPOINTMENT_STATUS.ON_WAY,
+                deliveryProcessId,
+                adminId
+            );
+            await createDeliveryAppointment(
+                DELIVERY_APPOINTMENT_STATUS.ON_WAY,
+                deliveryProcessId,
+                adminId
+            );
+            await createDeliveryAppointment(
+                DELIVERY_APPOINTMENT_STATUS.ON_WAY,
+                deliveryProcessId,
+                adminId
+            );
+            await createDeliveryAppointment(
+                DELIVERY_APPOINTMENT_STATUS.ON_WAY,
+                deliveryProcessId,
+                adminId
+            );
+            await createDeliveryAppointment(
+                DELIVERY_APPOINTMENT_STATUS.ON_WAY,
+                deliveryProcessId,
+                adminId
+            );
         }
 
         if (returnData?.status == DELIVERY_PROCESS_STATUS.DELIVERED) {
             await createDeliveryAppointment(
                 DELIVERY_APPOINTMENT_STATUS.DELIVERED,
-                deliveryProcessId
+                deliveryProcessId,
+                adminId
             );
         }
 

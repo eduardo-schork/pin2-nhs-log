@@ -28,7 +28,7 @@ export const PageContainer: React.FC<ContainerProps> = styled(Container).attrs({
     direction: 'column',
 })`
     align-self: center;
-    width: 80%;
+    width: 100%;
 `;
 
 export default Container;

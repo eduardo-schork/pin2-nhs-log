@@ -12,6 +12,7 @@ import TDeliveryProcessModel from '@shared/models/DeliveryProcess.model';
 import t from '@/infra/i18n';
 import VisualizeFeedbackModal from './visualize-feedback-modal.ui';
 import Spacings from '@/styles/tokens/spacing';
+import formatDateToPresent from '@/utils/format-date-to-present';
 
 function AdminManageDeliveryProcessPage({ ...props }) {
     const [deliveryProcesses, setDeliveryProcesses] = useState<TDeliveryProcessModel[]>([]);
@@ -106,7 +107,8 @@ function DeliveryProcessItem({
             <QuotationItem.InfoTitle>#{deliveryProcess?.id}</QuotationItem.InfoTitle>
 
             <Divider />
-            <QuotationItem.InfoLabel label={'Horário'} value={deliveryProcess.createdAt} />
+
+            <QuotationItem.InfoLabel label={'Horário'} value={formatDateToPresent(deliveryProcess.createdAt)} />
             <QuotationItem.InfoLabel label={'CPF'} value={quotation?.cpf} />
             <QuotationItem.InfoLabel label={'Email'} value={quotation?.email} />
 

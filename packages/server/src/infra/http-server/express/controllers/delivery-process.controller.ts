@@ -101,7 +101,7 @@ async function updateStatus(req: Request, res: Response) {
         const findAllResult = await updateDeliveryProcessStatusUsecase({
             deliveryProcessId: body.deliveryProcessId,
             status: body.status,
-            adminId: body?.updatedBy,
+            adminId: body?.adminId,
         });
 
         return res.status(200).send(findAllResult);

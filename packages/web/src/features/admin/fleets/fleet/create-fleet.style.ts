@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 import Spacings from '@/styles/tokens/spacing';
 import FontSizes from '@/styles/tokens/font-size';
+import QuotationItem from '@/components/quotation/quotation-item.ui';
 
 const RegisterTextMargin = {
     MARGINTOP: '-35.7px',
     MARGINLEFT: '170.06px',
 };
 
-export const FormContainer = styled.div`
+export const FormContainer = styled(QuotationItem.Container)`
     align-self: flex-start;
     display: flex;
     flex-direction: column;
@@ -18,6 +19,7 @@ export const FormContainer = styled.div`
     gap: ${Spacings.MEDIUM};
     padding: ${Spacings.MEDIUM};
     margin: auto;
+    margin-bottom: ${Spacings.LARGE};
 `;
 
 export const ImageContainer = styled.img`

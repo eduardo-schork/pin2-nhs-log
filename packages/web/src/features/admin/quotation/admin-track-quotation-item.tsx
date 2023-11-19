@@ -10,6 +10,7 @@ import AdminCreateOffer from '../offer/admin-offer-create';
 import AdminCancelOffer from '../offer/admin-offer-cancel';
 import { useState } from 'react';
 import { OFFER_STATUS } from '@shared/constants/offer-status.const';
+import formatDateToPresent from '@/utils/format-date-to-present';
 
 function AdminTrackQuotationItem({
     fetchQuotations,
@@ -45,7 +46,7 @@ function AdminTrackQuotationItem({
 
                 <Divider borderColor={Colors.PRIMARY} />
 
-                <QuotationItem.InfoLabel label="Horário" value={data.createdAt} />
+                <QuotationItem.InfoLabel label="Horário" value={formatDateToPresent(data.createdAt)} />
                 <QuotationItem.InfoLabel label="CPF" value={data.cpf} />
                 <QuotationItem.InfoLabel label="Email" value={data.email} />
                 <QuotationItem.InfoLabel label="Tipo de remessa" value={data?.itemRemittances?.[0].objectType} />

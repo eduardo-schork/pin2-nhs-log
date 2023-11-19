@@ -6,6 +6,7 @@ import RatingStars from '@/components/rating-stars.ui';
 import FontSizes from '@/styles/tokens/font-size';
 
 import Spacings from '@/styles/tokens/spacing';
+import formatDateToPresent from '@/utils/format-date-to-present';
 import { Text } from '@chakra-ui/react';
 
 import TDeliveryProcessModel from '@shared/models/DeliveryProcess.model';
@@ -36,7 +37,7 @@ function VisualizeFeedbackModal({
 
                     <Divider />
 
-                    <QuotationItem.InfoLabel label={'Horário'} value={feedback?.createdAt} />
+                    <QuotationItem.InfoLabel label={'Horário'} value={formatDateToPresent(feedback?.createdAt)} />
                     <QuotationItem.InfoLabel label={'Comentário'} value={feedback?.comment} />
                 </ColumnContainer>
             </ModalContent>

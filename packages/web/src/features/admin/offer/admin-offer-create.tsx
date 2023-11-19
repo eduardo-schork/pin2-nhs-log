@@ -35,10 +35,16 @@ function AdminCreateOffer({ isOpen, onClose, data, ...props }) {
                 return;
             }
 
+            const formattedForecast = deliveryForecast.replace(/[/]/g, '-');
+            const splittedString = formattedForecast.split('-');
+            const stringDate = `${splittedString[1]}-${splittedString[0]}-${splittedString[2]}`;
+
+            const date = new Date(stringDate);
+
             const formData = {
                 quotationId: data.id,
                 status: 'Em aberto',
-                deliveryForecast: deliveryForecast,
+                deliveryForecast: date,
                 fleetVehicleId: selectedFleet,
                 subtotal: subtotal,
                 taxes: taxes,

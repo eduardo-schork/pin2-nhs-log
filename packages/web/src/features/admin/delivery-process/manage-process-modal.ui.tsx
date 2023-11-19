@@ -6,6 +6,7 @@ import MaskedTextInput from '@/components/form/text-input/masked-text-input.ui';
 import Modal, { TModalProps } from '@/components/modal.ui';
 import HttpRequestPort from '@/infra/http-request/http-request.port';
 import Spacings from '@/styles/tokens/spacing';
+import getAdminId from '@/utils/get-admin-id';
 import { Text } from '@chakra-ui/react';
 import { DELIVERY_PROCESS_STATUS } from '@shared/constants/delivery-process-status.const';
 
@@ -39,11 +40,13 @@ function ManageProcessModal({ deliveryProcess, ...props }: TModalProps & { deliv
     async function handleUpdateProcessStatus(status?: string) {
         if (!status) return;
         try {
+            const adminId = getAdminId();
             await HttpRequestPort.post({
                 path: '/api/update-delivery-process-status',
                 body: {
                     deliveryProcessId: deliveryProcess?.id,
                     status: status,
+                    adminId: adminId,
                 },
             });
 

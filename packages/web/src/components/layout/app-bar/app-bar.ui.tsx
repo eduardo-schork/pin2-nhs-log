@@ -9,17 +9,19 @@ import Spacings from '@/styles/tokens/spacing';
 import FontSizes from '@/styles/tokens/font-size';
 import t from '@/infra/i18n';
 import Colors from '@/styles/tokens/color';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import EditModal from '@/features/admin/auth/edit/edit.modal';
+import getAdminId from '@/utils/get-admin-id';
 
 function AppBar({ userId, ...props }: { userId?: number }) {
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    function getAdminId() {
-        const adminId = localStorage.getItem('adminId');
-        return adminId;
-    }
+    const [currentAdminId, setCurrentAdminId] = useState<number | string | null>(userId);
+
+    useEffect(() => {
+        setCurrentAdminId(getAdminId());
+    }, [isModalOpen]);
 
     function handleOnClickLogo() {
         const adminId = getAdminId();
@@ -49,7 +51,9 @@ function AppBar({ userId, ...props }: { userId?: number }) {
             </LogoContainer>
 
             <UserIcon onClick={handleOnClickAdmin} />
-            {isModalOpen && <EditModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} user={userId} />}
+            {isModalOpen && (
+                <EditModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} user={currentAdminId} />
+            )}
         </Container>
     );
 }

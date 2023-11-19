@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import Spacings from '@/styles/tokens/spacing';
 import { HContainer } from '@/components/container/container.ui';
 import DeleteFleetModal from './delete-fleet-modal';
+import EditFleetModal from './edit-fleet-modal.ui';
 
 function ListFleets({ ...props }) {
     const [fleets, setFleets] = useState<TFleetModel[]>([]);
@@ -34,6 +35,7 @@ function ListFleets({ ...props }) {
 
     const openEditFleetModel = (fleet: TFleetModel) => {
         setSelectedFleet(fleet);
+        setIsEditFletModalOpen(true);
     };
 
     return (
@@ -43,6 +45,14 @@ function ListFleets({ ...props }) {
                     fleet={selectedFleet}
                     isOpen={isDeleteFleetModalOpen}
                     onClose={() => setIsDeleteFletModalOpen(false)}
+                />
+            )}
+
+            {isEditFleetModalOpen && (
+                <EditFleetModal
+                    fleet={selectedFleet}
+                    isOpen={isEditFleetModalOpen}
+                    onClose={() => setIsEditFletModalOpen(false)}
                 />
             )}
 

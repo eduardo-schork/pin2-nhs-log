@@ -37,7 +37,7 @@ function CreateFleet({ ...props }) {
     const [isCreateVehicleModalOpen, setIsCreateVehicleModalOpen] = useState(false);
     const [isEditVehicleModalOpen, setIsEditVehicleModalOpen] = useState(false);
     const [isDeleteVehicleModalOpen, setIsDeleteVehicleModalOpen] = useState(false);
-    const [selectedVehicle, setSelectedVehicle] = useState<TFleetVehicleModel>(null);
+    const [selectedVehicle, setSelectedVehicle] = useState<TFleetVehicleModel | null>(null);
 
     async function handleFetchFleetVehicles() {
         try {
@@ -89,7 +89,7 @@ function CreateFleet({ ...props }) {
             setIsErrorModalOpen(true);
         } else {
             const requestData = new URLSearchParams({
-                fleetName: data.fleetName,
+                fleetName: data?.fleetName,
                 fleetVehicles: selectedFleetVehicles,
             });
 
@@ -152,65 +152,61 @@ function CreateFleet({ ...props }) {
             <PageTitleBar title={'Criar/Listar frotas'} />
 
             <FormContainer>
-                <QuotationItem.Container
-                    style={{ backgroundColor: 'white', padding: Spacings.LARGE, gap: Spacings.MEDIUM }}
-                >
-                    <Text fontSize={'large'} fontWeight={'bold'}>
-                        Criar nova frota:
-                    </Text>
+                <Text fontSize={'large'} fontWeight={'bold'}>
+                    Criar nova frota:
+                </Text>
 
-                    <TextInput {...register('fleetName')} placeholder={t('Register.fleetName')} />
+                <TextInput {...register('fleetName')} placeholder={t('Register.fleetName')} />
 
-                    <Text alignSelf={'center'} fontWeight={'bold'}>
-                        Veículos da frota
-                    </Text>
+                <Text alignSelf={'center'} fontWeight={'bold'}>
+                    Veículos da frota
+                </Text>
 
-                    <VContainer style={{ height: '40vh', overflow: 'auto' }}>
-                        {fleetVehicles.map((vehicle) => (
-                            <VContainer key={vehicle.id}>
-                                <HContainer style={{ justifyContent: 'space-between', padding: `${Spacings.SMALL} 0` }}>
-                                    <Checkbox
-                                        isChecked={selectedFleetVehicles.includes(vehicle.id.toString())}
-                                        onChange={() => handleCheckboxChange(vehicle.id)}
+                <VContainer style={{ height: '40vh', overflow: 'auto' }}>
+                    {fleetVehicles.map((vehicle) => (
+                        <VContainer key={vehicle.id}>
+                            <HContainer style={{ justifyContent: 'space-between', padding: `${Spacings.SMALL} 0` }}>
+                                <Checkbox
+                                    isChecked={selectedFleetVehicles.includes(vehicle.id.toString())}
+                                    onChange={() => handleCheckboxChange(vehicle.id)}
+                                >
+                                    {vehicle.plate}
+                                </Checkbox>
+
+                                <HContainer style={{ gap: Spacings.SMALL }}>
+                                    <Button
+                                        onClick={() => selectEditVehicle(vehicle)}
+                                        leftIcon={<EditIcon />}
+                                        size="sm"
+                                        variant="link"
                                     >
-                                        {vehicle.plate}
-                                    </Checkbox>
+                                        Editar
+                                    </Button>
 
-                                    <HContainer style={{ gap: Spacings.SMALL }}>
-                                        <Button
-                                            onClick={() => selectEditVehicle(vehicle)}
-                                            leftIcon={<EditIcon />}
-                                            size="sm"
-                                            variant="link"
-                                        >
-                                            Editar
-                                        </Button>
-
-                                        <Button
-                                            onClick={() => selectDeleteVehicle(vehicle)}
-                                            leftIcon={<DeleteIcon />}
-                                            size="sm"
-                                            variant="link"
-                                        >
-                                            Excluir
-                                        </Button>
-                                    </HContainer>
+                                    <Button
+                                        onClick={() => selectDeleteVehicle(vehicle)}
+                                        leftIcon={<DeleteIcon />}
+                                        size="sm"
+                                        variant="link"
+                                    >
+                                        Excluir
+                                    </Button>
                                 </HContainer>
-                                <Divider />
-                            </VContainer>
-                        ))}
-                    </VContainer>
+                            </HContainer>
+                            <Divider />
+                        </VContainer>
+                    ))}
+                </VContainer>
 
-                    <HContainer style={{ justifyContent: 'space-between' }}>
-                        <ContainedButton onClick={openCreateVehicleModal}>
-                            <Text>CADASTRAR VEÍCULO</Text>
-                        </ContainedButton>
+                <HContainer style={{ justifyContent: 'space-between' }}>
+                    <ContainedButton onClick={openCreateVehicleModal}>
+                        <Text>CADASTRAR VEÍCULO</Text>
+                    </ContainedButton>
 
-                        <ContainedButton onClick={handleSubmit(handleFormSubmit)}>
-                            <Text>{t('common.Register')}</Text>
-                        </ContainedButton>
-                    </HContainer>
-                </QuotationItem.Container>
+                    <ContainedButton onClick={handleSubmit(handleFormSubmit)}>
+                        <Text>{t('common.Register')}</Text>
+                    </ContainedButton>
+                </HContainer>
             </FormContainer>
 
             <ListFleets />

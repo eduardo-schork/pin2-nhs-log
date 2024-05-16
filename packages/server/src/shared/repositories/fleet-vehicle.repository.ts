@@ -1,6 +1,14 @@
 import TFleetVehicleModel from "@/shared/src/models/FleetVehicle.model";
 import FleetVehicle from "../../models/FleetVehicle";
 import IBaseRepository from "./base.repository";
+import { z } from "zod";
+
+const TFleetVehicleSchema = z.object({
+    model: z.string().nonempty(),
+    plate: z.string().nonempty(),
+    cpfDriver: z.string().nonempty(),
+    renavam: z.string().nonempty(),
+});
 
 class FleetVehicleRepository implements IBaseRepository<TFleetVehicleModel> {
     async findAll(): Promise<TFleetVehicleModel[]> {
@@ -19,7 +27,18 @@ class FleetVehicleRepository implements IBaseRepository<TFleetVehicleModel> {
         if (deletedRows > 0) return true;
         return false;
     }
+
+    async validateInput(data: TFleetVehicleModel) {
+        try {
+            await TFleetVehicleSchema.parseAsync(data);
+        } catch (error) {
+            throw new Error("Erro. Os campos obrigatórios devem ser preenchidos!");
+        }
+    }
+
     async create({ data }: { data: TFleetVehicleModel }): Promise<TFleetVehicleModel> {
+        // await this.validateInput(data);
+
         const createResult = await FleetVehicle.create(data);
         return createResult;
     }

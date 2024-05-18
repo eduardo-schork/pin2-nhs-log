@@ -13,6 +13,13 @@ async function createSystemUser() {
             "system"
         );
 
+        await registerRepository.registerAdmin(
+            "luiza",
+            "65890996002",
+            "luiza@gmail.com",
+            "teste123"
+        );
+
         return null;
     } catch (error) {
         console.error("Erro ao criar usuário:", error);

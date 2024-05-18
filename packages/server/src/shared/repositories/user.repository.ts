@@ -1,6 +1,16 @@
 import IBaseRepository from "./base.repository";
 import User from "../../models/User";
 import TUserModel from "@/shared/src/models/User.model";
+import { z } from "zod";
+
+const TUser = z.object({
+    name: z.string().nonempty(),
+    cpf: z.string().nonempty(),
+    email: z.string().nonempty(),
+    password: z.string().nonempty(),
+    createdAt: z.date().optional(),
+    createdBy: z.string().optional(),
+});
 
 class UserRepository implements IBaseRepository<TUserModel> {
     async findAll(): Promise<TUserModel[]> {
@@ -20,7 +30,9 @@ class UserRepository implements IBaseRepository<TUserModel> {
         return false;
     }
 
-    async create({ data }: { data: TUserModel }): Promise<TUserModel> {
+    async create({ data }: { data: any }): Promise<TUserModel> {
+        await this.validateInput(data);
+
         const createResult = await User.create(data);
         return createResult;
     }
@@ -30,6 +42,25 @@ class UserRepository implements IBaseRepository<TUserModel> {
         if (affectedRows > 0) return data;
         return null;
     }
+
+    async validateInput(data: TUserModel) {
+        try {
+            await TUser.parseAsync(data);
+    
+            // CPF validation
+            const cleanedCpf = data.cpf.replace(/\D/g, "");
+            if (!/^\d{11}$/.test(cleanedCpf)) {
+                throw new Error("Erro. CPF inválido!");
+            }
+        } catch (error: unknown) {
+            if (error instanceof z.ZodError) {
+                throw new Error("Erro. Os campos obrigatórios devem ser preenchidos corretamente!");
+            } else {
+                throw error;
+            }
+        }
+    }
+    
 
     async updateUser(userId: any, userName: any, userCpf: any, userEmail: any): Promise<any> {
         try {

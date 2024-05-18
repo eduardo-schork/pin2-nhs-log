@@ -6,6 +6,37 @@ import ItemRemittance from "../../models/ItemRemittance";
 import { Op, Sequelize } from "sequelize";
 import Offer from "../../models/Offer";
 import DatabasePort from "../../infra/database/database.port";
+import { z } from "zod";
+
+const TAddressModel = z.object({
+    streetAddress: z.string().nonempty(),
+    number: z.number(),
+    city: z.string().nonempty(),
+    state: z.string().nonempty(),
+    country: z.string().nonempty(),
+    zipCode: z.string().nonempty(),
+    geoLatitude: z.number().nullable(),
+    geoLongitude: z.number().nullable(),
+});
+
+const TItemRemittanceModel = z.object({
+    objectType: z.string().nonempty(),
+    weight: z.number(),
+    quotationId: z.number(),
+});
+
+
+const TQuotationSchema = z.object({
+    cpf: z.string().nonempty(),
+    email: z.string().nonempty(),
+    currentDate: z.date(),
+    originAddressId: z.number(),
+    destinationAddressId: z.number(),
+    originAddress: TAddressModel,
+    destinationAddress: TAddressModel,
+    itemRemittances: z.array(TItemRemittanceModel),
+});
+
 
 class QuotationRepository implements IBaseRepository<TQuotationModel> {
     async findAll(): Promise<TQuotationModel[]> {
@@ -13,28 +44,11 @@ class QuotationRepository implements IBaseRepository<TQuotationModel> {
         return findAllResult;
     }
 
-    // Old findAllWithoutApprovedOffers raw query without joins
-    // const query = `
-    //     SELECT "Quotation".*
-    //     FROM "Quotation"
-    //     LEFT JOIN "Offer" ON "Quotation"."pk_quotation" = "Offer"."fk_quotation"
-    //     WHERE "Offer"."fk_quotation" is null and
-    //     (("Offer"."of_status" <> 'Aprovado') or ("Offer"."of_status" is null))
-    // `;
-
-    // const quotations = await DatabasePort?.instance?.query(query, {
-    //     model: Quotation,
-    //     mapToModel: true,
-    // });
-
-    // @ts-ignore`
-    // return quotations;
     async findAllWithoutApprovedOffers(): Promise<TQuotationModel[]> {
         const quotations = await Quotation.findAll({
             include: [
                 {
                     model: Offer,
-                    // where: { status: { [Op.not]: "Aprovado" } },
                     required: false,
                 },
                 {
@@ -46,13 +60,6 @@ class QuotationRepository implements IBaseRepository<TQuotationModel> {
                 { model: Address, as: "destinationAddress", required: false },
             ],
         });
-
-        // const quotationsWithoutApprovedOffers = quotations.filter((quotation) => {
-        //     return (
-        //         quotation?.offers?.length === 0 ||
-        //         quotation?.offers?.every((offer) => offer.status !== "Aprovado")
-        //     );
-        // });
 
         return quotations;
     }
@@ -90,7 +97,9 @@ class QuotationRepository implements IBaseRepository<TQuotationModel> {
         return false;
     }
 
-    async create({ data }: { data: TQuotationModel }): Promise<TQuotationModel> {
+    async create({ data }: { data: any }): Promise<TQuotationModel> {
+        await this.validateInput(data);
+
         const createResult = await Quotation.create(data);
         return createResult;
     }
@@ -100,6 +109,15 @@ class QuotationRepository implements IBaseRepository<TQuotationModel> {
         if (affectedRows > 0) return data;
         return null;
     }
+
+    async validateInput(data: TQuotationModel) {
+        try {
+            await TQuotationSchema.parseAsync(data);
+        } catch (error) {
+            throw new Error("Erro. Os campos obrigatórios devem ser preenchidos corretamente!");
+        }
+    }
+
 }
 
 export default new QuotationRepository();

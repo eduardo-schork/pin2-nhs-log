@@ -8,33 +8,12 @@ import Offer from "../../models/Offer";
 import DatabasePort from "../../infra/database/database.port";
 import { z } from "zod";
 
-const TAddressModel = z.object({
-    streetAddress: z.string().nonempty(),
-    number: z.number(),
-    city: z.string().nonempty(),
-    state: z.string().nonempty(),
-    country: z.string().nonempty(),
-    zipCode: z.string().nonempty(),
-    geoLatitude: z.number().nullable(),
-    geoLongitude: z.number().nullable(),
-});
-
-const TItemRemittanceModel = z.object({
-    objectType: z.string().nonempty(),
-    weight: z.number(),
-    quotationId: z.number(),
-});
-
-
 const TQuotationSchema = z.object({
     cpf: z.string().nonempty(),
     email: z.string().nonempty(),
     currentDate: z.date(),
     originAddressId: z.number(),
     destinationAddressId: z.number(),
-    originAddress: TAddressModel,
-    destinationAddress: TAddressModel,
-    itemRemittances: z.array(TItemRemittanceModel),
 });
 
 

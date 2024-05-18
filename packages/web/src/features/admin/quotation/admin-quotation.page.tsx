@@ -30,6 +30,7 @@ function AdminQuotationPage({ ...props }: { quotations?: TQuotationModel[] }) {
             path: '/api/quotation-not-approved',
         })) as TQuotationModel[];
 
+        console.log(returnData)
         if (returnData.length > 0) {
             setQuotationList(returnData);
         }

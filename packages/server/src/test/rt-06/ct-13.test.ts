@@ -6,7 +6,7 @@ describe("CT-13", () => {
         it("SHOULD delete the vehicle successfully", async () => {
             // Arrange
             await initializeDatabase();
-            const existingVehicleId = "20";
+            const existingVehicleId = "10";
 
             // Act
             const isDeleted = await fleetVehicleRepository.delete({ id: existingVehicleId });

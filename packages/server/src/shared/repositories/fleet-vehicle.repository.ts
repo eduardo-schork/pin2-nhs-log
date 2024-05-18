@@ -37,7 +37,7 @@ class FleetVehicleRepository implements IBaseRepository<TFleetVehicleModel> {
     }
 
     async create({ data }: { data: TFleetVehicleModel }): Promise<TFleetVehicleModel> {
-        // await this.validateInput(data);
+        await this.validateInput(data);
 
         const createResult = await FleetVehicle.create(data);
         return createResult;

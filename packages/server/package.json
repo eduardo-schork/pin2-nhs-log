@@ -5,7 +5,7 @@
     "license": "MIT",
     "scripts": {
         "start:db": "ts-node ./src/index.ts",
-        "test": "yarn jest --detectOpenHandles --verbose",
+        "test": "yarn jest --detectOpenHandles --verbose --no-cache --watchAll",
         "seed-database": "ts-node ./src/infra/database/sequelize/seed-database/seed-database.ts"
     },
     "dependencies": {

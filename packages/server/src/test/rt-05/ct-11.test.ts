@@ -8,11 +8,7 @@ describe("CT-11", () => {
             await initializeDatabase();
 
             const updatedVehicleData = {
-<<<<<<< HEAD
-                id: 15,
-=======
                 id: 11,
->>>>>>> cf701fb5cc295d48aeed14d2866b926b8a77c02c
                 model: "Corvette",
                 plate: "BM19TDG",
                 cpfDriver: "64400591316",

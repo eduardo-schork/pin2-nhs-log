@@ -13,7 +13,7 @@ describe("CT-34", () => {
             const url = "http://localhost:8000/api/approveOffer";
             const offer = {
                 id: 18,
-                status: 'Em negociação',
+                status: 'Aprovado',
                 subtotal: 2362.89,
                 taxes: 135.98,
                 total: 1453.72,

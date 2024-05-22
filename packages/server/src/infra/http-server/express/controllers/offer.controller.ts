@@ -47,7 +47,6 @@ async function create(req: Request, res: Response) {
 }
 
 async function approveOffer(req: Request, res: Response) {
-    console.log(req)
     try {
         const body = req.body;
         const createResult = await approveOfferUsecase(body.offer);

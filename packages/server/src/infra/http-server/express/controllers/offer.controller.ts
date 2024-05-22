@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import OfferRepository from "../../../../shared/repositories/offer.repository";
 import approveOfferUsecase from "../../../../shared/usecases/approve-offer.usecase";
+import { request } from "http";
 
 async function findAll(req: Request, res: Response) {
     try {
@@ -46,6 +47,7 @@ async function create(req: Request, res: Response) {
 }
 
 async function approveOffer(req: Request, res: Response) {
+    console.log(req)
     try {
         const body = req.body;
         const createResult = await approveOfferUsecase(body.offer);

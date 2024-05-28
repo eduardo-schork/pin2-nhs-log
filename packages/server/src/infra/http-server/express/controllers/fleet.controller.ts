@@ -70,7 +70,7 @@ async function deleteOne(req: Request, res: Response) {
 
         const deleteReturn = await fleetRepository.delete({ id: idToFind });
 
-        if (deleteReturn) return res.status(204).send("");
+        if (deleteReturn) return res.status(200).send("");
         return res.status(400).send("");
     } catch (error) {
         console.log({ error });

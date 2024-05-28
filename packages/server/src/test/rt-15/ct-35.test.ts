@@ -1,10 +1,4 @@
 import axios from 'axios';
-import express from 'express';
-import offerRoutes from '../../infra/http-server/express/routes/offer.routes';
-
-const app = express();
-app.use(express.json());
-app.use('/api', offerRoutes); 
 
 describe("CT-35", () => {
     describe("GIVEN an offer to be repproved", () => {

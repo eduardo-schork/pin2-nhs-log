@@ -12,6 +12,7 @@ import { cpf } from 'cpf-cnpj-validator';
 import { HContainer } from '@/components/container/container.ui';
 
 type TEditModalFormValues = any;
+const missingFieldsError = 'Todos os campos devem ser editados!';
 
 const EditModal: React.FC<TEditModalFormValues> = ({ isOpen, onClose, user }) => {
     const navigate = useNavigate();
@@ -40,7 +41,7 @@ const EditModal: React.FC<TEditModalFormValues> = ({ isOpen, onClose, user }) =>
 
     async function handleFormSubmitEdition(data: any) {
         if (!data.userName || !data.userCpf || !data.userEmail) {
-            setError(t('common.Edit'));
+            setError(missingFieldsError);
             setIsErrorModalOpen(true);
         } else {
             if (!cpf.isValid(data.userCpf)) {
@@ -113,7 +114,7 @@ const EditModal: React.FC<TEditModalFormValues> = ({ isOpen, onClose, user }) =>
                                 {t('common.Delete')}
                             </ContainedButton>
 
-                            <ContainedButton onClick={handleSubmit(handleFormSubmitEdition)}>
+                            <ContainedButton data-testid="save-button" onClick={handleSubmit(handleFormSubmitEdition)}>
                                 {t('common.Save')}
                             </ContainedButton>
                         </HContainer>

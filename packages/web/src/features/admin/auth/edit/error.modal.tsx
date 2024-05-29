@@ -10,7 +10,7 @@ const ErrorModal: React.FC<ErrorModalProps> = ({ isOpen, onClose, errorMessage }
     return (
         <Modal isOpen={isOpen} onClose={onClose} size="md">
             <ModalOverlay />
-            <ModalContent justifyContent="center" alignItems="center">
+            <ModalContent className="custom-modal-error" justifyContent="center" alignItems="center">
                 <ModalHeader>Erro</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>

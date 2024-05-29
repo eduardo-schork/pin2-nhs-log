@@ -50,7 +50,7 @@ function AppBar({ userId, ...props }: { userId?: number }) {
                 <CompanyNameText fontSize={'2xl'}>{t('common.CompanyName')}</CompanyNameText>
             </LogoContainer>
 
-            <UserIcon onClick={handleOnClickAdmin} />
+            <UserIcon className="user-actions-button" onClick={handleOnClickAdmin} />
             {isModalOpen && (
                 <EditModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} user={currentAdminId} />
             )}

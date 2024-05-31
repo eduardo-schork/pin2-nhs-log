@@ -27,8 +27,6 @@ describe("CT-41", () => {
             
             expect(selectElement).not.toBeNull();
 
-            console.log("Campo de seleção de tipo de remessa encontrado.");
-
             const expectedOptions = [
                 'Documentos',
                 'Eletrônicos',
@@ -45,16 +43,12 @@ describe("CT-41", () => {
 
             expect(cleanedOptions).toEqual(expectedOptions);
 
-            console.log("Opções de tipo de remessa verificadas.");
-
             for (const option of expectedOptions) {
                 await page.select('select[name="remittanceType"]', option);
 
                 const selectedOption = await page.$eval('select[name="remittanceType"]', el => el.value);
                 expect(selectedOption).toBe(option);
             }
-
-            console.log("Seleção de tipo de remessa validada.");
 
             await page.screenshot({ path: 'verificou-select-tipo-remessa.png' });
 

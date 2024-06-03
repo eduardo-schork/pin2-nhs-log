@@ -20,7 +20,6 @@ import { toast } from 'react-toastify';
 import Divider from '@/components/divider';
 import Spacings from '@/styles/tokens/spacing';
 import PageTitleBar from '@/components/page-title-bar.ui';
-import QuotationItem from '@/components/quotation/quotation-item.ui';
 
 type TCreateFleetPageFormValues = {
     fleetName: string;
@@ -156,17 +155,20 @@ function CreateFleet({ ...props }) {
                     Criar nova frota:
                 </Text>
 
-                <TextInput {...register('fleetName')} placeholder={t('Register.fleetName')} />
+                <TextInput
+                className='fleet-name-input'
+                {...register('fleetName')} placeholder={t('Register.fleetName')} />
 
                 <Text alignSelf={'center'} fontWeight={'bold'}>
                     Veículos da frota
                 </Text>
 
                 <VContainer style={{ height: '40vh', overflow: 'auto' }}>
-                    {fleetVehicles.map((vehicle) => (
+                    {fleetVehicles.map((vehicle, index) => (
                         <VContainer key={vehicle.id}>
                             <HContainer style={{ justifyContent: 'space-between', padding: `${Spacings.SMALL} 0` }}>
                                 <Checkbox
+                                    className={`vehicle-${index}-checkbox`}
                                     isChecked={selectedFleetVehicles.includes(vehicle.id.toString())}
                                     onChange={() => handleCheckboxChange(vehicle.id)}
                                 >
@@ -203,7 +205,9 @@ function CreateFleet({ ...props }) {
                         <Text>CADASTRAR VEÍCULO</Text>
                     </ContainedButton>
 
-                    <ContainedButton onClick={handleSubmit(handleFormSubmit)}>
+                    <ContainedButton
+                    className={"create-fleet-button"}
+                    onClick={handleSubmit(handleFormSubmit)}>
                         <Text>{t('common.Register')}</Text>
                     </ContainedButton>
                 </HContainer>

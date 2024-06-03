@@ -52,10 +52,14 @@ const EditFleetModal = ({ isOpen, onClose, fleet }: any & { fleet: TFleetModel }
                             style={{ gap: Spacings.MEDIUM, display: 'flex', flexDirection: 'column' }}
                             onSubmit={methods.handleSubmit(onSubmit)}
                         >
-                            <FormTextInput defaultValue={fleet?.name} methods={methods} name="name" />
+                            <FormTextInput
+                                defaultValue={fleet?.name} methods={methods} name="name" />
                             <HContainer style={{ alignSelf: 'flex-end', gap: Spacings.MEDIUM }}>
-                                <ContainedButton onClick={onClose}>Cancelar</ContainedButton>
-                                <ContainedButton type={'submit'}>Confirmar edição</ContainedButton>
+                                <ContainedButton 
+                                    onClick={onClose}>Cancelar</ContainedButton>
+                                <ContainedButton 
+                                className={'confirm-edit-button'}
+                                type={'submit'}>Confirmar edição</ContainedButton>
                             </HContainer>
                         </form>
                     </ModalBody>

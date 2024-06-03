@@ -18,6 +18,7 @@ function TextInputWithButton({
     return (
         <InputGroup>
             <MaskedTextInput
+                className={'identification-input'}
                 methods={methods}
                 style={{ height: '50px' }}
                 mask={mask}
@@ -25,7 +26,9 @@ function TextInputWithButton({
                 {...methods.register('inputValue')}
             />
             <InputRightElement style={{ height: '50px', alignSelf: 'center', width: '110px' }}>
-                <ContainedButton onClick={() => onButtonClick(methods.getValues('inputValue'))}>
+                <ContainedButton 
+                    className={"send-button"}
+                    onClick={() => onButtonClick(methods.getValues('inputValue'))}>
                     {buttonLabel}
                 </ContainedButton>
             </InputRightElement>

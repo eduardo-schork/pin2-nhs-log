@@ -50,13 +50,14 @@ function ListFleets({ ...props }) {
 
             {isEditFleetModalOpen && (
                 <EditFleetModal
+                    className={'edit-fleet-modal'}
                     fleet={selectedFleet}
                     isOpen={isEditFleetModalOpen}
                     onClose={() => setIsEditFletModalOpen(false)}
                 />
             )}
 
-            <TableContainer style={{ width: '80%', margin: 'auto' }} {...props}>
+            <TableContainer className='fleet-list' style={{ width: '80%', margin: 'auto' }} {...props}>
                 <Table>
                     <thead>
                         <MergedTableRow>
@@ -80,11 +81,13 @@ function ListFleets({ ...props }) {
                                     <HContainer style={{ gap: Spacings.SMALL }}>
                                         <IconButton
                                             icon={<EditIcon />}
+                                            className='edit-fleet-button'
                                             aria-label="Editar"
                                             onClick={() => openEditFleetModel(fleet)}
                                         />
                                         <IconButton
                                             icon={<DeleteIcon />}
+                                            className='delete-fleet-button'
                                             aria-label="Excluir"
                                             onClick={() => openDeleteFleetModal(fleet)}
                                         />

@@ -1,10 +1,10 @@
 //@ts-nocheck
-import * as dotenv from "dotenv";
+import * as dotenv from 'dotenv';
 dotenv.config();
 
-import puppeteer from "puppeteer";
+import puppeteer from 'puppeteer';
 
-describe("CT-40", () => {
+describe('CT-40', () => {
     let browser;
     let page;
 
@@ -27,18 +27,17 @@ describe("CT-40", () => {
         await browser.close();
     });
 
-    describe("GIVEN an existing user to edit", () => {
-        it("SHOULD open the edit user modal and verify if the fields are filled correctly", async () => {
-
+    describe('GIVEN an existing user to edit', () => {
+        it('SHOULD open the edit user modal and verify if the fields are filled correctly', async () => {
             await page.waitForSelector('.user-actions-button');
 
-            await page.click('.user-actions-button'); 
+            await page.click('.user-actions-button');
 
             await page.waitForSelector('.custom-modal-content');
 
-            const userNameValue = await page.$eval('input[name="userName"]', el => el.value);
-            const userCpfValue = await page.$eval('input[name="userCpf"]', el => el.value);
-            const userEmailValue = await page.$eval('input[name="userEmail"]', el => el.value);
+            const userNameValue = await page.$eval('input[name="userName"]', (el) => el.value);
+            const userCpfValue = await page.$eval('input[name="userCpf"]', (el) => el.value);
+            const userEmailValue = await page.$eval('input[name="userEmail"]', (el) => el.value);
 
             expect(userNameValue).not.toBe('');
             expect(userCpfValue).not.toBe('');
@@ -46,7 +45,7 @@ describe("CT-40", () => {
 
             await page.screenshot({ path: 'edit-user-modal.png' });
 
-            await sleep(3000)
+            await sleep(3000);
 
             await page.click('.chakra-modal__close-btn');
         }, 20000);
@@ -54,5 +53,5 @@ describe("CT-40", () => {
 });
 
 function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
 }

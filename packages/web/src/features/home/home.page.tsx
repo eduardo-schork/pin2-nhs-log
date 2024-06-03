@@ -21,11 +21,15 @@ function HomePage({ ...props }) {
             </HeroImage>
 
             <Containers.PageActions>
-                <ActionButton style={{ gap: Spacings.SMALL }} onClick={() => navigate('/delivery-process')}>
+                <ActionButton 
+                className={"track-shipping-button"}
+                style={{ gap: Spacings.SMALL }} onClick={() => navigate('/delivery-process')}>
                     <Icon boxSize={6} as={BsFillBoxSeamFill} />
                     <Text>{t('Home.ShippingTracking')}</Text>
                 </ActionButton>
-                <ActionButton style={{ gap: Spacings.SMALL }} onClick={() => navigate('/quotation')}>
+                <ActionButton 
+                className={"track-quotation-button"}
+                style={{ gap: Spacings.SMALL }} onClick={() => navigate('/quotation')}>
                     <Icon boxSize={6} as={FaShippingFast} />
                     <Text>{t('Home.FollowQuotation')}</Text>
                 </ActionButton>

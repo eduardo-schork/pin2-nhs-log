@@ -13,7 +13,9 @@ function FormTextInput({
     return (
         <VContainer style={{ width: '100%' }}>
             {label && <FormLabel>{label}</FormLabel>}
-            <TextInput placeholder={'Digite aqui'} {...props} {...methods?.register(name)} />
+            <TextInput 
+            className='form-text-input'
+            placeholder={'Digite aqui'} {...props} {...methods?.register(name)} />
             <InputErrorLabel error={error || methods?.formState?.errors?.[name]?.message} />
         </VContainer>
     );

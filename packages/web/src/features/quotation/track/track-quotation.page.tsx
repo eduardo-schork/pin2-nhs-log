@@ -1,5 +1,5 @@
 import BaseLayout from '@/components/layout/base-layout/base-layout.ui';
-import { Text, useDisclosure } from '@chakra-ui/react';
+import { useDisclosure } from '@chakra-ui/react';
 
 import QuotationOffersModal from '@/components/modals/quotation-offers-modal.ui';
 import { useEffect, useState } from 'react';
@@ -49,9 +49,11 @@ function TrackQuotationPage({ ...props }) {
 
             <PageTitleBar title={'Acompanhar cotações'} />
 
-            <QuotationItem.ListContainer>
+            <QuotationItem.ListContainer
+                className={"quotations-list"}>
                 {quotationList?.map((quotationItem, index) => (
                     <TrackQuotationItem
+                        className={`track-quotation-item-${index}`}
                         key={index}
                         item={quotationItem}
                         onItemSeeOffersPress={onShowOffersFromQuotationPress}

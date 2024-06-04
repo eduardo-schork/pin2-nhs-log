@@ -4,7 +4,7 @@ describe("CT-47", () => {
     describe("HAVING user to remove", () => {
         it("SHOULD return user successfully removed", async () => {
             // Arrange
-            const userId = 86; 
+            const userId = 43; 
             const url = `http://localhost:8000/api/admin`;
 
             // Act

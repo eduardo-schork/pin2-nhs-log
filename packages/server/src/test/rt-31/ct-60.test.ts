@@ -6,7 +6,7 @@ describe("CT-60", () => {
 
             // Arrange
             const url = "http://localhost:8000/api/fleet/delete";
-            const id = 1;
+            const id = 141;
 
             // Act
             const response = await axios.delete(`${url}/${id}`);

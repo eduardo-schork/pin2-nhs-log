@@ -5,7 +5,7 @@ describe("CT-32", () => {
         it("SHOULD delete the expected vehicle", async () => {
             // Arrange
             const url = "http://localhost:8000/api/fleetVehicle/delete";
-            const vehicleId = '99';
+            const vehicleId = '101';
 
             // Act
             const response = await axios.delete(`${url}/${vehicleId}`);

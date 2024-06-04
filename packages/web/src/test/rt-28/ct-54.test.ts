@@ -1,5 +1,7 @@
 //@ts-nocheck
 import puppeteer from 'puppeteer';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 describe('CT-54', () => {
     let browser;
@@ -9,7 +11,7 @@ describe('CT-54', () => {
         browser = await puppeteer.launch({ headless: false });
         page = await browser.newPage();
 
-        await page.goto('http://localhost:5173/admin/fleet');
+        await page.goto(`${process.env.IP_FOR_TESTS}/admin/fleet`);
 
         await page.evaluate(() => {
             localStorage.setItem('adminId', '1');
@@ -19,6 +21,9 @@ describe('CT-54', () => {
     });
 
     afterAll(async () => {
+        await page.evaluate(() => {
+            localStorage.setItem('adminId', null);
+        });
         await browser.close();
     });
 

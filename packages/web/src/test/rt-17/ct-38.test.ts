@@ -1,10 +1,10 @@
 //@ts-nocheck
-import * as dotenv from "dotenv";
+import * as dotenv from 'dotenv';
 dotenv.config();
 
-import puppeteer from "puppeteer";
+import puppeteer from 'puppeteer';
 
-describe("CT-38", () => {
+describe('CT-38', () => {
     let browser;
     let page;
 
@@ -27,11 +27,10 @@ describe("CT-38", () => {
         await browser.close();
     });
 
-    describe("GIVEN an existing user to edit", () => {
-        it("SHOULD attempt to save with an empty name field and display an error", async () => {
-
+    describe('GIVEN an existing user to edit', () => {
+        it('SHOULD attempt to save with an empty name field and display an error', async () => {
             await page.waitForSelector('.user-actions-button');
-            await page.click('.user-actions-button'); 
+            await page.click('.user-actions-button');
 
             await page.waitForSelector('.custom-modal-content');
 

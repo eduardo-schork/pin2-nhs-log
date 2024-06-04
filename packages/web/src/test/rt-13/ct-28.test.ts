@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 import puppeteer from 'puppeteer';
+import * as dotenv from 'dotenv';
 
 describe('CT-28', () => {
     let browser;
@@ -12,7 +13,7 @@ describe('CT-28', () => {
         browser = await puppeteer.launch({ headless: false });
         page = await browser.newPage();
 
-        await page.goto('http://localhost:5173/admin/fleet');
+        await page.goto(`${process.env.IP_FOR_TESTS}/admin/fleet`);
 
         await page.evaluate(() => {
             localStorage.setItem('adminId', '1');

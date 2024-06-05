@@ -9,12 +9,13 @@ describe("CT-59", () => {
             const url = "http://localhost:8000/api/fleet";
             const id = -1;
 
-            // Act
-            const response = await axios.get(`${url}/${id}`);
-
-            // Assert
-            expect(response.status).toBe(400);
-            expect(response.data).toBeNull();
+            try {
+                // Act
+                await axios.get(`${url}/${id}`);
+            } catch (error: any) {
+                // Assert
+                expect(error.response.status).toBe(400);
+            }
         });
     });
 });

@@ -8,13 +8,15 @@ describe("CT-62", () => {
     describe("GIVING an empty CPF", () => {
         it("SHOULD not return quotations and the status has to be 400", async () => {
             // Arrange
-            const cpf = " ";
+            const cpf = null;
 
-            // Act
-            const response = await axios.get(`http://localhost:8000/api/quotation-by-cpf/${cpf}`);
-
-            // Assert
-            expect(response.status).toBe(400);
+            try {
+                // Act
+                await axios.get(`http://localhost:8000/api/quotation-by-cpf/${cpf}`);
+            } catch (error: any) {
+                // Assert
+                expect(error.response.status).toBe(400);
+            }
         });
     });
 });

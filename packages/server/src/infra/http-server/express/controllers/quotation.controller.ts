@@ -45,8 +45,10 @@ async function findAllWithoutApprovedOffers(req: Request, res: Response) {
 async function findAllByCPF(req: Request, res: Response) {
     try {
         const idToFind = req.params.cpf;
-
         const findAllResult = await quotationRepository.findAllByCPF({ cpf: idToFind });
+        if (!findAllResult.length) {
+            return res.status(400).send("Erro");
+        }
         return res.status(200).send(findAllResult);
     } catch (error) {
         console.log({ error });

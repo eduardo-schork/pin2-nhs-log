@@ -33,6 +33,9 @@ async function findOne(req: Request, res: Response) {
     const idToFind = req.params.id;
     try {
         const findOneResult = await fleetRepository.findOne({ id: idToFind });
+        if (!findOneResult) {
+            return res.status(400).send("Erro");
+        }
         return res.status(200).send(findOneResult);
     } catch (error) {
         console.log({ error });
